@@ -29,27 +29,13 @@ import java.util.logging.Logger;
  * Se encarga de la lectura de archivos
  * @author Jorge Maldonado Ventura 
  */
-public class ToRead {
-    public static ArrayList<String> storeFileContentIntoList(BufferedReader br){
-        String line;
-        
-        ArrayList<String> lines = new ArrayList<>();
-        int index = 0;
-        try {
-            while((line = br.readLine()) != null){
-                lines.add(line);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(ToRead.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return lines;
-    }
+public class LanguageFileReader {
     public static ArrayList<String> readLanguageFile(String path){
         BufferedReader br = null;
         ArrayList<String> text = null;
             try {
                 br = new BufferedReader(new FileReader(path));
-                text = ToRead.storeFileContentIntoList(br);
+                text = LanguageFileReader.storeFileContentIntoList(br);
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Octogonave.class.getName()).log(Level.SEVERE, null, ex);
             } finally{
@@ -61,4 +47,19 @@ public class ToRead {
             }
         return text;
     }
+    public static ArrayList<String> storeFileContentIntoList(BufferedReader br){
+        String line;
+        
+        ArrayList<String> lines = new ArrayList<>();
+        int index = 0;
+        try {
+            while((line = br.readLine()) != null){
+                lines.add(line);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(LanguageFileReader.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lines;
+    }
+    
 }

@@ -30,7 +30,7 @@ public class PlayerSpacecraft extends Sprite{
     private boolean right;
     private boolean down;
     private boolean left;
-    private double velocity = 4;
+    private double velocity = 5;
     
     public PlayerSpacecraft(Scene scene, String SVGData, double xLocation, double yLocation, Image... spriteImages) {
         super(scene, SVGData, xLocation, yLocation, spriteImages);
@@ -39,6 +39,7 @@ public class PlayerSpacecraft extends Sprite{
     @Override
     public void update() {
         determineKeyPressed();
+        determineKeyReleased();
         setXAndYPosition();
         moveSpaceCraft();
     }
@@ -57,6 +58,32 @@ public class PlayerSpacecraft extends Sprite{
                         break;
                     case LEFT:
                         left = true;
+                        break;
+                    case Z:
+                        decreaseSpeed(1);
+                        break;
+                    case X:
+                        increaseSpeed(1);
+                        break;
+                }
+            }
+        );
+    }
+    private void determineKeyReleased(){
+        scene.setOnKeyReleased((KeyEvent event) -> 
+            {
+                switch(event.getCode()){
+                    case UP:
+                        up = false;
+                        break;
+                    case RIGHT:
+                        right = false;
+                        break;
+                    case DOWN:
+                        down = false;
+                        break;
+                    case LEFT:
+                        left = false;
                         break;
                 }
             }
@@ -77,6 +104,14 @@ public class PlayerSpacecraft extends Sprite{
     private void moveSpaceCraft() {
         spriteFrame.setTranslateX(xPos);
         spriteFrame.setTranslateY(yPos);
+    }
+    private void increaseSpeed(double pixelsPerMove){
+        velocity += pixelsPerMove;
+    }
+    private void decreaseSpeed(double pixelsPerMove){
+        if(!(velocity <= 0)){
+            velocity -= pixelsPerMove;
+        }
     }
 
 }
