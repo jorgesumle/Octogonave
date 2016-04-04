@@ -44,6 +44,7 @@ public class Configuration {
     private static final File settingsFile = new File("settings.xml");
     private static ArrayList<String> text;
     private static String playText, instructionsText, configText, creditsText, exitText, languageLabelText;
+    public static String selectedLanguage;
 
     public static String getPlayText() {
         return playText;
@@ -82,10 +83,13 @@ public class Configuration {
         NodeList languageTag = configXML.getElementsByTagName("language");
         Node languageValue = languageTag.item(0);
         if(languageValue.getTextContent().equals("castellano")){
+            selectedLanguage = "castellano";
             text = LanguageFileReader.readLanguageFile("lang/castellano.lang");
         } else if(languageValue.getTextContent().equals("english")){
+            selectedLanguage = "english";
             text = LanguageFileReader.readLanguageFile("lang/english.lang");
         } else if(languageValue.getTextContent().equals("deutsch")){
+            selectedLanguage = "deutsch";
             text = LanguageFileReader.readLanguageFile("lang/deutsch.lang");
         }
     }
@@ -105,17 +109,21 @@ public class Configuration {
         
         ChoiceBox languages = new ChoiceBox<>();
         languages.getItems().add("castellano");
-        languages.getItems().add("english");
         languages.getItems().add("deutsch");
+        languages.getItems().add("english");
+        setSelectedElement(languages);
         languages.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
                 if(languages.getItems().get((Integer) number2) == "castellano"){
+                    selectedLanguage = "castellano";
                     text = LanguageFileReader.readLanguageFile("lang/castellano.lang");
-                } else if(languages.getItems().get((Integer) number2) == "english"){
-                    text = LanguageFileReader.readLanguageFile("lang/english.lang");
                 } else if(languages.getItems().get((Integer) number2) == "deutsch"){
+                    selectedLanguage = "deutsch";
                     text = LanguageFileReader.readLanguageFile("lang/deutsch.lang");
+                } else if(languages.getItems().get((Integer) number2) == "english"){
+                    selectedLanguage = "english";
+                    text = LanguageFileReader.readLanguageFile("lang/english.lang");
                 } 
                 saveConfig();
             }
@@ -187,5 +195,19 @@ public class Configuration {
         configText = text.get(4);
         creditsText = text.get(5);
         exitText = text.get(6);
+    }
+
+    private static void setSelectedElement(ChoiceBox languages) {
+        switch(selectedLanguage){
+            case "castellano":
+                languages.getSelectionModel().select(0);
+                break;
+            case "deutsch":
+                languages.getSelectionModel().select(1);
+                break;
+            case "english":
+                languages.getSelectionModel().select(2);
+                break;
+        }
     }
 }
