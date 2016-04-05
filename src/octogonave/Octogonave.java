@@ -36,10 +36,10 @@ public class Octogonave extends Application {
     private static final short HEIGHT = 480;
     private static final String gameTitle = "Octogonave";
     protected static Button playButton, instructionsButton, configButton, creditsButton, exitButton;
-    
+    private Gem gem;
     private Group root;
     private PlayerSpacecraft octogonave;
-    private Image octnave1;
+    private Image octnave1, gem1;
     private Scene scene;
     private SpriteManager spriteManager;
 
@@ -63,6 +63,8 @@ public class Octogonave extends Application {
      */
     private void loadImages(){
         octnave1 = new Image("/octogonaveEstatica.png", 135, 134, true, false, true);
+        gem1 = new Image("/gem.png", 30, 30, true, false, true);
+        
     }
     /**
      * Crea los <i>sprites</i> utilizados en el juego.
@@ -76,16 +78,18 @@ public class Octogonave extends Application {
 "             82,258 10,186 10,186\n" +
 "             10,186 9,83 9,83\n" +
 "             9,83 82,8 82,8 Z", 45, 45, octnave1);
+        gem = new Gem(scene, "", 300, 200, gem1);
     }
     /**
      * Añade los Nodes de los <i>sprites</i> al Group principal.
      */
     private void addActorNodes(){
         root.getChildren().add(octogonave.getSpriteFrame());
+        root.getChildren().add(gem.getSpriteFrame());
     }
     private void manageSprites(){
         spriteManager = new SpriteManager();
-        spriteManager.addToCurrentActors(octogonave);
+        spriteManager.addToCurrentActors(octogonave, gem);
     }
 
     /**

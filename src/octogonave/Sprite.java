@@ -85,6 +85,9 @@ public abstract class Sprite {
         spriteBound = new SVGPath();
         spriteBound.setContent(SVGData);
         spriteFrame = new ImageView(spriteImages[0]);
+        spriteFrame.setTranslateX(xLocation);
+        spriteFrame.setTranslateY(yLocation);
+        
         this.spriteImages.addAll(Arrays.asList(spriteImages));
         this.scene = scene;
     }
