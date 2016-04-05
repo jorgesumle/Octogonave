@@ -42,9 +42,27 @@ public class Gem extends Sprite{
         selectedFrame = 0;
         changeFrame = false;
     }
+    /**
+     * 
+     * @return devuelve {@code true} si el <i>sprite</i> es una bonificación
+     * que otorga puntos en la partida y {@code false} en caso contrario.
+     */
+    public boolean isBonus() {
+        return bonus;
+    }
+    /**
+     * Asigna un valor para indicar si el <i>sprite</i> es una modificación.
+     * @param bonus 
+     */
+    public void setBonus(boolean bonus) {
+        this.bonus = bonus;
+    }
 
     @Override
     public void update() {
+        setCurrentFrame();
+    }
+    public void setCurrentFrame(){
         frameCounter++;
         if(changeFrame){
             frameCounter = 0;
@@ -62,19 +80,5 @@ public class Gem extends Sprite{
             }
         }
     }
-    /**
-     * 
-     * @return devuelve {@code true} si el <i>sprite</i> es una bonificación
-     * que otorga puntos en la partida y {@code false} en caso contrario.
-     */
-    public boolean isBonus() {
-        return bonus;
-    }
-    /**
-     * Asigna un valor para indicar si el <i>sprite</i> es una modificación.
-     * @param bonus 
-     */
-    public void setBonus(boolean bonus) {
-        this.bonus = bonus;
-    }
+    
 }
