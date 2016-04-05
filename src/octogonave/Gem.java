@@ -30,15 +30,37 @@ public class Gem extends Sprite{
      * que otorga puntos en la partida. Es {@code true} si lo es y, {@code false} 
      * en caso contrario.
      */
-    protected boolean bonus;
+    private boolean bonus;
+    private final byte FRAME_CHANGE_TIME;
+    private byte frameCounter;
+    private boolean changeFrame;
+    private byte selectedFrame;
     
     public Gem(Scene scene, String SVGData, double xLocation, double yLocation, Image... spriteImages) {
         super(scene, SVGData, xLocation, yLocation, spriteImages);
+        FRAME_CHANGE_TIME = 20;
+        selectedFrame = 0;
+        changeFrame = false;
     }
 
     @Override
     public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        frameCounter++;
+        if(changeFrame){
+            frameCounter = 0;
+            if(selectedFrame == 0){
+                spriteFrame.setImage(spriteImages.get(1));
+                selectedFrame = 1;
+            } else if(selectedFrame == 1){
+                spriteFrame.setImage(spriteImages.get(0));
+                selectedFrame = 0;
+            }
+            changeFrame = false;
+        } else{
+            if(frameCounter >= FRAME_CHANGE_TIME){
+                changeFrame = true;
+            }
+        }
     }
     /**
      * 

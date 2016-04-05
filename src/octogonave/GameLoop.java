@@ -26,9 +26,11 @@ import javafx.animation.AnimationTimer;
  * @author Jorge Maldonado Ventura 
  */
 public class GameLoop extends AnimationTimer{
-    private PlayerSpacecraft octogonave;
-    public GameLoop(PlayerSpacecraft octogonave){
+    private final PlayerSpacecraft octogonave;
+    private final Gem diamond;
+    public GameLoop(PlayerSpacecraft octogonave, Gem diamond){
         this.octogonave = octogonave;
+        this.diamond = diamond;
     }
     /**
      * Este código se ejecuta cada fotograma mientras el AnimationTimer este
@@ -39,7 +41,7 @@ public class GameLoop extends AnimationTimer{
     @Override
     public void handle(long now) {
         octogonave.update();
-        
+        diamond.update();
     }
     /**
      * Empieza el AnimationTimer. Una vez empezado, el método handle(long) de 

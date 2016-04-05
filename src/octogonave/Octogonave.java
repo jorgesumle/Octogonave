@@ -36,10 +36,10 @@ public class Octogonave extends Application {
     private static final short HEIGHT = 480;
     private static final String gameTitle = "Octogonave";
     protected static Button playButton, instructionsButton, configButton, creditsButton, exitButton;
-    private Gem gem;
+    private Gem diamond;
     private Group root;
     private PlayerSpacecraft octogonave;
-    private Image octnave1, gem1;
+    private Image octnave1, diamond1, diamond2;
     private Scene scene;
     private SpriteManager spriteManager;
 
@@ -63,7 +63,8 @@ public class Octogonave extends Application {
      */
     private void loadImages(){
         octnave1 = new Image("/octogonaveEstatica.png", 135, 134, true, false, true);
-        gem1 = new Image("/gem.png", 30, 30, true, false, true);
+        diamond1 = new Image("/diamond.png", 30, 30, true, false, true);
+        diamond2 = new Image("/diamond2.png", 30, 30, true, false, true);
         
     }
     /**
@@ -78,18 +79,25 @@ public class Octogonave extends Application {
 "             82,258 10,186 10,186\n" +
 "             10,186 9,83 9,83\n" +
 "             9,83 82,8 82,8 Z", 45, 45, octnave1);
-        gem = new Gem(scene, "", 300, 200, gem1);
+        diamond = new Gem(scene, "M 0,14\n" +
+"           C 0,14 6,8 6,8\n" +
+"             6,8 25,8 25,8\n" +
+"             25,8 31,14 31,14\n" +
+"             31,14 31,16 31,16\n" +
+"             31,16 16,31 16,31\n" +
+"             16,31 15,31 15,31\n" +
+"             15,31 0,16 0,16 Z", 300, 200, diamond1, diamond2);
     }
     /**
      * Añade los Nodes de los <i>sprites</i> al Group principal.
      */
     private void addActorNodes(){
         root.getChildren().add(octogonave.getSpriteFrame());
-        root.getChildren().add(gem.getSpriteFrame());
+        root.getChildren().add(diamond.getSpriteFrame());
     }
     private void manageSprites(){
         spriteManager = new SpriteManager();
-        spriteManager.addToCurrentActors(octogonave, gem);
+        spriteManager.addToCurrentActors(octogonave, diamond);
     }
 
     /**
@@ -160,7 +168,7 @@ public class Octogonave extends Application {
     }
 
     private void startGameLoop() {
-        GameLoop gameLoop = new GameLoop(octogonave);
+        GameLoop gameLoop = new GameLoop(octogonave, diamond);
         gameLoop.start();
     }
 }
