@@ -42,6 +42,7 @@ public class PlayerSpacecraft extends Sprite{
         determineKeyReleased();
         setXAndYPosition();
         moveSpaceCraft();
+        checkCollision();
     }
     private void determineKeyPressed(){
         scene.setOnKeyPressed((KeyEvent event) -> 
@@ -112,6 +113,10 @@ public class PlayerSpacecraft extends Sprite{
         if(!(velocity <= 0)){
             velocity -= pixelsPerMove;
         }
+    }
+
+    private void checkCollision() {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

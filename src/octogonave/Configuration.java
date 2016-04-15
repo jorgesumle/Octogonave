@@ -14,12 +14,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -93,16 +93,17 @@ public class Configuration {
             text = LanguageFileReader.readLanguageFile("lang/deutsch.lang");
         }
     }
-    protected static void configMenu(Scene scene, Group root) {
+    protected static void configMenu(Scene scene, StackPane root) {
         languageLabelText = text.get(7);
         GridPane configMenu = new GridPane();
+        configMenu.setVgap(10);
+        configMenu.setHgap(10);
         configMenu.setAlignment(Pos.CENTER);
         scene.setRoot(configMenu);
         
         Text title = new Text(configText);
         title.getStyleClass().add("smallTitle");
         configMenu.add(title, 0, 0, 2, 1);
-        configMenu.setHalignment(title, HPos.CENTER);
         
         Label language = new Label(languageLabelText);
         configMenu.add(language, 0, 1);

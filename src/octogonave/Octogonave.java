@@ -18,10 +18,10 @@ package octogonave;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -37,7 +37,7 @@ public class Octogonave extends Application {
     private static final String gameTitle = "Octogonave";
     protected static Button playButton, instructionsButton, configButton, creditsButton, exitButton;
     private Gem diamond;
-    private Group root;
+    private StackPane root;
     private PlayerSpacecraft octogonave;
     private Image octnave1, diamond1, diamond2;
     private Scene scene;
@@ -48,8 +48,12 @@ public class Octogonave extends Application {
     public void start(Stage primaryStage) {
         
         Configuration.loadConfig();
-        root = new Group();
-        scene = new Scene(root, WIDTH, HEIGHT);   
+        root = new StackPane();
+        root.prefHeight(HEIGHT);
+        root.prefWidth(WIDTH);
+        
+        scene = new Scene(root, WIDTH, HEIGHT); 
+        scene.getStylesheets().add(this.getClass().getResource("menus.css").toExternalForm());
         primaryStage.setTitle(gameTitle);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -113,6 +117,7 @@ public class Octogonave extends Application {
         Configuration.setLanguageText();
         
         VBox menuVBox = new VBox();
+        menuVBox.setSpacing(10);
         menuVBox.setAlignment(Pos.CENTER);
         
         Text title = new Text(gameTitle);
@@ -131,6 +136,7 @@ public class Octogonave extends Application {
         
         menuVBox.getChildren().addAll(title, playButton, instructionsButton, configButton, creditsButton, exitButton);
         root.getChildren().add(menuVBox);
+        
     }
 
     private void makeMainMenuInteract() {
@@ -146,7 +152,7 @@ public class Octogonave extends Application {
         );
         instructionsButton.setOnAction(e -> 
             {
-                
+                root.getChildren().clear();
             }
         );
         configButton.setOnAction(e -> 
