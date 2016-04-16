@@ -76,12 +76,13 @@ public abstract class Sprite {
     /**
      * Crea un <i>sprite</i> con ruta SVG, coordenadas X y Y y con las imágenes que
      * utiliza.
+     * @param octogonave contiene un objeto con la información accesible de la clase lanzadora del juego.
      * @param SVGData la ruta SVG.
      * @param xLocation la coordenada X.
      * @param yLocation la coordenada Y.
      * @param spriteImages las imágenes que utiliza el <i>sprite</i>.
      */
-    public Sprite(Scene scene, String SVGData, double xLocation, double yLocation, Image... spriteImages){
+    public Sprite(Octogonave octogonave, String SVGData, double xLocation, double yLocation, Image... spriteImages){
         spriteBound = new SVGPath();
         spriteBound.setContent(SVGData);
         spriteFrame = new ImageView(spriteImages[0]);
@@ -89,7 +90,7 @@ public abstract class Sprite {
         spriteFrame.setTranslateY(yLocation);
         
         this.spriteImages.addAll(Arrays.asList(spriteImages));
-        this.scene = scene;
+        scene = octogonave.getScene();
     }
     /**
      * Este código se actualiza en cada fotograma.

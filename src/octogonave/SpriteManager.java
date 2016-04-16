@@ -26,30 +26,35 @@ import java.util.List;
  * @author Jorge Maldonado Ventura 
  */
 public class SpriteManager {
-    private final List<Sprite> CURRENT_ACTORS;
-    private final List<Sprite> REMOVED_ACTORS;
+    private final List<Sprite> CURRENT_SPRITES;
+    private final List<Sprite> REMOVED_SPRITES;
     public SpriteManager(){
-        CURRENT_ACTORS = new ArrayList<>();
-        REMOVED_ACTORS = new ArrayList<>();
+        CURRENT_SPRITES = new ArrayList<>();
+        REMOVED_SPRITES = new ArrayList<>();
+    }
+
+    public List<Sprite> getCURRENT_SPRITES() {
+        return CURRENT_SPRITES;
     }
     /**
      * Añade un <i>sprite</i> a la lista de <i>sprites</i>: {@code(List<Actor>}.
-     * @param actors el <i>sprite</i> que se desea añadir.
+     * @param sprites el <i>sprite</i> que se desea añadir.
      */
-    public void addToCurrentActors(Sprite... actors){
-        CURRENT_ACTORS.addAll(Arrays.asList(actors));
+    public void addToCurrentSprites(Sprite... sprites){
+        CURRENT_SPRITES.addAll(Arrays.asList(sprites));
     }
     /**
      * Borra un <i>sprite</i>  de la lista de <i>sprites</i>: {@code(List<Actor>}.
-     * @param actors el <i>sprite</i> que se desea eliminar.
+     * @param sprites el <i>sprite</i> que se desea eliminar.
      */
-    public void removeFromCurrentActors(Sprite... actors){
-        CURRENT_ACTORS.removeAll(Arrays.asList(actors));
+    public void removeFromCurrentSprites(Sprite... sprites){
+        CURRENT_SPRITES.removeAll(Arrays.asList(sprites));
+        REMOVED_SPRITES.addAll(Arrays.asList(sprites));
     }
     /**
      * Borra todos los <i>sprites</i> de la lista de <i>sprites</i>: {@code(List<Actor>}.
      */
-    public void resetCurrentActors(){
-        CURRENT_ACTORS.clear();
+    public void resetCurrentSprites(){
+        CURRENT_SPRITES.clear();
     }
 }

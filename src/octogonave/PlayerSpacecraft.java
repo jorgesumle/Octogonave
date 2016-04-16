@@ -17,9 +17,10 @@
 
 package octogonave;
 
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.shape.SVGPath;
+import javafx.scene.shape.Shape;
 
 /**
  * El héroe del juego.
@@ -31,9 +32,11 @@ public class PlayerSpacecraft extends Sprite{
     private boolean down;
     private boolean left;
     private double velocity = 5;
+    private Octogonave octogonave;
     
-    public PlayerSpacecraft(Scene scene, String SVGData, double xLocation, double yLocation, Image... spriteImages) {
-        super(scene, SVGData, xLocation, yLocation, spriteImages);
+    public PlayerSpacecraft(Octogonave octogonave, String SVGData, double xLocation, double yLocation, Image... spriteImages) {
+        super(octogonave, SVGData, xLocation, yLocation, spriteImages);
+        this.octogonave = octogonave;
     }
 
     @Override
@@ -116,7 +119,27 @@ public class PlayerSpacecraft extends Sprite{
     }
 
     private void checkCollision() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        for(short i = 0; i < octogonave.getSpriteManager().getCURRENT_SPRITES().size(); i++){
+            Sprite sprite = octogonave.getSpriteManager().getCURRENT_SPRITES().get(i);
+            if(collide(sprite)){
+                
+                octogonave.getSpriteManager().removeFromCurrentSprites(sprite);
+                octogonave.getRoot().getChildren().remove(sprite.getSpriteFrame());
+                octogonave.getSpriteManager().resetCurrentSprites();
+            }
+        }
+    }
+    
+    private boolean collide(Sprite sprite){
+        if(octogonave.getOctogonave().spriteFrame.getBoundsInParent().intersects(sprite.getSpriteFrame().getBoundsInParent())){
+            System.out.println("Hola");
+            Shape intersection = SVGPath.intersect(octogonave.getOctogonave().getSpriteBound(), sprite.getSpriteBound());
+            if(intersection.getBoundsInLocal().getWidth() != -1){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

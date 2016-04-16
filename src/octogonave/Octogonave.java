@@ -34,7 +34,7 @@ import javafx.stage.Stage;
 public class Octogonave extends Application {
     private static final short WIDTH = 640;
     private static final short HEIGHT = 480;
-    private static final String gameTitle = "Octogonave";
+    private static final String GAME_TITLE = "Octogonave";
     protected static Button playButton, instructionsButton, configButton, creditsButton, exitButton;
     private Gem diamond;
     private StackPane root;
@@ -42,8 +42,29 @@ public class Octogonave extends Application {
     private Image octnave1, diamond1, diamond2;
     private Scene scene;
     private SpriteManager spriteManager;
+    protected static final byte PADDING = 10;
+
+    public Scene getScene() {
+        return scene;
+    }
 
 
+    public StackPane getRoot() {
+        return root;
+    }
+
+    public SpriteManager getSpriteManager() {
+        return spriteManager;
+    }
+
+    public PlayerSpacecraft getOctogonave() {
+        return octogonave;
+    }
+    
+    
+    
+
+    
     @Override
     public void start(Stage primaryStage) {
         
@@ -54,7 +75,7 @@ public class Octogonave extends Application {
         
         scene = new Scene(root, WIDTH, HEIGHT); 
         scene.getStylesheets().add(this.getClass().getResource("menus.css").toExternalForm());
-        primaryStage.setTitle(gameTitle);
+        primaryStage.setTitle(GAME_TITLE);
         primaryStage.setScene(scene);
         primaryStage.show();
         //primaryStage.setFullScreen(true);
@@ -74,8 +95,8 @@ public class Octogonave extends Application {
     /**
      * Crea los <i>sprites</i> utilizados en el juego.
      */
-    private void createActors(){
-        octogonave = new PlayerSpacecraft(scene, "M 187,7\n" +
+    private void createSprites(){
+        octogonave = new PlayerSpacecraft(this, "M 187,7\n" +
 "           C 187,7 261,84 261,84\n" +
 "             261,84 260,186 260,186\n" +
 "             260,186 188,257 188,257\n" +
@@ -83,7 +104,7 @@ public class Octogonave extends Application {
 "             82,258 10,186 10,186\n" +
 "             10,186 9,83 9,83\n" +
 "             9,83 82,8 82,8 Z", 45, 45, octnave1);
-        diamond = new Gem(scene, "M 0,14\n" +
+        diamond = new Gem(this, "M 0,14\n" +
 "           C 0,14 6,8 6,8\n" +
 "             6,8 25,8 25,8\n" +
 "             25,8 31,14 31,14\n" +
@@ -95,13 +116,13 @@ public class Octogonave extends Application {
     /**
      * Añade los Nodes de los <i>sprites</i> al Group principal.
      */
-    private void addActorNodes(){
+    private void addSpriteNodes(){
         root.getChildren().add(octogonave.getSpriteFrame());
         root.getChildren().add(diamond.getSpriteFrame());
     }
     private void manageSprites(){
         spriteManager = new SpriteManager();
-        spriteManager.addToCurrentActors(octogonave, diamond);
+        spriteManager.addToCurrentSprites(diamond);
     }
 
     /**
@@ -117,10 +138,10 @@ public class Octogonave extends Application {
         Configuration.setLanguageText();
         
         VBox menuVBox = new VBox();
-        menuVBox.setSpacing(10);
+        menuVBox.setSpacing(PADDING);
         menuVBox.setAlignment(Pos.CENTER);
         
-        Text title = new Text(gameTitle);
+        Text title = new Text(GAME_TITLE);
         title.setId("title");
         
         playButton = new Button(Configuration.getPlayText());
@@ -144,8 +165,8 @@ public class Octogonave extends Application {
             {
                 root.getChildren().clear();
                 loadImages();
-                createActors();
-                addActorNodes();
+                createSprites();
+                addSpriteNodes();
                 manageSprites();
                 startGameLoop();
             }
@@ -153,11 +174,12 @@ public class Octogonave extends Application {
         instructionsButton.setOnAction(e -> 
             {
                 root.getChildren().clear();
+                Instructions.displayInstructions(this);
             }
         );
         configButton.setOnAction(e -> 
             {
-                Configuration.configMenu(scene, root);
+                Configuration.configMenu(this);
                 Configuration.applyLanguageChange();
             }
         );

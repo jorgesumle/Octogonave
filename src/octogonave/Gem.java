@@ -17,7 +17,6 @@
 
 package octogonave;
 
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 
 /**
@@ -36,8 +35,8 @@ public class Gem extends Sprite{
     private boolean changeFrame;
     private byte selectedFrame;
     
-    public Gem(Scene scene, String SVGData, double xLocation, double yLocation, Image... spriteImages) {
-        super(scene, SVGData, xLocation, yLocation, spriteImages);
+    public Gem(Octogonave octogonave, String SVGData, double xLocation, double yLocation, Image... spriteImages) {
+        super(octogonave, SVGData, xLocation, yLocation, spriteImages);
         FRAME_CHANGE_TIME = 20;
         selectedFrame = 0;
         changeFrame = false;
