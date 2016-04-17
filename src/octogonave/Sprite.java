@@ -85,6 +85,8 @@ public abstract class Sprite {
     public Sprite(Octogonave octogonave, String SVGData, double xLocation, double yLocation, Image... spriteImages){
         spriteBound = new SVGPath();
         spriteBound.setContent(SVGData);
+        spriteBound.setTranslateX(xLocation);
+        spriteBound.setTranslateY(yLocation);
         spriteFrame = new ImageView(spriteImages[0]);
         spriteFrame.setTranslateX(xLocation);
         spriteFrame.setTranslateY(yLocation);

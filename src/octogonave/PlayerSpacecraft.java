@@ -32,7 +32,7 @@ public class PlayerSpacecraft extends Sprite{
     private boolean down;
     private boolean left;
     private double velocity = 5;
-    private Octogonave octogonave;
+    private final Octogonave octogonave;
     
     public PlayerSpacecraft(Octogonave octogonave, String SVGData, double xLocation, double yLocation, Image... spriteImages) {
         super(octogonave, SVGData, xLocation, yLocation, spriteImages);
@@ -108,6 +108,8 @@ public class PlayerSpacecraft extends Sprite{
     private void moveSpaceCraft() {
         spriteFrame.setTranslateX(xPos);
         spriteFrame.setTranslateY(yPos);
+        octogonave.getOctogonave().spriteBound.setTranslateX(xPos);
+        octogonave.getOctogonave().spriteBound.setTranslateY(yPos);
     }
     private void increaseSpeed(double pixelsPerMove){
         velocity += pixelsPerMove;
@@ -131,9 +133,9 @@ public class PlayerSpacecraft extends Sprite{
     }
     
     private boolean collide(Sprite sprite){
-        if(octogonave.getOctogonave().spriteFrame.getBoundsInParent().intersects(sprite.getSpriteFrame().getBoundsInParent())){
-            Shape intersection = SVGPath.intersect(octogonave.getOctogonave().getSpriteBound(), sprite.getSpriteBound());
-            if(intersection.getBoundsInLocal().getWidth() != -1){
+        if(octogonave.getOctogonave().spriteFrame.getBoundsInParent().intersects(sprite.spriteFrame.getBoundsInParent())){
+            Shape intersection = SVGPath.intersect(octogonave.getOctogonave().spriteBound, sprite.spriteBound);
+            if(!intersection.getBoundsInLocal().isEmpty()){
                 return true;
             }
         }

@@ -39,7 +39,7 @@ public class Octogonave extends Application {
     private Gem diamond;
     private StackPane root;
     private PlayerSpacecraft octogonave;
-    private Image octnave1, diamond1, diamond2;
+    private Image octnave1, diamondImg1, diamondImg2;
     private Scene scene;
     private SpriteManager spriteManager;
     protected static final byte PADDING = 10;
@@ -88,23 +88,24 @@ public class Octogonave extends Application {
      */
     private void loadImages(){
         octnave1 = new Image("/octogonaveStill.png", 57, 57, true, false, true);
-        diamond1 = new Image("/diamond.png", 32, 24, true, false, true);
-        diamond2 = new Image("/diamond2.png", 32, 24, true, false, true);
+        diamondImg1 = new Image("/diamond.png", 32, 24, true, false, true);
+        diamondImg2 = new Image("/diamond2.png", 32, 24, true, false, true);
         
     }
     /**
      * Crea los <i>sprites</i> utilizados en el juego.
      */
     private void createSprites(){
-        octogonave = new PlayerSpacecraft(this, "M 23,0 L 23,0 34,0 35,1 35,8 37,9 42,4 44,4 51,12 51,14 46,19 48,21 55,21 56,22 56,33 55,34 51,44 28,56 0,28 Z", 0, 0, octnave1);
-        diamond = new Gem(this, "M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", -40, -80, diamond1, diamond2);
+        octogonave = new PlayerSpacecraft(this, "M 23,0 L 23,0 34,0 35,1 35,8 37,9 42,4 44,4 51,12 51,14 46,19 48,21 55,21 56,22 56,33 55,34 48,34 47,35 47,36 46,37 51,42 51,44 44,51 42,51 35,46 36,47 34,47 34,55 33,56 22,56 21,55 21,48 19,46 14,51 12,51 5,44 5,42 10,37 9,36 9,34 1,34 0,33 0,22 1,21 8,21 10,19 5,14 5,12 12,4 14,4 19,10 20,9 22,9 22,1 Z", 0, 0, octnave1);
+        diamond = new Gem(this, "M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", -40, -80, diamondImg1, diamondImg2);
+        
     }
     /**
      * Añade los Nodes de los <i>sprites</i> al Group principal.
      */
     private void addSpriteNodes(){
-        root.getChildren().add(octogonave.getSpriteFrame());
-        root.getChildren().add(diamond.getSpriteFrame());
+        root.getChildren().addAll(octogonave.getSpriteFrame(), 
+                                  diamond.getSpriteFrame());
     }
     private void manageSprites(){
         spriteManager = new SpriteManager();
