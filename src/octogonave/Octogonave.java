@@ -87,31 +87,17 @@ public class Octogonave extends Application {
      * Carga todas las imágenes utilizadas en el juego.
      */
     private void loadImages(){
-        octnave1 = new Image("/octogonaveEstatica.png", 135, 134, true, false, true);
-        diamond1 = new Image("/diamond.png", 30, 30, true, false, true);
-        diamond2 = new Image("/diamond2.png", 30, 30, true, false, true);
+        octnave1 = new Image("/octogonaveStill.png", 57, 57, true, false, true);
+        diamond1 = new Image("/diamond.png", 32, 32, true, false, true);
+        diamond2 = new Image("/diamond2.png", 32, 32, true, false, true);
         
     }
     /**
      * Crea los <i>sprites</i> utilizados en el juego.
      */
     private void createSprites(){
-        octogonave = new PlayerSpacecraft(this, "M 187,7\n" +
-"           C 187,7 261,84 261,84\n" +
-"             261,84 260,186 260,186\n" +
-"             260,186 188,257 188,257\n" +
-"             188,257 82,258 82,258\n" +
-"             82,258 10,186 10,186\n" +
-"             10,186 9,83 9,83\n" +
-"             9,83 82,8 82,8 Z", 45, 45, octnave1);
-        diamond = new Gem(this, "M 0,14\n" +
-"           C 0,14 6,8 6,8\n" +
-"             6,8 25,8 25,8\n" +
-"             25,8 31,14 31,14\n" +
-"             31,14 31,16 31,16\n" +
-"             31,16 16,31 16,31\n" +
-"             16,31 15,31 15,31\n" +
-"             15,31 0,16 0,16 Z", 300, 200, diamond1, diamond2);
+        octogonave = new PlayerSpacecraft(this, "M 0,22 L 0,22 1,21 8,21 10,19 5,14 5,12 12,4 14,4 19,10 20,9 22,9 22,1 23,0 34,0 35,1 35,8 37,10 42,4 44,4 51,12 51,14 46,19 48,21 55,21 56,22 56,33 55,34 48,34 46,37 51,42 51,44 44,51 42,51 37,46 36,47 34,47 34,55 33,56 22,56 21,55 21,47 19,46 14,51 12,51 5,44 5,42 10,37 9,36 9,34 1,34 0,33 Z", 270, 268, octnave1);
+        diamond = new Gem(this, "M0,14 L0,14 6,8 25,8 31,14 31,16 16,31 15,31 0,16 Z", 250, 100, diamond1, diamond2);
     }
     /**
      * Añade los Nodes de los <i>sprites</i> al Group principal.

@@ -123,7 +123,6 @@ public class PlayerSpacecraft extends Sprite{
         for(short i = 0; i < octogonave.getSpriteManager().getCURRENT_SPRITES().size(); i++){
             Sprite sprite = octogonave.getSpriteManager().getCURRENT_SPRITES().get(i);
             if(collide(sprite)){
-                
                 octogonave.getSpriteManager().removeFromCurrentSprites(sprite);
                 octogonave.getRoot().getChildren().remove(sprite.getSpriteFrame());
                 octogonave.getSpriteManager().resetCurrentSprites();
@@ -133,7 +132,6 @@ public class PlayerSpacecraft extends Sprite{
     
     private boolean collide(Sprite sprite){
         if(octogonave.getOctogonave().spriteFrame.getBoundsInParent().intersects(sprite.getSpriteFrame().getBoundsInParent())){
-            System.out.println("Hola");
             Shape intersection = SVGPath.intersect(octogonave.getOctogonave().getSpriteBound(), sprite.getSpriteBound());
             if(intersection.getBoundsInLocal().getWidth() != -1){
                 return true;
