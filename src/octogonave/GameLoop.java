@@ -17,6 +17,7 @@
 
 package octogonave;
 
+import java.util.ArrayList;
 import javafx.animation.AnimationTimer;
 
 /**
@@ -27,10 +28,10 @@ import javafx.animation.AnimationTimer;
  */
 public class GameLoop extends AnimationTimer{
     private final PlayerSpacecraft octogonave;
-    private final Gem diamond;
-    public GameLoop(PlayerSpacecraft octogonave, Gem diamond){
+    private final ArrayList<Gem> diamonds;
+    public GameLoop(PlayerSpacecraft octogonave, ArrayList<Gem> diamonds){
         this.octogonave = octogonave;
-        this.diamond = diamond;
+        this.diamonds = diamonds;
     }
     /**
      * Este código se ejecuta cada fotograma mientras el AnimationTimer este
@@ -41,7 +42,9 @@ public class GameLoop extends AnimationTimer{
     @Override
     public void handle(long now) {
         octogonave.update();
-        diamond.update();
+        diamonds.stream().forEach((diamond) -> {
+            diamond.update();
+        });
     }
     /**
      * Empieza el AnimationTimer. Una vez empezado, el método handle(long) de 

@@ -16,6 +16,7 @@
  */
 package octogonave;
 
+import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -97,7 +98,7 @@ public class Octogonave extends Application {
      */
     private void createSprites(){
         octogonave = new PlayerSpacecraft(this, "M 23,0 L 23,0 34,0 35,1 35,8 37,9 42,4 44,4 51,12 51,14 46,19 48,21 55,21 56,22 56,33 55,34 48,34 47,35 47,36 46,37 51,42 51,44 44,51 42,51 35,46 36,47 34,47 34,55 33,56 22,56 21,55 21,48 19,46 14,51 12,51 5,44 5,42 10,37 9,36 9,34 1,34 0,33 0,22 1,21 8,21 10,19 5,14 5,12 12,4 14,4 19,10 20,9 22,9 22,1 Z", 0, 0, octnave1);
-        diamond = new Gem(this, "M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", -40, -80, diamondImg1, diamondImg2);
+        diamond = new Gem(this, "M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 200, 100, diamondImg1, diamondImg2);
         
     }
     /**
@@ -183,7 +184,10 @@ public class Octogonave extends Application {
     }
 
     private void startGameLoop() {
-        GameLoop gameLoop = new GameLoop(octogonave, diamond);
+        ArrayList<Gem> diamonds = new ArrayList<Gem>(){{
+            add(diamond);
+        }};
+        GameLoop gameLoop = new GameLoop(octogonave, diamonds);
         gameLoop.start();
     }
 }
