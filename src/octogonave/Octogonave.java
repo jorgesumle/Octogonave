@@ -33,34 +33,58 @@ import javafx.stage.Stage;
  * @author Jorge Maldonado Ventura
  */
 public class Octogonave extends Application {
-    private static final short WIDTH = 640;
-    private static final short HEIGHT = 480;
+    private static final short HEIGHT = 480, WIDTH = 640;
     private static final String GAME_TITLE = "Octogonave";
-    protected static Button playButton, instructionsButton, configButton, creditsButton, exitButton;
-    private Gem diamond;
-    private StackPane root;
-    private PlayerSpacecraft octogonave;
-    private Image octnave1, diamondImg1, diamondImg2;
-    private Scene scene;
-    private SpriteManager spriteManager;
-    protected static final byte PADDING = 10;
+    private static final byte PADDING = 10;
+    private static Button playButton, instructionsButton, configButton, creditsButton, exitButton;
+    private static Gem diamond;
+    private static StackPane root;
+    private static PlayerSpacecraft octogonave;
+    private static Image octogonaveImg1, diamondImg1, diamondImg2;
+    private static Scene scene;
+    private static SpriteManager spriteManager;
 
-    public Scene getScene() {
+    public static Button getPlayButton() {
+        return playButton;
+    }
+
+    public static Button getInstructionsButton() {
+        return instructionsButton;
+    }
+
+    public static Button getConfigButton() {
+        return configButton;
+    }
+
+    public static Button getCreditsButton() {
+        return creditsButton;
+    }
+
+    public static Button getExitButton() {
+        return exitButton;
+    }
+    
+    public static Scene getScene() {
         return scene;
     }
 
 
-    public StackPane getRoot() {
+    public static StackPane getRoot() {
         return root;
     }
 
-    public SpriteManager getSpriteManager() {
+    public static SpriteManager getSpriteManager() {
         return spriteManager;
     }
 
-    public PlayerSpacecraft getOctogonave() {
+    public static PlayerSpacecraft getOctogonave() {
         return octogonave;
     }
+
+    public static byte getPADDING() {
+        return PADDING;
+    }
+    
     
     
     
@@ -87,8 +111,8 @@ public class Octogonave extends Application {
     /**
      * Carga todas las imágenes utilizadas en el juego.
      */
-    private void loadImages(){
-        octnave1 = new Image("/octogonaveStill.png", 57, 57, true, false, true);
+    private static void loadImages(){
+        octogonaveImg1 = new Image("/octogonaveStill.png", 57, 57, true, false, true);
         diamondImg1 = new Image("/diamond.png", 32, 24, true, false, true);
         diamondImg2 = new Image("/diamond2.png", 32, 24, true, false, true);
         
@@ -97,18 +121,18 @@ public class Octogonave extends Application {
      * Crea los <i>sprites</i> utilizados en el juego.
      */
     private void createSprites(){
-        octogonave = new PlayerSpacecraft(this, "M 23,0 L 23,0 34,0 35,1 35,8 37,9 42,4 44,4 51,12 51,14 46,19 48,21 55,21 56,22 56,33 55,34 48,34 47,35 47,36 46,37 51,42 51,44 44,51 42,51 35,46 36,47 34,47 34,55 33,56 22,56 21,55 21,48 19,46 14,51 12,51 5,44 5,42 10,37 9,36 9,34 1,34 0,33 0,22 1,21 8,21 10,19 5,14 5,12 12,4 14,4 19,10 20,9 22,9 22,1 Z", 0, 0, octnave1);
+        octogonave = new PlayerSpacecraft(this, "M 23,0 L 23,0 34,0 35,1 35,8 37,9 42,4 44,4 51,12 51,14 46,19 48,21 55,21 56,22 56,33 55,34 48,34 47,35 47,36 46,37 51,42 51,44 44,51 42,51 35,46 36,47 34,47 34,55 33,56 22,56 21,55 21,48 19,46 14,51 12,51 5,44 5,42 10,37 9,36 9,34 1,34 0,33 0,22 1,21 8,21 10,19 5,14 5,12 12,4 14,4 19,10 20,9 22,9 22,1 Z", 0, 0, octogonaveImg1);
         diamond = new Gem(this, "M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 200, 100, diamondImg1, diamondImg2);
         
     }
     /**
      * Añade los Nodes de los <i>sprites</i> al Group principal.
      */
-    private void addSpriteNodes(){
+    private static void addSpriteNodes(){
         root.getChildren().addAll(octogonave.getSpriteFrame(), 
                                   diamond.getSpriteFrame());
     }
-    private void manageSprites(){
+    private static void manageSprites(){
         spriteManager = new SpriteManager();
         spriteManager.addToCurrentSprites(diamond);
     }
@@ -122,7 +146,7 @@ public class Octogonave extends Application {
 
     
 
-    private void createMainMenu() {
+    private static void createMainMenu() {
         Configuration.setLanguageText();
         
         VBox menuVBox = new VBox();
@@ -183,7 +207,7 @@ public class Octogonave extends Application {
         );
     }
 
-    private void startGameLoop() {
+    private static void startGameLoop() {
         ArrayList<Gem> diamonds = new ArrayList<Gem>(){{
             add(diamond);
         }};

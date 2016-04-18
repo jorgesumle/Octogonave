@@ -1,7 +1,18 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2016 Jorge Maldonado Ventura 
+ *
+ * Este programa es software libre: usted puede redistruirlo y/o modificarlo
+ * bajo los términos de la Licencia Pública General GNU, tal y como está publicada por
+ * la Free Software Foundation; ya sea la versión 3 de la Licencia, o
+ * (a su elección) cualquier versión posterior.
+ *
+ * Este programa se distribuye con la intención de ser útil,
+ * pero SIN NINGUNA GARANTÍA; incluso sin la garantía implícita de
+ * USABILIDAD O UTILIDAD PARA UN FIN PARTICULAR. Vea la
+ * Licencia Pública General GNU para más detalles.
+ *
+ * Usted debería haber recibido una copia de la Licencia Pública General GNU
+ * junto a este programa.  Si no es así, vea <http://www.gnu.org/licenses/>.
  */
 package octogonave;
 
@@ -93,7 +104,7 @@ public class Configuration {
     protected static void configMenu(Octogonave octogonave) {
         languageLabelText = text.get(7);
         GridPane configMenu = new GridPane();
-        configMenu.setVgap(Octogonave.PADDING);
+        configMenu.setVgap(Octogonave.getPADDING());
         configMenu.setHgap(10);
         configMenu.setAlignment(Pos.CENTER);
         octogonave.getScene().setRoot(configMenu);
@@ -181,11 +192,11 @@ public class Configuration {
     protected static void applyLanguageChange() {
         setLanguageText();
         
-        Octogonave.playButton.setText(playText);
-        Octogonave.instructionsButton.setText(instructionsText);
-        Octogonave.configButton.setText(configText);
-        Octogonave.creditsButton.setText(creditsText);
-        Octogonave.exitButton.setText(exitText);
+        Octogonave.getPlayButton().setText(playText);
+        Octogonave.getInstructionsButton().setText(instructionsText);
+        Octogonave.getConfigButton().setText(configText);
+        Octogonave.getCreditsButton().setText(creditsText);
+        Octogonave.getExitButton().setText(exitText);
     }
     protected static void setLanguageText(){
         playText = text.get(2);

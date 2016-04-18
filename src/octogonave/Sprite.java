@@ -31,6 +31,7 @@ import javafx.scene.shape.SVGPath;
  * @author Jorge Maldonado Ventura 
  */
 public abstract class Sprite {
+    protected static Octogonave octogonave;
     /**
      * Las imágenes que utiliza el <i>sprite</i>.
      */
@@ -73,6 +74,7 @@ public abstract class Sprite {
      * La ventana en la que se ubican los <i>sprites</i>.
      */
     protected Scene scene;
+    
     /**
      * Crea un <i>sprite</i> con ruta SVG, coordenadas X y Y y con las imágenes que
      * utiliza.
@@ -93,6 +95,7 @@ public abstract class Sprite {
         
         this.spriteImages.addAll(Arrays.asList(spriteImages));
         scene = octogonave.getScene();
+        this.octogonave = octogonave;
     }
     /**
      * Este código se actualiza en cada fotograma.

@@ -32,11 +32,9 @@ public class PlayerSpacecraft extends Sprite{
     private boolean down;
     private boolean left;
     private double velocity = 5;
-    private final Octogonave octogonave;
     
     public PlayerSpacecraft(Octogonave octogonave, String SVGData, double xLocation, double yLocation, Image... spriteImages) {
         super(octogonave, SVGData, xLocation, yLocation, spriteImages);
-        this.octogonave = octogonave;
     }
 
     @Override
@@ -104,13 +102,17 @@ public class PlayerSpacecraft extends Sprite{
             yPos += velocity;
         }
     }
-
+    
+    /**
+     * Mueve la nave y las coordenadas de su SVGPath.
+     */
     private void moveSpaceCraft() {
         spriteFrame.setTranslateX(xPos);
         spriteFrame.setTranslateY(yPos);
-        octogonave.getOctogonave().spriteBound.setTranslateX(xPos);
-        octogonave.getOctogonave().spriteBound.setTranslateY(yPos);
+        Octogonave.getOctogonave().spriteBound.setTranslateX(xPos);
+        Octogonave.getOctogonave().spriteBound.setTranslateY(yPos);
     }
+    
     private void increaseSpeed(double pixelsPerMove){
         velocity += pixelsPerMove;
     }
@@ -119,22 +121,31 @@ public class PlayerSpacecraft extends Sprite{
             velocity -= pixelsPerMove;
         }
     }
-
+    
+    /**
+     * Comprueba si la nave ha colisiona con alguno de los <i>sprites</i> presentes
+     * en el ArrayList CURRENT_SPRITES de SpriteManager.
+     */
     private void checkCollision() {
         
-        for(short i = 0; i < octogonave.getSpriteManager().getCURRENT_SPRITES().size(); i++){
-            Sprite sprite = octogonave.getSpriteManager().getCURRENT_SPRITES().get(i);
+        for(short i = 0; i < Octogonave.getSpriteManager().getCURRENT_SPRITES().size(); i++){
+            Sprite sprite = Octogonave.getSpriteManager().getCURRENT_SPRITES().get(i);
             if(collide(sprite)){
-                octogonave.getSpriteManager().removeFromCurrentSprites(sprite);
-                octogonave.getRoot().getChildren().remove(sprite.getSpriteFrame());
-                octogonave.getSpriteManager().resetCurrentSprites();
+                Octogonave.getSpriteManager().removeFromCurrentSprites(sprite);
+                Octogonave.getRoot().getChildren().remove(sprite.getSpriteFrame());
+                Octogonave.getSpriteManager().resetCurrentSprites();
             }
         }
     }
     
+    /**
+     * Comprueba si la nave ha colisionado con un <i>sprite</i> determinado.
+     * @param sprite el <i>sprite</i> con el que desea comprobar si se ha colisionado
+     * @return true si se ha producido una colisión y false en caso contrario.
+     */
     private boolean collide(Sprite sprite){
-        if(octogonave.getOctogonave().spriteFrame.getBoundsInParent().intersects(sprite.spriteFrame.getBoundsInParent())){
-            Shape intersection = SVGPath.intersect(octogonave.getOctogonave().spriteBound, sprite.spriteBound);
+        if(Octogonave.getOctogonave().spriteFrame.getBoundsInParent().intersects(sprite.spriteFrame.getBoundsInParent())){
+            Shape intersection = SVGPath.intersect(Octogonave.getOctogonave().spriteBound, sprite.spriteBound);
             if(!intersection.getBoundsInLocal().isEmpty()){
                 return true;
             }

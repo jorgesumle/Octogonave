@@ -15,6 +15,6 @@ public class Instructions {
     
     public static void displayInstructions(Octogonave octogonave) {
         VBox instructionsMenu = new VBox();
-        instructionsMenu.setSpacing(Octogonave.PADDING);
+        instructionsMenu.setSpacing(Octogonave.getPADDING());
     }
 }
