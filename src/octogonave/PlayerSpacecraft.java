@@ -132,6 +132,7 @@ public class PlayerSpacecraft extends Sprite{
             Sprite sprite = Octogonave.getSpriteManager().getCURRENT_SPRITES().get(i);
             if(collide(sprite)){
                 Octogonave.getSpriteManager().removeFromCurrentSprites(sprite);
+                updateScore(sprite);
                 Octogonave.getRoot().getChildren().remove(sprite.getSpriteFrame());
                 Octogonave.getSpriteManager().resetCurrentSprites();
             }
@@ -151,6 +152,13 @@ public class PlayerSpacecraft extends Sprite{
             }
         }
         return false;
+    }
+
+    private void updateScore(Sprite sprite) {
+        if(sprite instanceof Gem){
+            Octogonave.setScore(Octogonave.getScore() + 1);
+            Octogonave.updateScoreText();
+        }
     }
 
 }

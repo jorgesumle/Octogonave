@@ -36,6 +36,7 @@ public class Octogonave extends Application {
     private static final short HEIGHT = 480, WIDTH = 640;
     private static final String GAME_TITLE = "Octogonave";
     private static final byte PADDING = 10;
+    private static long score = 0;
     private static Button playButton, instructionsButton, configButton, creditsButton, exitButton;
     private static Gem diamond;
     private static StackPane root;
@@ -43,6 +44,7 @@ public class Octogonave extends Application {
     private static Image octogonaveImg1, diamondImg1, diamondImg2;
     private static Scene scene;
     private static SpriteManager spriteManager;
+    private static Text scoreText;
 
     public static Button getPlayButton() {
         return playButton;
@@ -84,12 +86,16 @@ public class Octogonave extends Application {
     public static byte getPADDING() {
         return PADDING;
     }
-    
-    
-    
-    
 
+    public static long getScore() {
+        return score;
+    }
+
+    public static void setScore(long score) {
+        Octogonave.score = score;
+    }
     
+     
     @Override
     public void start(Stage primaryStage) {
         
@@ -118,18 +124,23 @@ public class Octogonave extends Application {
         
     }
     /**
-     * Crea los <i>sprites</i> utilizados en el juego.
+     * Crea los nodos (Nodes) utilizados en el juego.
      */
-    private void createSprites(){
+    private void createNodes(){
         octogonave = new PlayerSpacecraft(this, "M 23,0 L 23,0 34,0 35,1 35,8 37,9 42,4 44,4 51,12 51,14 46,19 48,21 55,21 56,22 56,33 55,34 48,34 47,35 47,36 46,37 51,42 51,44 44,51 42,51 35,46 36,47 34,47 34,55 33,56 22,56 21,55 21,48 19,46 14,51 12,51 5,44 5,42 10,37 9,36 9,34 1,34 0,33 0,22 1,21 8,21 10,19 5,14 5,12 12,4 14,4 19,10 20,9 22,9 22,1 Z", 0, 0, octogonaveImg1);
         diamond = new Gem(this, "M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 200, 100, diamondImg1, diamondImg2);
-        
+        scoreText = new Text(Long.toString(score));
+        scoreText.setTranslateX(310);
+        scoreText.setTranslateY(-210);
+        scoreText.getStyleClass().add("text");
     }
     /**
-     * Añade los Nodes de los <i>sprites</i> al Group principal.
+     * Añade los nodos (Nodes) al StackPane principal.
      */
-    private static void addSpriteNodes(){
-        root.getChildren().addAll(octogonave.getSpriteFrame(), 
+    private static void addNodes(){
+         
+        root.getChildren().addAll(scoreText,
+                                  octogonave.getSpriteFrame(), 
                                   diamond.getSpriteFrame());
     }
     private static void manageSprites(){
@@ -177,8 +188,8 @@ public class Octogonave extends Application {
             {
                 root.getChildren().clear();
                 loadImages();
-                createSprites();
-                addSpriteNodes();
+                createNodes();
+                addNodes();
                 manageSprites();
                 startGameLoop();
             }
@@ -206,7 +217,11 @@ public class Octogonave extends Application {
             }
         );
     }
-
+    
+    /**
+     * Arranca el AnimationTimer, que ejecutará la lógica de acción y actualización
+     * del juego, que se ejecutará en cada fotograma en condiciones idóneas.
+     */
     private static void startGameLoop() {
         ArrayList<Gem> diamonds = new ArrayList<Gem>(){{
             add(diamond);
@@ -214,4 +229,14 @@ public class Octogonave extends Application {
         GameLoop gameLoop = new GameLoop(octogonave, diamonds);
         gameLoop.start();
     }
+    
+    /**
+     * Actualiza el objeto Text que aparece en pantalla con la puntuación actual,
+     * obtenida de la variable {@link #score}.
+     */
+    protected static void updateScoreText() {
+        scoreText.setText(Long.toString(score));
+    }
+    
+    
 }
