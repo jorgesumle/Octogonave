@@ -168,7 +168,6 @@ public class PlayerSpacecraft extends Sprite{
                 Octogonave.getSpriteManager().removeFromCurrentSprites(sprite);
                 updateScore(sprite);
                 Octogonave.getRoot().getChildren().remove(sprite.getSpriteFrame());
-                Octogonave.getSpriteManager().resetCurrentSprites();
             }
         }
     }

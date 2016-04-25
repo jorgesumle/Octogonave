@@ -22,9 +22,14 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -42,7 +47,7 @@ public class Octogonave extends Application {
     private static Gem diamond, diamond2, diamond3, diamond4, diamond5;
     private static Pane root;
     private static PlayerSpacecraft octogonave;
-    private static Image octoNaveStill, octoNaveMov, diamondImg1, diamondImg2;
+    private static Image octoNaveStill, octoNaveMov, diamondImg1, diamondImg2, spaceBackground;
     private static Scene scene;
     private static SpriteManager spriteManager;
     private static StackPane menuStackPane;
@@ -128,7 +133,7 @@ public class Octogonave extends Application {
         octoNaveMov = new Image("/octogonaveMoving.png", 57, 57, true, false, true);
         diamondImg1 = new Image("/diamond.png", 32, 24, true, false, true);
         diamondImg2 = new Image("/diamond2.png", 32, 24, true, false, true);
-        
+        spaceBackground = new Image("/spaceBackground.jpg", 640, 480, true, false, true);
     }
     /**
      * Crea los nodos (Nodes) utilizados en el juego.
@@ -144,6 +149,7 @@ public class Octogonave extends Application {
         scoreText.setTranslateX(550);
         scoreText.setTranslateY(30);
         scoreText.getStyleClass().add("text");
+        scoreText.setFill(Color.WHITE);
     }
     /**
      * Añade los nodos (Nodes) al StackPane principal.
@@ -157,6 +163,17 @@ public class Octogonave extends Application {
                                   diamond3.getSpriteFrame(),
                                   diamond4.getSpriteFrame(),
                                   diamond5.getSpriteFrame());
+        root.setBackground(
+            new javafx.scene.layout.Background(
+                    new BackgroundImage(                             
+                            spaceBackground, 
+                            BackgroundRepeat.NO_REPEAT, 
+                            BackgroundRepeat.NO_REPEAT, 
+                            BackgroundPosition.CENTER, 
+                            new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, false, true)
+                    )
+            )
+        );
     }
     private static void manageSprites(){
         spriteManager = new SpriteManager();
