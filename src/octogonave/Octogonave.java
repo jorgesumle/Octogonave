@@ -22,6 +22,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -38,12 +39,13 @@ public class Octogonave extends Application {
     private static final byte PADDING = 10;
     private static long score = 0;
     private static Button playButton, instructionsButton, configButton, creditsButton, exitButton;
-    private static Gem diamond;
-    private static StackPane root;
+    private static Gem diamond, diamond2, diamond3, diamond4, diamond5;
+    private static Pane root;
     private static PlayerSpacecraft octogonave;
-    private static Image octogonaveImg1, diamondImg1, diamondImg2;
+    private static Image octoNaveStill, octoNaveMov, diamondImg1, diamondImg2;
     private static Scene scene;
     private static SpriteManager spriteManager;
+    private static StackPane menuStackPane;
     private static Text scoreText;
 
     public static Button getPlayButton() {
@@ -61,7 +63,11 @@ public class Octogonave extends Application {
     public static Button getCreditsButton() {
         return creditsButton;
     }
-
+    
+    public static StackPane getMenuStackPane(){
+        return menuStackPane;
+    }
+    
     public static Button getExitButton() {
         return exitButton;
     }
@@ -71,7 +77,7 @@ public class Octogonave extends Application {
     }
 
 
-    public static StackPane getRoot() {
+    public static Pane getRoot() {
         return root;
     }
 
@@ -100,7 +106,7 @@ public class Octogonave extends Application {
     public void start(Stage primaryStage) {
         
         Configuration.loadConfig();
-        root = new StackPane();
+        root = new Pane();
         root.prefHeight(HEIGHT);
         root.prefWidth(WIDTH);
         
@@ -118,7 +124,8 @@ public class Octogonave extends Application {
      * Carga todas las imágenes utilizadas en el juego.
      */
     private static void loadImages(){
-        octogonaveImg1 = new Image("/octogonaveStill.png", 57, 57, true, false, true);
+        octoNaveStill = new Image("/octogonaveStill.png", 57, 57, true, false, true);
+        octoNaveMov = new Image("/octogonaveMoving.png", 57, 57, true, false, true);
         diamondImg1 = new Image("/diamond.png", 32, 24, true, false, true);
         diamondImg2 = new Image("/diamond2.png", 32, 24, true, false, true);
         
@@ -127,11 +134,15 @@ public class Octogonave extends Application {
      * Crea los nodos (Nodes) utilizados en el juego.
      */
     private void createNodes(){
-        octogonave = new PlayerSpacecraft(this, "M 23,0 L 23,0 34,0 35,1 35,8 37,9 42,4 44,4 51,12 51,14 46,19 48,21 55,21 56,22 56,33 55,34 48,34 47,35 47,36 46,37 51,42 51,44 44,51 42,51 35,46 36,47 34,47 34,55 33,56 22,56 21,55 21,48 19,46 14,51 12,51 5,44 5,42 10,37 9,36 9,34 1,34 0,33 0,22 1,21 8,21 10,19 5,14 5,12 12,4 14,4 19,10 20,9 22,9 22,1 Z", 0, 0, octogonaveImg1);
+        octogonave = new PlayerSpacecraft(this, "M 23,0 L 23,0 34,0 35,1 35,8 37,9 42,4 44,4 51,12 51,14 46,19 48,21 55,21 56,22 56,33 55,34 48,34 47,35 47,36 46,37 51,42 51,44 44,51 42,51 35,46 36,47 34,47 34,55 33,56 22,56 21,55 21,48 19,46 14,51 12,51 5,44 5,42 10,37 9,36 9,34 1,34 0,33 0,22 1,21 8,21 10,19 5,14 5,12 12,4 14,4 19,10 20,9 22,9 22,1 Z", 0, 0, octoNaveStill, octoNaveMov);
         diamond = new Gem(this, "M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 200, 100, diamondImg1, diamondImg2);
+        diamond2 = new Gem(this, "M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 460, 10, diamondImg1, diamondImg2);
+        diamond3 = new Gem(this, "M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 219, 12, diamondImg1, diamondImg2);
+        diamond4 = new Gem(this, "M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 600, 470, diamondImg1, diamondImg2);
+        diamond5 = new Gem(this, "M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 323, 260, diamondImg1, diamondImg2);
         scoreText = new Text(Long.toString(score));
-        scoreText.setTranslateX(310);
-        scoreText.setTranslateY(-210);
+        scoreText.setTranslateX(550);
+        scoreText.setTranslateY(30);
         scoreText.getStyleClass().add("text");
     }
     /**
@@ -141,11 +152,15 @@ public class Octogonave extends Application {
          
         root.getChildren().addAll(scoreText,
                                   octogonave.getSpriteFrame(), 
-                                  diamond.getSpriteFrame());
+                                  diamond.getSpriteFrame(),
+                                  diamond2.getSpriteFrame(),
+                                  diamond3.getSpriteFrame(),
+                                  diamond4.getSpriteFrame(),
+                                  diamond5.getSpriteFrame());
     }
     private static void manageSprites(){
         spriteManager = new SpriteManager();
-        spriteManager.addToCurrentSprites(diamond);
+        spriteManager.addToCurrentSprites(diamond, diamond2, diamond3, diamond4, diamond5);
     }
 
     /**
@@ -158,6 +173,8 @@ public class Octogonave extends Application {
     
 
     private static void createMainMenu() {
+        menuStackPane = new StackPane();
+       
         Configuration.setLanguageText();
         
         VBox menuVBox = new VBox();
@@ -179,14 +196,16 @@ public class Octogonave extends Application {
         exitButton.getStyleClass().add("exit");
         
         menuVBox.getChildren().addAll(title, playButton, instructionsButton, configButton, creditsButton, exitButton);
-        root.getChildren().add(menuVBox);
+        
+        scene.setRoot(menuStackPane);
+        menuStackPane.getChildren().add(menuVBox);
         
     }
 
     private void makeMainMenuInteract() {
         playButton.setOnAction(e -> 
             {
-                root.getChildren().clear();
+                scene.setRoot(root);
                 loadImages();
                 createNodes();
                 addNodes();
@@ -223,9 +242,13 @@ public class Octogonave extends Application {
      * del juego, que se ejecutará en cada fotograma en condiciones idóneas.
      */
     private static void startGameLoop() {
-        ArrayList<Gem> diamonds = new ArrayList<Gem>(){{
-            add(diamond);
-        }};
+        ArrayList<Gem> diamonds = new ArrayList<>();
+        diamonds.add(diamond);
+        diamonds.add(diamond2);
+        diamonds.add(diamond3);
+        diamonds.add(diamond4);
+        diamonds.add(diamond5);
+
         GameLoop gameLoop = new GameLoop(octogonave, diamonds);
         gameLoop.start();
     }

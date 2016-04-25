@@ -44,11 +44,13 @@ public class SpriteManager {
         CURRENT_SPRITES.addAll(Arrays.asList(sprites));
     }
     /**
-     * Borra un <i>sprite</i>  de la lista de <i>sprites</i>: {@code(List<Actor>}.
+     * Borra un <i>sprite</i>  de la lista de <i>sprites</i>: {@code(List<Actor>} y
+     * deja de actualizarse.
      * @param sprites el <i>sprite</i> que se desea eliminar.
      */
     public void removeFromCurrentSprites(Sprite... sprites){
         CURRENT_SPRITES.removeAll(Arrays.asList(sprites));
+        GameLoop.diamonds.removeAll(Arrays.asList(sprites));
         REMOVED_SPRITES.addAll(Arrays.asList(sprites));
     }
     /**

@@ -49,7 +49,7 @@ import org.xml.sax.SAXException;
  * @author jorge
  */
 public class Configuration {
-    private static final File settingsFile = new File("settings.xml");
+    private static final File SETTINGS_FILE = new File("settings.xml");
     private static ArrayList<String> text;
     private static String playText, instructionsText, configText, creditsText, exitText, languageLabelText;
     public static String selectedLanguage;
@@ -84,7 +84,7 @@ public class Configuration {
         Document configXML = null;
         try {
             documentBuilder = documentBuilderFactory.newDocumentBuilder();   
-            configXML = documentBuilder.parse(settingsFile);
+            configXML = documentBuilder.parse(SETTINGS_FILE);
         } catch (ParserConfigurationException | SAXException | IOException ex) {
             Logger.getLogger(Octogonave.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -142,7 +142,7 @@ public class Configuration {
         Button back = new Button("Atrás");
         back.setOnAction(e ->
             {
-                octogonave.getScene().setRoot(octogonave.getRoot());
+                Octogonave.getScene().setRoot(Octogonave.getMenuStackPane());
                 applyLanguageChange();
             }
         );
@@ -181,7 +181,7 @@ public class Configuration {
         }
         DOMSource source = new DOMSource(configXML);
         
-        StreamResult streamResult = new StreamResult(settingsFile);
+        StreamResult streamResult = new StreamResult(SETTINGS_FILE);
         try {
             transformer.transform(source, streamResult);
         } catch (TransformerException ex) {

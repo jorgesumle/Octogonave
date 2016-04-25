@@ -41,6 +41,7 @@ public class PlayerSpacecraft extends Sprite{
     public void update() {
         determineKeyPressed();
         determineKeyReleased();
+        determineFrame();
         setXAndYPosition();
         moveSpaceCraft();
         checkCollision();
@@ -91,6 +92,41 @@ public class PlayerSpacecraft extends Sprite{
             }
         );
     }
+    
+    /**
+     * Determina el fotograma que se mostrará según las teclas pulsadas. Por ejemplo, si se pulsa la tecla
+     * de arriba, se mostrará el fotograma de la nave moviéndose en esa dirección.
+     */
+    private void determineFrame(){
+        if(left && up){
+            spriteFrame.setImage(spriteImages.get(1));
+            spriteFrame.setRotate(135);
+        } else if(up && right){
+            spriteFrame.setImage(spriteImages.get(1));
+            spriteFrame.setRotate(-135);
+        } else if(right && down){
+            spriteFrame.setImage(spriteImages.get(1));
+            spriteFrame.setRotate(-45);
+        } else if(down && left){
+            spriteFrame.setImage(spriteImages.get(1));
+            spriteFrame.setRotate(45);
+        } else if(left){
+            spriteFrame.setImage(spriteImages.get(1));
+            spriteFrame.setRotate(90);
+        } else if(up){
+            spriteFrame.setImage(spriteImages.get(1));
+            spriteFrame.setRotate(180);
+        } else if(right){
+            spriteFrame.setImage(spriteImages.get(1));
+            spriteFrame.setRotate(-90);
+        } else if(down){
+            spriteFrame.setImage(spriteImages.get(1));
+            spriteFrame.setRotate(0);
+        } else{
+            spriteFrame.setImage(spriteImages.get(0));
+        }
+    }
+    
     private void setXAndYPosition(){
         if(up){
             yPos -= velocity;
@@ -109,8 +145,8 @@ public class PlayerSpacecraft extends Sprite{
     private void moveSpaceCraft() {
         spriteFrame.setTranslateX(xPos);
         spriteFrame.setTranslateY(yPos);
-        Octogonave.getOctogonave().spriteBound.setTranslateX(xPos);
-        Octogonave.getOctogonave().spriteBound.setTranslateY(yPos);
+        spriteBound.setTranslateX(xPos);
+        spriteBound.setTranslateY(yPos);
     }
     
     private void increaseSpeed(double pixelsPerMove){
@@ -127,9 +163,7 @@ public class PlayerSpacecraft extends Sprite{
      * en el ArrayList CURRENT_SPRITES de SpriteManager.
      */
     private void checkCollision() {
-        
-        for(short i = 0; i < Octogonave.getSpriteManager().getCURRENT_SPRITES().size(); i++){
-            Sprite sprite = Octogonave.getSpriteManager().getCURRENT_SPRITES().get(i);
+        for(Sprite sprite: Octogonave.getSpriteManager().getCURRENT_SPRITES()){            
             if(collide(sprite)){
                 Octogonave.getSpriteManager().removeFromCurrentSprites(sprite);
                 updateScore(sprite);
@@ -145,8 +179,8 @@ public class PlayerSpacecraft extends Sprite{
      * @return true si se ha producido una colisión y false en caso contrario.
      */
     private boolean collide(Sprite sprite){
-        if(Octogonave.getOctogonave().spriteFrame.getBoundsInParent().intersects(sprite.spriteFrame.getBoundsInParent())){
-            Shape intersection = SVGPath.intersect(Octogonave.getOctogonave().spriteBound, sprite.spriteBound);
+        if(spriteFrame.getBoundsInParent().intersects(sprite.spriteFrame.getBoundsInParent())){
+            Shape intersection = SVGPath.intersect(spriteBound, sprite.spriteBound);
             if(!intersection.getBoundsInLocal().isEmpty()){
                 return true;
             }

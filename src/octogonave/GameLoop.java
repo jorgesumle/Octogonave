@@ -28,10 +28,10 @@ import javafx.animation.AnimationTimer;
  */
 public class GameLoop extends AnimationTimer{
     private final PlayerSpacecraft octogonave;
-    private final ArrayList<Gem> diamonds;
+    protected static ArrayList<Gem> diamonds;
     public GameLoop(PlayerSpacecraft octogonave, ArrayList<Gem> diamonds){
         this.octogonave = octogonave;
-        this.diamonds = diamonds;
+        GameLoop.diamonds = diamonds;
     }
     /**
      * Este código se ejecuta cada fotograma mientras el AnimationTimer este
