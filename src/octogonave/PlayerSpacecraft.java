@@ -32,6 +32,7 @@ public class PlayerSpacecraft extends Sprite{
     private boolean down;
     private boolean left;
     private double velocity = 5;
+    private byte currentFrame = 1;
     
     public PlayerSpacecraft(Octogonave octogonave, String SVGData, double xLocation, double yLocation, Image... spriteImages) {
         super(octogonave, SVGData, xLocation, yLocation, spriteImages);
@@ -98,30 +99,34 @@ public class PlayerSpacecraft extends Sprite{
      * de arriba, se mostrará el fotograma de la nave moviéndose en esa dirección.
      */
     private void determineFrame(){
+        currentFrame++;
+        if(currentFrame > 2){
+            currentFrame = 1;
+        }
         if(left && up){
-            spriteFrame.setImage(spriteImages.get(1));
-            spriteFrame.setRotate(135);
-        } else if(up && right){
-            spriteFrame.setImage(spriteImages.get(1));
-            spriteFrame.setRotate(-135);
-        } else if(right && down){
-            spriteFrame.setImage(spriteImages.get(1));
+            spriteFrame.setImage(spriteImages.get(currentFrame));
             spriteFrame.setRotate(-45);
-        } else if(down && left){
-            spriteFrame.setImage(spriteImages.get(1));
+        } else if(up && right){
+            spriteFrame.setImage(spriteImages.get(currentFrame));
             spriteFrame.setRotate(45);
+        } else if(right && down){
+            spriteFrame.setImage(spriteImages.get(currentFrame));
+            spriteFrame.setRotate(135);
+        } else if(down && left){
+            spriteFrame.setImage(spriteImages.get(currentFrame));
+            spriteFrame.setRotate(-135);
         } else if(left){
-            spriteFrame.setImage(spriteImages.get(1));
-            spriteFrame.setRotate(90);
-        } else if(up){
-            spriteFrame.setImage(spriteImages.get(1));
-            spriteFrame.setRotate(180);
-        } else if(right){
-            spriteFrame.setImage(spriteImages.get(1));
+            spriteFrame.setImage(spriteImages.get(currentFrame));
             spriteFrame.setRotate(-90);
-        } else if(down){
-            spriteFrame.setImage(spriteImages.get(1));
+        } else if(up){
+            spriteFrame.setImage(spriteImages.get(currentFrame));
             spriteFrame.setRotate(0);
+        } else if(right){
+            spriteFrame.setImage(spriteImages.get(currentFrame));
+            spriteFrame.setRotate(90);
+        } else if(down){
+            spriteFrame.setImage(spriteImages.get(currentFrame));
+            spriteFrame.setRotate(180);
         } else{
             spriteFrame.setImage(spriteImages.get(0));
         }
@@ -163,12 +168,16 @@ public class PlayerSpacecraft extends Sprite{
      * en el ArrayList CURRENT_SPRITES de SpriteManager.
      */
     private void checkCollision() {
-        for(Sprite sprite: Octogonave.getSpriteManager().getCURRENT_SPRITES()){            
-            if(collide(sprite)){
-                Octogonave.getSpriteManager().removeFromCurrentSprites(sprite);
-                updateScore(sprite);
-                Octogonave.getRoot().getChildren().remove(sprite.getSpriteFrame());
+        try{
+            for(Sprite sprite: Octogonave.getSpriteManager().getCURRENT_SPRITES()){            
+                if(collide(sprite)){
+                    Octogonave.getSpriteManager().removeFromCurrentSprites(sprite);
+                    updateScore(sprite);
+                    Octogonave.getRoot().getChildren().remove(sprite.getSpriteFrame());
+                }
             }
+        } catch(Exception e){
+            //Este es un fallo no controlado correctamente, arréglalo luego.
         }
     }
     
