@@ -126,6 +126,7 @@ public class Octogonave extends Application {
         
         scene = new Scene(root, WIDTH, HEIGHT); 
         scene.getStylesheets().add(this.getClass().getResource("menus.css").toExternalForm());
+        primaryStage.getIcons().add(new Image("/octogonaveStillOriginal.png"));
         primaryStage.setTitle(GAME_TITLE);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -150,12 +151,12 @@ public class Octogonave extends Application {
      * Crea los nodos (Nodes) utilizados en el juego.
      */
     private void createNodes(){
-        octogonave = new PlayerSpacecraft(this, "M 53,30 L 53,30 64,30 65,31 65,38 67,39 72,34 74,34 81,42 81,44 76,49 78,51 85,51 86,52 86,63 85,64 78,64 77,65 77,66 76,67 81,72 81,74 74,81 72,81 65,76 66,77 64,77 64,85 63,86 52,86 51,85 51,78 49,76 44,81 42,81 35,74 35,72 40,67 39,66 39,64 31,64 30,63 30,52 31,51 38,51 40,49 35,44 35,42 42,34 44,34 49,40 50,39 52,39 52,31 Z", 0, 0, octoNaveStill, octoNaveMov1, octoNaveMov2, octoNaveMov3);
-        diamond = new Gem(this, "M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 200, 100, diamondImg1, diamondImg2);
-        diamond2 = new Gem(this, "M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 460, 10, diamondImg1, diamondImg2);
-        diamond3 = new Gem(this, "M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 219, 12, diamondImg1, diamondImg2);
-        diamond4 = new Gem(this, "M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 600, 470, diamondImg1, diamondImg2);
-        diamond5 = new Gem(this, "M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 323, 260, diamondImg1, diamondImg2);
+        octogonave = new PlayerSpacecraft("M 53,30 L 53,30 64,30 65,31 65,38 67,39 72,34 74,34 81,42 81,44 76,49 78,51 85,51 86,52 86,63 85,64 78,64 77,65 77,66 76,67 81,72 81,74 74,81 72,81 65,76 66,77 64,77 64,85 63,86 52,86 51,85 51,78 49,76 44,81 42,81 35,74 35,72 40,67 39,66 39,64 31,64 30,63 30,52 31,51 38,51 40,49 35,44 35,42 42,34 44,34 49,40 50,39 52,39 52,31 Z", 0, 0, octoNaveStill, octoNaveMov1, octoNaveMov2, octoNaveMov3);
+        diamond = new Gem("M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 200, 100, diamondImg1, diamondImg2);
+        diamond2 = new Gem("M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 460, 10, diamondImg1, diamondImg2);
+        diamond3 = new Gem("M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 219, 12, diamondImg1, diamondImg2);
+        diamond4 = new Gem("M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 600, 470, diamondImg1, diamondImg2);
+        diamond5 = new Gem("M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 323, 260, diamondImg1, diamondImg2);
         scoreText = new Text(Long.toString(score));
         scoreText.setTranslateX(550);
         scoreText.setTranslateY(30);
@@ -277,7 +278,7 @@ public class Octogonave extends Application {
         diamonds.add(diamond4);
         diamonds.add(diamond5);
 
-        GameLoop gameLoop = new GameLoop(octogonave, diamonds);
+        GameLoop gameLoop = new GameLoop(octogonave, spriteManager);
         gameLoop.start();
     }
     

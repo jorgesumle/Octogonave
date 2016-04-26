@@ -31,11 +31,20 @@ public class PlayerSpacecraft extends Sprite{
     private boolean right;
     private boolean down;
     private boolean left;
-    private double velocity = 5;
-    private byte currentFrame = 1;
+    private double velocity;
+    private byte currentFrame;
+    /**
+     * Esta constante influye en la velocidad en la que se produce un cambio de fotograma de la nave, se le resta
+     * posteriormente la velocidad para que a más velocidad mayor sea el cambio.
+     */
+    private final short frameChangeRate;
+    private int frameCounter;
     
-    public PlayerSpacecraft(Octogonave octogonave, String SVGData, double xLocation, double yLocation, Image... spriteImages) {
-        super(octogonave, SVGData, xLocation, yLocation, spriteImages);
+    public PlayerSpacecraft(String SVGData, double xLocation, double yLocation, Image... spriteImages) {
+        super(SVGData, xLocation, yLocation, spriteImages);
+        currentFrame = 1;
+        velocity = 5;
+        frameChangeRate = 10;
     }
 
     @Override
@@ -99,10 +108,15 @@ public class PlayerSpacecraft extends Sprite{
      * de arriba, se mostrará el fotograma de la nave moviéndose en esa dirección.
      */
     private void determineFrame(){
-        currentFrame++;
-        if(currentFrame > 2){
-            currentFrame = 1;
+        frameCounter++;
+        if(frameCounter >= (frameChangeRate - velocity)){
+            frameCounter = 0;
+            currentFrame++;
+            if(currentFrame > 3){
+                currentFrame = 1;
+            }
         }
+        
         if(left && up){
             spriteFrame.setImage(spriteImages.get(currentFrame));
             spriteFrame.setRotate(-45);

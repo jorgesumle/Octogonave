@@ -35,8 +35,8 @@ public class Gem extends Sprite{
     private boolean changeFrame;
     private byte selectedFrame;
     
-    public Gem(Octogonave octogonave, String SVGData, double xLocation, double yLocation, Image... spriteImages) {
-        super(octogonave, SVGData, xLocation, yLocation, spriteImages);
+    public Gem(String SVGData, double xLocation, double yLocation, Image... spriteImages) {
+        super(SVGData, xLocation, yLocation, spriteImages);
         FRAME_CHANGE_TIME = 20;
         selectedFrame = 0;
         changeFrame = false;

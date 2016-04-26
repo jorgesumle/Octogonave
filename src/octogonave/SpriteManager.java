@@ -19,8 +19,11 @@ package octogonave;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.util.Duration;
 
 /**
@@ -52,7 +55,6 @@ public class SpriteManager {
      */
     public void removeFromCurrentSprites(Sprite... sprites){
         CURRENT_SPRITES.removeAll(Arrays.asList(sprites));
-        GameLoop.diamonds.removeAll(Arrays.asList(sprites));
         REMOVED_SPRITES.addAll(Arrays.asList(sprites));
     }
     /**
@@ -62,13 +64,17 @@ public class SpriteManager {
         CURRENT_SPRITES.clear();
     }
     
-    /*public void update(){
+    public void update(){
         Timeline timeline = new Timeline();
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5000), e ->
-            {
-                CURRENT_SPRITES.addtoCurrentSprites(new Gem("M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 323, 260, Octogonave.getDiamondImg1(), Octogonave.getDiamondImg2()));
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5000), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                Gem diamond = new Gem("M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", (Math.random() * 640 + 1), (Math.random() * 480 + 1), Octogonave.getDiamondImg1(), Octogonave.getDiamondImg2());
+                Octogonave.getRoot().getChildren().add(diamond.getSpriteFrame());
+                addToCurrentSprites(diamond);
             }
-        ));
-        
-    }*/
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+    }
 }

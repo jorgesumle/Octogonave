@@ -31,7 +31,6 @@ import javafx.scene.shape.SVGPath;
  * @author Jorge Maldonado Ventura 
  */
 public abstract class Sprite {
-    protected static Octogonave octogonave;
     /**
      * Las imágenes que utiliza el <i>sprite</i>.
      */
@@ -78,13 +77,12 @@ public abstract class Sprite {
     /**
      * Crea un <i>sprite</i> con ruta SVG, coordenadas X y Y y con las imágenes que
      * utiliza.
-     * @param octogonave contiene un objeto con la información accesible de la clase lanzadora del juego.
      * @param SVGData la ruta SVG.
      * @param xLocation la coordenada X.
      * @param yLocation la coordenada Y.
      * @param spriteImages las imágenes que utiliza el <i>sprite</i>.
      */
-    public Sprite(Octogonave octogonave, String SVGData, double xLocation, double yLocation, Image... spriteImages){
+    public Sprite(String SVGData, double xLocation, double yLocation, Image... spriteImages){
         spriteBound = new SVGPath();
         spriteBound.setContent(SVGData);
         spriteBound.setTranslateX(xLocation);
@@ -94,8 +92,7 @@ public abstract class Sprite {
         spriteFrame.setTranslateY(yLocation);
         
         this.spriteImages.addAll(Arrays.asList(spriteImages));
-        scene = octogonave.getScene();
-        this.octogonave = octogonave;
+        scene = Octogonave.getScene();
     }
     /**
      * Este código se actualiza en cada fotograma.
