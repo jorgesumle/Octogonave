@@ -64,17 +64,4 @@ public class SpriteManager {
         CURRENT_SPRITES.clear();
     }
     
-    public void update(){
-        Timeline timeline = new Timeline();
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5000), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                Gem diamond = new Gem("M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", (Math.random() * 640 + 1), (Math.random() * 480 + 1), Octogonave.getDiamondImg1(), Octogonave.getDiamondImg2());
-                Octogonave.getRoot().getChildren().add(diamond.getSpriteFrame());
-                addToCurrentSprites(diamond);
-            }
-        }));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
-    }
 }

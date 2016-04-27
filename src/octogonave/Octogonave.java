@@ -17,7 +17,12 @@
 package octogonave;
 
 import java.util.ArrayList;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -32,6 +37,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 
 /**
@@ -280,6 +286,14 @@ public class Octogonave extends Application {
 
         GameLoop gameLoop = new GameLoop(octogonave, spriteManager);
         gameLoop.start();
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5000), (ActionEvent e) -> {
+            Gem diamond1 = new Gem("M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", (Math.random() * 640 + 1), (Math.random() * 480 + 1), Octogonave.getDiamondImg1(), Octogonave.getDiamondImg2());
+            Octogonave.getRoot().getChildren().add(diamond1.getSpriteFrame());
+            spriteManager.addToCurrentSprites(diamond1);
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
     }
     
     /**

@@ -44,7 +44,6 @@ public class GameLoop extends AnimationTimer{
         spriteManager.getCURRENT_SPRITES().stream().forEach((sprite) -> {
             sprite.update();
         });
-        spriteManager.update();
     }
     /**
      * Empieza el AnimationTimer. Una vez empezado, el método handle(long) de 
