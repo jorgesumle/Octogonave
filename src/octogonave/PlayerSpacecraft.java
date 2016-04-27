@@ -211,7 +211,10 @@ public class PlayerSpacecraft extends Sprite{
     }
 
     private void updateScore(Sprite sprite) {
-        if(sprite instanceof Gem){
+        if(sprite instanceof Diamond){
+            Octogonave.setScore(Octogonave.getScore() + 5);
+            Octogonave.updateScoreText();
+        } else if(sprite instanceof Ruby){
             Octogonave.setScore(Octogonave.getScore() + 1);
             Octogonave.updateScoreText();
         }
