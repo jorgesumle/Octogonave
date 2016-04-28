@@ -39,12 +39,22 @@ public class PlayerSpacecraft extends Sprite{
      */
     private final short frameChangeRate;
     private int frameCounter;
+    /**
+     * Posición del <i>sprite</i> en el eje X. 
+     */
+    protected double xPos;
+    /**
+     * Posición del <i>sprite</i> en el eje Y.
+     */
+    protected double yPos;
     
     public PlayerSpacecraft(String SVGData, double xLocation, double yLocation, Image... spriteImages) {
         super(SVGData, xLocation, yLocation, spriteImages);
         currentFrame = 1;
         velocity = 5;
         frameChangeRate = 10;
+        xPos = xLocation;
+        yPos = yLocation;
     }
 
     @Override
@@ -225,5 +235,9 @@ public class PlayerSpacecraft extends Sprite{
         }
         Octogonave.updateScoreText();
     }
+    
+    /*private void isOutOfBounds(){
+        if(spriteFrame.getTranslateX())
+    }*/
 
 }

@@ -45,31 +45,6 @@ public abstract class Sprite {
      */
     protected SVGPath spriteBound;
     /**
-     * El tipo de <i>sprite</i>. Si es estático, el valor de esta variable es
-     * {@code true}; si no, es {@code false}.
-     */
-    protected boolean fixed;
-    /**
-     * Indica si el <i>sprite</i> está girado horizontalmente.
-     * Es {@code true} si el <i>sprite</i> está girado horizontalmente
-     * y {@code false} en caso contrario.
-     */
-    protected boolean flippedH;
-    /**
-     * Indica si el <i>sprite</i> está girado verticalmente.
-     * Es {@code true} si el <i>sprite</i> está girado verticalmente
-     * y {@code false} en caso contrario.
-     */
-    protected boolean flippedV;
-    /**
-     * Posición del <i>sprite</i> en el eje X. 
-     */
-    protected double xPos;
-    /**
-     * Posición del <i>sprite</i> en el eje Y.
-     */
-    protected double yPos;
-    /**
      * La ventana en la que se ubican los <i>sprites</i>.
      */
     protected Scene scene;
@@ -140,51 +115,5 @@ public abstract class Sprite {
     public void setSpriteBound(SVGPath spriteBound) {
         this.spriteBound = spriteBound;
     }
-    /**
-     * 
-     * @return devuelve {@code true} si el <i>sprite</i> es estático y {@code false}
-     * en caso contrario.
-     */
-    public boolean isFixed() {
-        return fixed;
-    }
-    /**
-     * Asigna un valor para indicar si el <i>sprite</i> es fijo.
-     * @param fixed 
-     */
-    public void setFixed(boolean fixed) {
-        this.fixed = fixed;
-    }
-    /**
-     * 
-     * @return devuelve {@code true} si el <i>sprite</i> está girado horizontalmente
-     * y {@code false} en caso contrario.
-     */
-    public boolean isFlippedH() {
-        return flippedH;
-    }
-    /**
-     * Asigna un valor para indicar si el <i>sprite</i> está girado horizontalmente.
-     * @param flippedH 
-     */
-    public void setFlippedH(boolean flippedH) {
-        this.flippedH = flippedH;
-    }
-    /**
-     * 
-     * @return devuelve {@code true} si el <i>sprite</i> está girado verticalmente
-     * y {@code false} en caso contrario.
-     */
-    public boolean isFlippedV() {
-        return flippedV;
-    }
-    /**
-     * Asigna un valor para indicar si el <i>sprite</i> está girado verticalmente.
-     * @param flippedV 
-     */
-    public void setFlippedV(boolean flippedV) {
-        this.flippedV = flippedV;
-    }
-    
     
 }
