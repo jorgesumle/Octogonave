@@ -17,6 +17,7 @@
 
 package octogonave;
 
+import java.util.ArrayList;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.shape.SVGPath;
@@ -47,6 +48,7 @@ public class PlayerSpacecraft extends Sprite{
      * Posición del <i>sprite</i> en el eje Y.
      */
     protected double yPos;
+    private byte lives;
     
     public PlayerSpacecraft(String SVGData, double xLocation, double yLocation, Image... spriteImages) {
         super(SVGData, xLocation, yLocation, spriteImages);
@@ -55,6 +57,7 @@ public class PlayerSpacecraft extends Sprite{
         frameChangeRate = 10;
         xPos = xLocation;
         yPos = yLocation;
+        lives = 2;
     }
 
     @Override
@@ -192,6 +195,24 @@ public class PlayerSpacecraft extends Sprite{
      * en el ArrayList CURRENT_SPRITES de SpriteManager.
      */
     private void checkCollision() {
+        if(boundsLimitOrOutY()){
+            damage();
+            if(yPos <= 0 - 30){
+                yPos = -28;
+            } else{
+                yPos = Octogonave.getScene().getHeight() - 89; 
+            }
+            velocity = 0.01;
+        } else if(boundsLimitOrOutX()){
+           damage();
+            if(xPos <= 0 - 30){
+                xPos = -28;
+            } else{
+                xPos = Octogonave.getScene().getWidth() - 89; 
+            }
+            velocity = 0.01;
+        }
+        
         try{
             for(Sprite sprite: Octogonave.getSpriteManager().getCURRENT_SPRITES()){            
                 if(collide(sprite)){
@@ -202,6 +223,24 @@ public class PlayerSpacecraft extends Sprite{
             }
         } catch(Exception e){
             //Este es un fallo no controlado correctamente, arréglalo luego.
+        }
+    }
+    
+    /**
+     * Le quita una vida a la nave. A medida que la nave pierde vidas, su aspecto
+     * cambia. Si la nave se queda sin vidas acaba la partida.
+     */
+    private void damage(){
+        lives--;
+        if(lives == 1){
+            ArrayList<Image> hurtImages = new ArrayList<>();
+            hurtImages.add(new Image("/octogonaveHurtStill.png", 117, 117, true, false, true));
+            hurtImages.add(new Image("/octogonaveMovingFireHurt1.png", 117, 117, true, false, true));
+            hurtImages.add(new Image("octogonaveMovingFireHurt2.png", 117, 117, true, false, true));
+            hurtImages.add(new Image("octogonaveMovingFireHurt3.png", 117, 117, true, false, true));
+            this.setSpriteImages(hurtImages);
+        } else if(lives == 0){
+            System.exit(0);
         }
     }
     
@@ -236,8 +275,16 @@ public class PlayerSpacecraft extends Sprite{
         Octogonave.updateScoreText();
     }
     
-    /*private void isOutOfBounds(){
-        if(spriteFrame.getTranslateX())
-    }*/
+    /**
+     * Informa de si la nave está tocando el límite de la ventana o ha salido de ella.
+     * @return true si ha contactado con el límite o está fuera y false si se encuentra dentro de
+     * la ventana.
+     */
+    private boolean boundsLimitOrOutX(){
+        return xPos <= 0 - 30 || xPos >= Octogonave.getScene().getWidth() - 87;
+    }
+    private boolean boundsLimitOrOutY(){
+        return yPos <= 0 - 30 || yPos >= Octogonave.getScene().getHeight() - 87;
+    }
 
 }
