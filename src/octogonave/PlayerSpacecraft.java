@@ -159,7 +159,7 @@ public class PlayerSpacecraft extends Sprite{
     }
     
     /**
-     * Mueve la nave y las coordenadas de su SVGPath.
+     * Mueve la nave, es decir, su spriteFrame y spriteBound.
      */
     private void moveSpaceCraft() {
         spriteFrame.setTranslateX(xPos);
@@ -172,7 +172,7 @@ public class PlayerSpacecraft extends Sprite{
         velocity += pixelsPerMove;
     }
     private void decreaseSpeed(double pixelsPerMove){
-        if(!(velocity <= 0)){
+        if(!(velocity <= 1)){
             velocity -= pixelsPerMove;
         }
     }
@@ -209,15 +209,21 @@ public class PlayerSpacecraft extends Sprite{
         }
         return false;
     }
-
+    
+    /**
+     * Actualiza la puntuación del juego. Cada objeto que recoge la nave tiene
+     * una puntuación diferente.
+     * @param sprite el objeto que recoge la nave.
+     */
     private void updateScore(Sprite sprite) {
         if(sprite instanceof Diamond){
-            Octogonave.setScore(Octogonave.getScore() + 5);
-            Octogonave.updateScoreText();
+            Octogonave.setScore(Octogonave.getScore() + 3);
         } else if(sprite instanceof Ruby){
+            Octogonave.setScore(Octogonave.getScore() + 2);
+        } else if(sprite instanceof YellowSapphire){
             Octogonave.setScore(Octogonave.getScore() + 1);
-            Octogonave.updateScoreText();
         }
+        Octogonave.updateScoreText();
     }
 
 }

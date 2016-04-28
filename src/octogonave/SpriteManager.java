@@ -19,12 +19,6 @@ package octogonave;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.util.Duration;
 
 /**
  * Se encarga de la administración de todos los elementos interactivos del juego.

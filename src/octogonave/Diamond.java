@@ -23,7 +23,7 @@ import javafx.scene.image.Image;
  *
  * @author Jorge Maldonado Ventura 
  */
-public class Diamond extends Gem{
+public class Diamond extends Sprite{
     private final byte FRAME_CHANGE_TIME;
     private byte frameCounter;
     private boolean changeFrame;

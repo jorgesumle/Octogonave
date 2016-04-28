@@ -14,19 +14,21 @@
  * Usted debería haber recibido una copia de la Licencia Pública General GNU
  * junto a este programa.  Si no es así, vea <http://www.gnu.org/licenses/>.
  */
-
 package octogonave;
 
 import javafx.scene.image.Image;
 
 /**
  *
- * @author Jorge Maldonado Ventura 
+ * @author Jorge Maldonado Ventura
  */
-public class Ruby extends StaticSprite{
+public class StaticSprite extends Sprite{
     
-    public Ruby(String SVGData, double xLocation, double yLocation, Image... spriteImages) {
+    public StaticSprite(String SVGData, double xLocation, double yLocation, Image... spriteImages) {
         super(SVGData, xLocation, yLocation, spriteImages);
     }
+
+    @Override
+    public void update() {}
     
 }
