@@ -5,7 +5,12 @@
  */
 package octogonave;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 /**
  *
@@ -15,6 +20,28 @@ public class Instructions {
     
     public static void displayInstructions() {
         VBox instructionsMenu = new VBox();
+        instructionsMenu.setAlignment(Pos.CENTER);
+        
         instructionsMenu.setSpacing(Octogonave.getPADDING());
+    
+        Text title = new Text("Instrucciones");
+        title.getStyleClass().add("smallTitle");
+        
+        Text gameTitle = new Text(Octogonave.getGAME_TITLE());
+        gameTitle.setStyle("-fx-font-style: italic;");
+        Text instructionsText = new Text(Configuration.getInstructionsText());
+        
+        TextFlow instructions = new TextFlow(gameTitle, instructionsText);
+        instructionsMenu.setMargin(instructions, new Insets(6));
+        
+        Button back = new Button("Atrás");
+        back.setOnAction(e ->
+            {
+                Octogonave.getScene().setRoot(Octogonave.getMenuStackPane());
+            }
+        );
+        
+        instructionsMenu.getChildren().addAll(title, instructions, back);
+        Octogonave.getScene().setRoot(instructionsMenu);
     }
 }

@@ -60,15 +60,9 @@ public class Octogonave extends Application {
     private static SpriteManager spriteManager;
     private static StackPane menuStackPane;
     private static Text scoreText;
-    
-    public static List<Image> getOctoNaveHurtImages(){
-        List<Image> hurtImages = new ArrayList<Image>(){{
-            add(octoNaveHurtStill);
-            add(octoNaveMovHurt1);
-            add(octoNaveMovHurt2);
-            add(octoNaveMovHurt3);
-        }};
-        return hurtImages;
+
+    public static String getGAME_TITLE() {
+        return GAME_TITLE;
     }
     
     public static Button getPlayButton() {
@@ -124,6 +118,15 @@ public class Octogonave extends Application {
         Octogonave.score = score;
     }
     
+    public static List<Image> getOctoNaveHurtImages(){
+        List<Image> hurtImages = new ArrayList<Image>(){{
+            add(octoNaveHurtStill);
+            add(octoNaveMovHurt1);
+            add(octoNaveMovHurt2);
+            add(octoNaveMovHurt3);
+        }};
+        return hurtImages;
+    }
      
     @Override
     public void start(Stage primaryStage) {
@@ -227,15 +230,15 @@ public class Octogonave extends Application {
         Text title = new Text(GAME_TITLE);
         title.setId("title");
         
-        playButton = new Button(Configuration.getPlayText());
+        playButton = new Button(Configuration.getPlayButtonText());
         playButton.getStyleClass().add("button");    
-        instructionsButton = new Button(Configuration.getInstructionsText());
+        instructionsButton = new Button(Configuration.getInstructionsButtonText());
         instructionsButton.getStyleClass().add("instructions");   
-        configButton = new Button(Configuration.getConfigText());
+        configButton = new Button(Configuration.getConfigButtonText());
         configButton.getStyleClass().add("config");
-        creditsButton = new Button(Configuration.getCreditsText());
+        creditsButton = new Button(Configuration.getCreditsButtonText());
         creditsButton.getStyleClass().add("credits");
-        exitButton = new Button(Configuration.getExitText());
+        exitButton = new Button(Configuration.getExitButtonText());
         exitButton.getStyleClass().add("exit");
         
         menuVBox.getChildren().addAll(title, playButton, instructionsButton, configButton, creditsButton, exitButton);

@@ -46,12 +46,13 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author jorge
+ * @author Jorge Maldonado Ventura
  */
 public class Configuration {
     private static final File SETTINGS_FILE = new File("settings.xml");
     private static ArrayList<String> text;
-    private static String playText, instructionsText, configText, creditsText, exitText, languageLabelText;
+    private static String playButtonText, instructionsButtonText, configButtonText, creditsButtonText, 
+            exitButtonText, languageLabelText;
     public static String selectedLanguage;
     private static boolean musicOn;
     private static GridPane configMenu;
@@ -60,28 +61,32 @@ public class Configuration {
         return musicOn;
     }
 
-    public static String getPlayText() {
-        return playText;
+    public static String getPlayButtonText() {
+        return playButtonText;
     }
 
-    public static String getInstructionsText() {
-        return instructionsText;
+    public static String getInstructionsButtonText() {
+        return instructionsButtonText;
     }
 
-    public static String getConfigText() {
-        return configText;
+    public static String getConfigButtonText() {
+        return configButtonText;
     }
 
-    public static String getCreditsText() {
-        return creditsText;
+    public static String getCreditsButtonText() {
+        return creditsButtonText;
     }
 
-    public static String getExitText() {
-        return exitText;
+    public static String getExitButtonText() {
+        return exitButtonText;
     }
 
     public static String getLanguageLabelText() {
         return languageLabelText;
+    }
+    
+    public static String getInstructionsText(){
+        return text.get(11);
     }
     
     protected static void loadConfig() {
@@ -119,7 +124,7 @@ public class Configuration {
         configMenu.setAlignment(Pos.CENTER);
         Octogonave.getScene().setRoot(configMenu);
         
-        Text title = new Text(configText);
+        Text title = new Text(configButtonText);
         title.getStyleClass().add("smallTitle");
         configMenu.add(title, 0, 0, 2, 1);
         
@@ -189,18 +194,18 @@ public class Configuration {
     protected static void applyLanguageChange() {
         setLanguageText();
         
-        Octogonave.getPlayButton().setText(playText);
-        Octogonave.getInstructionsButton().setText(instructionsText);
-        Octogonave.getConfigButton().setText(configText);
-        Octogonave.getCreditsButton().setText(creditsText);
-        Octogonave.getExitButton().setText(exitText);
+        Octogonave.getPlayButton().setText(playButtonText);
+        Octogonave.getInstructionsButton().setText(instructionsButtonText);
+        Octogonave.getConfigButton().setText(configButtonText);
+        Octogonave.getCreditsButton().setText(creditsButtonText);
+        Octogonave.getExitButton().setText(exitButtonText);
     }
     protected static void setLanguageText(){
-        playText = text.get(2);
-        instructionsText = text.get(3);
-        configText = text.get(4);
-        creditsText = text.get(5);
-        exitText = text.get(6);
+        playButtonText = text.get(2);
+        instructionsButtonText = text.get(3);
+        configButtonText = text.get(4);
+        creditsButtonText = text.get(5);
+        exitButtonText = text.get(6);
     }
 
     private static void setSelectedElement(ChoiceBox languages) {
