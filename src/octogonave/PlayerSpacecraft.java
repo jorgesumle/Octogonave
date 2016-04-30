@@ -17,7 +17,6 @@
 
 package octogonave;
 
-import java.util.ArrayList;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.shape.SVGPath;
@@ -233,12 +232,7 @@ public class PlayerSpacecraft extends Sprite{
     private void damage(){
         lives--;
         if(lives == 1){
-            ArrayList<Image> hurtImages = new ArrayList<>();
-            hurtImages.add(new Image("/octogonaveHurtStill.png", 117, 117, true, false, true));
-            hurtImages.add(new Image("/octogonaveMovingFireHurt1.png", 117, 117, true, false, true));
-            hurtImages.add(new Image("octogonaveMovingFireHurt2.png", 117, 117, true, false, true));
-            hurtImages.add(new Image("octogonaveMovingFireHurt3.png", 117, 117, true, false, true));
-            this.setSpriteImages(hurtImages);
+            this.setSpriteImages(Octogonave.getOctoNaveHurtImages());
         } else if(lives == 0){
             System.exit(0);
         }

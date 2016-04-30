@@ -17,6 +17,7 @@
 package octogonave;
 
 import java.util.ArrayList;
+import java.util.List;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -52,12 +53,23 @@ public class Octogonave extends Application {
     private static Diamond diamond, diamond2, diamond3, diamond4, diamond5;
     private static Pane root;
     private static PlayerSpacecraft octogonave;
-    private static Image octoNaveStill, octoNaveMov1, octoNaveMov2, octoNaveMov3, diamondImg1, diamondImg2, rubyImg, yellowSapphireImg, spaceBackground;
+    private static Image octoNaveStill, octoNaveMov1, octoNaveMov2, octoNaveMov3,
+            octoNaveHurtStill, octoNaveMovHurt1, octoNaveMovHurt2, octoNaveMovHurt3,
+            diamondImg1, diamondImg2, rubyImg, yellowSapphireImg, spaceBackground;
     private static Scene scene;
     private static SpriteManager spriteManager;
     private static StackPane menuStackPane;
     private static Text scoreText;
-
+    
+    public static List<Image> getOctoNaveHurtImages(){
+        List<Image> hurtImages = new ArrayList<Image>(){{
+            add(octoNaveHurtStill);
+            add(octoNaveMovHurt1);
+            add(octoNaveMovHurt2);
+            add(octoNaveMovHurt3);
+        }};
+        return hurtImages;
+    }
     
     public static Button getPlayButton() {
         return playButton;
@@ -140,6 +152,10 @@ public class Octogonave extends Application {
         octoNaveMov1 = new Image("/octogonaveMovingFire1.png", 117, 117, true, false, true);
         octoNaveMov2 = new Image("/octogonaveMovingFire2.png", 117, 117, true, false, true);
         octoNaveMov3 = new Image("/octogonaveMovingFire3.png", 117, 117, true, false, true);
+        octoNaveHurtStill = new Image("/octogonaveHurtStill.png", 117, 117, true, false, true);
+        octoNaveMovHurt1 = new Image("/octogonaveMovingFireHurt1.png", 117, 117, true, false, true);
+        octoNaveMovHurt2 = new Image("octogonaveMovingFireHurt2.png", 117, 117, true, false, true);
+        octoNaveMovHurt3 = new Image("octogonaveMovingFireHurt3.png", 117, 117, true, false, true);
         diamondImg1 = new Image("/diamond.png", 32, 24, true, false, true);
         diamondImg2 = new Image("/diamond2.png", 32, 24, true, false, true);
         rubyImg = new Image("/ruby.png", 32, 32, true, false, true);
@@ -239,6 +255,7 @@ public class Octogonave extends Application {
                 addNodes();
                 manageSprites();
                 startGameLoop();
+                Sounds.playMusic();
             }
         );
         instructionsButton.setOnAction(e -> 
