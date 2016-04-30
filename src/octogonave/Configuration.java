@@ -54,6 +54,7 @@ public class Configuration {
     private static String playText, instructionsText, configText, creditsText, exitText, languageLabelText;
     public static String selectedLanguage;
     private static boolean musicOn;
+    private static GridPane configMenu;
 
     public static boolean isMusicOn() {
         return musicOn;
@@ -109,68 +110,21 @@ public class Configuration {
         NodeList musicTag = configXML.getElementsByTagName("music");
         Node musicValue = musicTag.item(0);
         musicOn = musicValue.getTextContent().equals("on");
-        System.out.println(musicOn);
     }
     
-    protected static void configMenu(Octogonave octogonave) {
-        languageLabelText = text.get(7);
-        GridPane configMenu = new GridPane();
+    protected static void configMenu() {
+        configMenu = new GridPane();
         configMenu.setVgap(Octogonave.getPADDING());
         configMenu.setHgap(10);
         configMenu.setAlignment(Pos.CENTER);
-        octogonave.getScene().setRoot(configMenu);
+        Octogonave.getScene().setRoot(configMenu);
         
         Text title = new Text(configText);
         title.getStyleClass().add("smallTitle");
         configMenu.add(title, 0, 0, 2, 1);
         
-        Label language = new Label(languageLabelText);
-        configMenu.add(language, 0, 1);
-        
-        ChoiceBox languages = new ChoiceBox<>();
-        languages.getItems().add("castellano");
-        languages.getItems().add("deutsch");
-        languages.getItems().add("english");
-        setSelectedElement(languages);
-        languages.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-                if(languages.getItems().get((Integer) number2) == "castellano"){
-                    selectedLanguage = "castellano";
-                    text = LanguageFileReader.readLanguageFile("lang/castellano.lang");
-                } else if(languages.getItems().get((Integer) number2) == "deutsch"){
-                    selectedLanguage = "deutsch";
-                    text = LanguageFileReader.readLanguageFile("lang/deutsch.lang");
-                } else if(languages.getItems().get((Integer) number2) == "english"){
-                    selectedLanguage = "english";
-                    text = LanguageFileReader.readLanguageFile("lang/english.lang");
-                } 
-                saveConfig();
-            }
-        });
-        configMenu.add(languages, 1, 1);
-        
-        Label musicLabel = new Label(text.get(8));
-        Button musicButton;
-        if(musicOn){
-            musicButton = new Button(text.get(9));
-        } else{
-            musicButton = new Button(text.get(10));
-        }
-        musicButton.setOnAction(e -> 
-            {
-                if(musicOn){
-                    musicButton.setText(text.get(10));
-                    musicOn = false;
-                } else{
-                    musicButton.setText(text.get(9));
-                    musicOn = true;
-                }
-            }
-        );
-        configMenu.add(musicLabel, 0, 2);
-        configMenu.add(musicButton, 1, 2);
-        
+        languageConfigNodes();  
+        musicConfigNodes();
         
         Button back = new Button("Atrás");
         back.setOnAction(e ->
@@ -261,5 +215,64 @@ public class Configuration {
                 languages.getSelectionModel().select(2);
                 break;
         }
+    }
+    
+    /**
+     * Se encarga de la creación del Label y ChoiceBox relacionados con la
+     * configuración del idioma dentro del menú de configuración del juego.
+     */
+    private static void languageConfigNodes(){
+        Label language = new Label(text.get(7));
+        configMenu.add(language, 0, 1);
+        
+        ChoiceBox languages = new ChoiceBox<>();
+        languages.getItems().add("castellano");
+        languages.getItems().add("deutsch");
+        languages.getItems().add("english");
+        setSelectedElement(languages);
+        languages.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
+                if(languages.getItems().get((Integer) number2) == "castellano"){
+                    selectedLanguage = "castellano";
+                    text = LanguageFileReader.readLanguageFile("lang/castellano.lang");
+                } else if(languages.getItems().get((Integer) number2) == "deutsch"){
+                    selectedLanguage = "deutsch";
+                    text = LanguageFileReader.readLanguageFile("lang/deutsch.lang");
+                } else if(languages.getItems().get((Integer) number2) == "english"){
+                    selectedLanguage = "english";
+                    text = LanguageFileReader.readLanguageFile("lang/english.lang");
+                } 
+                saveConfig();
+            }
+        });
+        configMenu.add(languages, 1, 1);
+    }
+    
+    /**
+     * Se encarga de la creación del Label y Button relacionados con la
+     * configuración de música dentro del menú de configuración del juego.
+     */
+    private static void musicConfigNodes(){
+        Label musicLabel = new Label(text.get(8));
+        Button musicButton;
+        if(musicOn){
+            musicButton = new Button(text.get(9));
+        } else{
+            musicButton = new Button(text.get(10));
+        }
+        musicButton.setOnAction(e -> 
+            {
+                if(musicOn){
+                    musicButton.setText(text.get(10));
+                    musicOn = false;
+                } else{
+                    musicButton.setText(text.get(9));
+                    musicOn = true;
+                }
+            }
+        );
+        configMenu.add(musicLabel, 0, 2);
+        configMenu.add(musicButton, 1, 2);
     }
 }

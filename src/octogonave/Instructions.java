@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox;
  */
 public class Instructions {
     
-    public static void displayInstructions(Octogonave octogonave) {
+    public static void displayInstructions() {
         VBox instructionsMenu = new VBox();
         instructionsMenu.setSpacing(Octogonave.getPADDING());
     }

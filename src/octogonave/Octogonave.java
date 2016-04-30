@@ -259,12 +259,12 @@ public class Octogonave extends Application {
         instructionsButton.setOnAction(e -> 
             {
                 root.getChildren().clear();
-                Instructions.displayInstructions(this);
+                Instructions.displayInstructions();
             }
         );
         configButton.setOnAction(e -> 
             {
-                Configuration.configMenu(this);
+                Configuration.configMenu();
                 Configuration.applyLanguageChange();
             }
         );
