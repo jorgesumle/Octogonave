@@ -53,6 +53,11 @@ public class Configuration {
     private static ArrayList<String> text;
     private static String playText, instructionsText, configText, creditsText, exitText, languageLabelText;
     public static String selectedLanguage;
+    private static boolean musicOn;
+
+    public static boolean isMusicOn() {
+        return musicOn;
+    }
 
     public static String getPlayText() {
         return playText;
@@ -100,7 +105,13 @@ public class Configuration {
             selectedLanguage = "deutsch";
             text = LanguageFileReader.readLanguageFile("lang/deutsch.lang");
         }
+        
+        NodeList musicTag = configXML.getElementsByTagName("music");
+        Node musicValue = musicTag.item(0);
+        musicOn = musicValue.getTextContent().equals("on");
+        System.out.println(musicOn);
     }
+    
     protected static void configMenu(Octogonave octogonave) {
         languageLabelText = text.get(7);
         GridPane configMenu = new GridPane();
@@ -139,14 +150,37 @@ public class Configuration {
         });
         configMenu.add(languages, 1, 1);
         
+        Label musicLabel = new Label(text.get(8));
+        Button musicButton;
+        if(musicOn){
+            musicButton = new Button(text.get(9));
+        } else{
+            musicButton = new Button(text.get(10));
+        }
+        musicButton.setOnAction(e -> 
+            {
+                if(musicOn){
+                    musicButton.setText(text.get(10));
+                    musicOn = false;
+                } else{
+                    musicButton.setText(text.get(9));
+                    musicOn = true;
+                }
+            }
+        );
+        configMenu.add(musicLabel, 0, 2);
+        configMenu.add(musicButton, 1, 2);
+        
+        
         Button back = new Button("Atrás");
         back.setOnAction(e ->
             {
                 Octogonave.getScene().setRoot(Octogonave.getMenuStackPane());
                 applyLanguageChange();
+                saveConfig();
             }
         );
-        configMenu.add(back, 0, 2, 2, 1);
+        configMenu.add(back, 0, 3, 2, 1);
     }
     private static void saveConfig(){
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -157,6 +191,7 @@ public class Configuration {
             Logger.getLogger(Octogonave.class.getName()).log(Level.SEVERE, null, ex);
         }
         Document configXML = documentBuilder.newDocument();
+        Element root = (Element) configXML.createElement("settings");
         Element language = (Element) configXML.createElement("language");
         switch (text.get(0)) {
             case "castellano":
@@ -167,10 +202,18 @@ public class Configuration {
                 break;
             case "deutsch":
                 language.appendChild(configXML.createTextNode("deutsch"));
-                break;
-                
+                break;       
         }
-        configXML.appendChild(language);
+        Element music = (Element) configXML.createElement("music");
+        if(musicOn){
+            music.appendChild(configXML.createTextNode("on"));
+        } else{
+            music.appendChild(configXML.createTextNode("off"));
+        }
+        
+        root.appendChild(language);
+        root.appendChild(music);
+        configXML.appendChild(root);
         
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = null;

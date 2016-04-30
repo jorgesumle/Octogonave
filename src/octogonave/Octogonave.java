@@ -139,7 +139,6 @@ public class Octogonave extends Application {
         primaryStage.setTitle(GAME_TITLE);
         primaryStage.setScene(scene);
         primaryStage.show();
-        //primaryStage.setFullScreen(true);
         
         createMainMenu();
         makeMainMenuInteract();
@@ -255,7 +254,6 @@ public class Octogonave extends Application {
                 addNodes();
                 manageSprites();
                 startGameLoop();
-                Sounds.playMusic();
             }
         );
         instructionsButton.setOnAction(e -> 
@@ -317,6 +315,10 @@ public class Octogonave extends Application {
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+        
+        if(Configuration.isMusicOn()){
+            Sounds.playMusic();
+        }
     }
     
     /**
