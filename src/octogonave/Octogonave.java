@@ -51,11 +51,13 @@ public class Octogonave extends Application {
     private static long score = 0;
     private static Button playButton, instructionsButton, configButton, creditsButton, exitButton;
     private static Diamond diamond, diamond2, diamond3, diamond4, diamond5;
+    private static Bullet bullet, bullet2;
     private static Pane root;
     private static PlayerSpacecraft octogonave;
     private static Image octoNaveStill, octoNaveMov1, octoNaveMov2, octoNaveMov3,
             octoNaveHurtStill, octoNaveMovHurt1, octoNaveMovHurt2, octoNaveMovHurt3,
-            diamondImg1, diamondImg2, rubyImg, yellowSapphireImg, spaceBackground;
+            diamondImg1, diamondImg2, rubyImg, yellowSapphireImg, spaceBackground,
+            bulletImg;
     private static Scene scene;
     private static SpriteManager spriteManager;
     private static StackPane menuStackPane;
@@ -141,6 +143,7 @@ public class Octogonave extends Application {
         primaryStage.getIcons().add(new Image("/octogonaveStillOriginal.png"));
         primaryStage.setTitle(GAME_TITLE);
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         primaryStage.show();
         
         createMainMenu();
@@ -162,7 +165,8 @@ public class Octogonave extends Application {
         diamondImg2 = new Image("/diamond2.png", 32, 24, true, false, true);
         rubyImg = new Image("/ruby.png", 32, 32, true, false, true);
         yellowSapphireImg = new Image("/yellowSapphire.png", 22, 21, true, false, true);
-        spaceBackground = new Image("/spaceBackgroundInv.jpg", 640, 480, true, false, true);
+        spaceBackground = new Image("/spaceBackgroundInvSmall.jpg", 640, 480, true, false, true);
+        bulletImg = new Image("/bullet.png", 10, 13, true, false, true);
     }
     /**
      * Crea los nodos (Nodes) utilizados en el juego.
@@ -174,6 +178,8 @@ public class Octogonave extends Application {
         diamond3 = new Diamond("M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 219, 12, diamondImg1, diamondImg2);
         diamond4 = new Diamond("M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 600, 470, diamondImg1, diamondImg2);
         diamond5 = new Diamond("M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 323, 260, diamondImg1, diamondImg2);
+        bullet = new Bullet("M 4,0 L 4,0 5,0 6,1 6,8 10,12 10,13 0,13 0,12 3,8 3,1 4,1 Z", WIDTH-9, HEIGHT-12, bulletImg);
+        bullet2 = new Bullet("M 4,0 L 4,0 5,0 6,1 6,8 10,12 10,13 0,13 0,12 3,8 3,1 4,1 Z", WIDTH-10, HEIGHT-13, bulletImg);
         scoreText = new Text(Long.toString(score));
         scoreText.setTranslateX(550);
         scoreText.setTranslateY(30);
@@ -191,7 +197,9 @@ public class Octogonave extends Application {
                                   diamond2.getSpriteFrame(),
                                   diamond3.getSpriteFrame(),
                                   diamond4.getSpriteFrame(),
-                                  diamond5.getSpriteFrame());
+                                  diamond5.getSpriteFrame(),
+                                  bullet.getSpriteFrame(),
+                                  bullet2.getSpriteFrame());
         root.setBackground(
             new javafx.scene.layout.Background(
                     new BackgroundImage(                             
@@ -206,7 +214,7 @@ public class Octogonave extends Application {
     }
     private static void manageSprites(){
         spriteManager = new SpriteManager();
-        spriteManager.addToCurrentSprites(diamond, diamond2, diamond3, diamond4, diamond5);
+        spriteManager.addToCurrentSprites(diamond, diamond2, diamond3, diamond4, diamond5, bullet, bullet2);
     }
 
     /**
@@ -288,13 +296,6 @@ public class Octogonave extends Application {
      * del juego, que se ejecutará en cada fotograma en condiciones idóneas.
      */
     private static void startGameLoop() {
-        ArrayList<Sprite> diamonds = new ArrayList<>();
-        diamonds.add(diamond);
-        diamonds.add(diamond2);
-        diamonds.add(diamond3);
-        diamonds.add(diamond4);
-        diamonds.add(diamond5);
-
         GameLoop gameLoop = new GameLoop(octogonave, spriteManager);
         gameLoop.start();
         
