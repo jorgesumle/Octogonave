@@ -49,7 +49,6 @@ public class Main extends Application {
     private static Bullet bullet, bullet2;
     private static Pane root;
     private static Octogonave octogonave;
-    private static Image spaceBackground;
     private static Scene scene;
     private static SpriteManager spriteManager;
     private static StackPane menuStackPane;
@@ -131,12 +130,7 @@ public class Main extends Application {
         createMainMenu();
         makeMainMenuInteract();
     }
-    /**
-     * Carga todas las imágenes utilizadas en el juego.
-     */
-    private static void loadImages(){
-        spaceBackground = new Image("/spaceBackgroundInvSmall.jpg", 640, 480, true, false, true);
-    }
+
     /**
      * Crea los nodos (Nodes) utilizados en el juego.
      */
@@ -159,7 +153,7 @@ public class Main extends Application {
         root.setBackground(
             new javafx.scene.layout.Background(
                     new BackgroundImage(                             
-                            spaceBackground, 
+                            new Image("/spaceBackgroundInvSmall.jpg", 640, 480, true, false, true), 
                             BackgroundRepeat.NO_REPEAT, 
                             BackgroundRepeat.NO_REPEAT, 
                             BackgroundPosition.CENTER, 
@@ -208,7 +202,6 @@ public class Main extends Application {
         playButton.setOnAction(e -> 
             {
                 scene.setRoot(root);
-                loadImages();
                 createNodes();
                 addNodes();
                 manageSprites();
