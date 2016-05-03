@@ -97,7 +97,7 @@ public class Configuration {
             documentBuilder = documentBuilderFactory.newDocumentBuilder();   
             configXML = documentBuilder.parse(SETTINGS_FILE);
         } catch (ParserConfigurationException | SAXException | IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Octogonave.class.getName()).log(Level.SEVERE, null, ex);
         }
         NodeList languageTag = configXML.getElementsByTagName("language");
         Node languageValue = languageTag.item(0);
@@ -119,10 +119,10 @@ public class Configuration {
     
     protected static void configMenu() {
         configMenu = new GridPane();
-        configMenu.setVgap(Main.getPADDING());
+        configMenu.setVgap(Octogonave.getPADDING());
         configMenu.setHgap(10);
         configMenu.setAlignment(Pos.CENTER);
-        Main.getScene().setRoot(configMenu);
+        Octogonave.getScene().setRoot(configMenu);
         
         Text title = new Text(configButtonText);
         title.getStyleClass().add("smallTitle");
@@ -134,7 +134,7 @@ public class Configuration {
         Button back = new Button("Atrás");
         back.setOnAction(e ->
             {
-                Main.getScene().setRoot(Main.getMenuStackPane());
+                Octogonave.getScene().setRoot(Octogonave.getMenuStackPane());
                 applyLanguageChange();
                 saveConfig();
             }
@@ -147,7 +147,7 @@ public class Configuration {
         try {
             documentBuilder = documentBuilderFactory.newDocumentBuilder();     
         } catch (ParserConfigurationException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Octogonave.class.getName()).log(Level.SEVERE, null, ex);
         }
         Document configXML = documentBuilder.newDocument();
         Element root = (Element) configXML.createElement("settings");
@@ -179,7 +179,7 @@ public class Configuration {
         try {
             transformer = transformerFactory.newTransformer();
         } catch (TransformerConfigurationException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Octogonave.class.getName()).log(Level.SEVERE, null, ex);
         }
         DOMSource source = new DOMSource(configXML);
         
@@ -187,18 +187,18 @@ public class Configuration {
         try {
             transformer.transform(source, streamResult);
         } catch (TransformerException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Octogonave.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     protected static void applyLanguageChange() {
         setLanguageText();
         
-        Main.getPlayButton().setText(playButtonText);
-        Main.getInstructionsButton().setText(instructionsButtonText);
-        Main.getConfigButton().setText(configButtonText);
-        Main.getCreditsButton().setText(creditsButtonText);
-        Main.getExitButton().setText(exitButtonText);
+        Octogonave.getPlayButton().setText(playButtonText);
+        Octogonave.getInstructionsButton().setText(instructionsButtonText);
+        Octogonave.getConfigButton().setText(configButtonText);
+        Octogonave.getCreditsButton().setText(creditsButtonText);
+        Octogonave.getExitButton().setText(exitButtonText);
     }
     protected static void setLanguageText(){
         playButtonText = text.get(2);

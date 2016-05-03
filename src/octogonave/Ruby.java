@@ -24,10 +24,9 @@ import javafx.scene.image.Image;
  * @author Jorge Maldonado Ventura 
  */
 public class Ruby extends StaticSprite{
-    private static final Image RUBY_IMG = new Image("/ruby.png", 32, 32, true, false, true);
-    private static final String SVG_PATH = "M 14,0 L 14,0 17,0 31,14 31,16 16,31 15,31 0,16 0,14 Z";
-    public Ruby(double xLocation, double yLocation) {
-        super(SVG_PATH, xLocation, yLocation, RUBY_IMG);
+    
+    public Ruby(String SVGData, double xLocation, double yLocation, Image... spriteImages) {
+        super(SVGData, xLocation, yLocation, spriteImages);
     }
     
 }

@@ -67,7 +67,7 @@ public abstract class Sprite {
         spriteFrame.setTranslateY(yLocation);
         
         this.spriteImages.addAll(Arrays.asList(spriteImages));
-        scene = Main.getScene();
+        scene = Octogonave.getScene();
     }
     /**
      * Este código se actualiza en cada fotograma.

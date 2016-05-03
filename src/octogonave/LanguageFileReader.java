@@ -37,12 +37,12 @@ public class LanguageFileReader {
                 br = new BufferedReader(new FileReader(path));
                 text = LanguageFileReader.storeFileContentIntoList(br);
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Octogonave.class.getName()).log(Level.SEVERE, null, ex);
             } finally{
                 try {
                     br.close();
                 } catch (IOException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Octogonave.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         return text;

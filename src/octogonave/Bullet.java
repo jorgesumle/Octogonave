@@ -23,28 +23,26 @@ import javafx.scene.image.Image;
  * @author Jorge Maldonado Ventura
  */
 public class Bullet extends Sprite{
-    private static final Image BULLET_IMG = new Image("/bullet.png", 10, 13, true, false, true);
-    private static final String SVG_PATH = "M 4,0 L 4,0 5,0 6,1 6,8 9,11 9,12 0,12 0,11 3,8 3,1 Z";
     private static double velocity;
-    public Bullet(double xLocation, double yLocation) {
-        super(SVG_PATH, xLocation, yLocation, BULLET_IMG);
+    public Bullet(String SVGData, double xLocation, double yLocation, Image... spriteImages) {
+        super(SVGData, xLocation, yLocation, spriteImages);
         velocity = 9;
     }
 
     @Override
     public void update() {
         if(boundsLimitOrOutY() || boundsLimitOrOutX()){
-            Main.getSpriteManager().removeFromCurrentSprites(this);
-            Main.getRoot().getChildren().remove(getSpriteFrame());
+            Octogonave.getSpriteManager().removeFromCurrentSprites(this);
+            Octogonave.getRoot().getChildren().remove(getSpriteFrame());
         }
     }
     
     private boolean boundsLimitOrOutX(){
-        return getSpriteFrame().getTranslateX() <= 0 - getSpriteFrame().getFitWidth() || getSpriteFrame().getTranslateX() >= Main.getScene().getWidth() - getSpriteFrame().getFitWidth();
+        return getSpriteFrame().getTranslateX() <= 0 - getSpriteFrame().getFitWidth() || getSpriteFrame().getTranslateX() >= Octogonave.getScene().getWidth() - getSpriteFrame().getFitWidth();
     }
     
     private boolean boundsLimitOrOutY(){
-        return getSpriteFrame().getTranslateY() <= 0 - getSpriteFrame().getFitHeight() || getSpriteFrame().getTranslateY() >= Main.getScene().getHeight() - getSpriteFrame().getFitHeight();
+        return getSpriteFrame().getTranslateY() <= 0 - getSpriteFrame().getFitHeight() || getSpriteFrame().getTranslateY() >= Octogonave.getScene().getHeight() - getSpriteFrame().getFitHeight();
     }
     
 }

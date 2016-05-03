@@ -26,9 +26,9 @@ import javafx.animation.AnimationTimer;
  * @author Jorge Maldonado Ventura 
  */
 public class GameLoop extends AnimationTimer{
-    private final Octogonave octogonave;
+    private final PlayerSpacecraft octogonave;
     private SpriteManager spriteManager;
-    public GameLoop(Octogonave octogonave, SpriteManager spriteManager){
+    public GameLoop(PlayerSpacecraft octogonave, SpriteManager spriteManager){
         this.octogonave = octogonave;
         this.spriteManager = spriteManager;
     }
