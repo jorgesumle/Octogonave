@@ -16,11 +16,7 @@
  */
 package octogonave;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -34,7 +30,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 
 /**
@@ -239,31 +234,6 @@ public class Main extends Application {
     private static void startGameLoop() {
         GameLoop gameLoop = new GameLoop(octogonave, spriteManager);
         gameLoop.start();
-        
-        Timeline timeline = new Timeline();
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5000), (ActionEvent e) -> {
-            Sprite sprite;
-            byte randomNumber = (byte)(Math.random() * 3);
-            switch (randomNumber) {
-                case 0:
-                    sprite = new Diamond((Math.random() * (640 - 32 + 1) ), (Math.random() * (480 - 24 + 1)));
-                    break;
-                case 1:
-                    sprite = new Ruby((Math.random() * (640 - 32 + 1)), (Math.random() * (480 - 32 + 1)));
-                    break;
-                default:
-                    sprite = new YellowSapphire((Math.random() * (640 - 22 + 1)), (Math.random() * (480 - 21 + 1)));
-                    break;
-            }
-            Main.getRoot().getChildren().add(sprite.getSpriteFrame());
-            spriteManager.addToCurrentSprites(sprite);
-        }));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
-        
-        if(Configuration.isMusicOn()){
-            Sounds.playMusic();
-        }
     }
     
 }

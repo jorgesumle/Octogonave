@@ -17,7 +17,12 @@
 
 package octogonave;
 
+import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.util.Duration;
 
 /**
  * El bucle del juego. Hereda de la clase AnimationTimer, lo cual
@@ -27,10 +32,14 @@ import javafx.animation.AnimationTimer;
  */
 public class GameLoop extends AnimationTimer{
     private final Octogonave octogonave;
-    private SpriteManager spriteManager;
+    private final SpriteManager SPRITE_MANAGER;
     public GameLoop(Octogonave octogonave, SpriteManager spriteManager){
         this.octogonave = octogonave;
-        this.spriteManager = spriteManager;
+        this.SPRITE_MANAGER = spriteManager;
+        playTimeLine();
+        if(Configuration.isMusicOn()){
+            Sounds.playMusic();
+        }
     }
     /**
      * Este código se ejecuta cada fotograma mientras el AnimationTimer este
@@ -40,8 +49,8 @@ public class GameLoop extends AnimationTimer{
      */
     @Override
     public void handle(long now) {
-        octogonave.update();
-        spriteManager.getCURRENT_SPRITES().stream().forEach((sprite) -> {
+        octogonave.update(); 
+        SPRITE_MANAGER.getCURRENT_SPRITES().stream().forEach((sprite) -> {
             sprite.update();
         });
     }
@@ -60,5 +69,31 @@ public class GameLoop extends AnimationTimer{
     @Override
     public void stop(){
         super.stop();
+    }
+    
+    /**
+     * Empieza el TimeLine, que añade nuevos sprites al juego cada 5 segundos.
+     */
+    public void playTimeLine(){
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5000), (ActionEvent e) -> {
+            Sprite sprite;
+            byte randomNumber = (byte)(Math.random() * 3);
+            switch (randomNumber) {
+                case 0:
+                    sprite = new Diamond((Math.random() * (640 - 32 + 1) ), (Math.random() * (480 - 24 + 1)));
+                    break;
+                case 1:
+                    sprite = new Ruby((Math.random() * (640 - 32 + 1)), (Math.random() * (480 - 32 + 1)));
+                    break;
+                default:
+                    sprite = new YellowSapphire((Math.random() * (640 - 22 + 1)), (Math.random() * (480 - 21 + 1)));
+                    break;
+            }
+            Main.getRoot().getChildren().add(sprite.getSpriteFrame());
+            SPRITE_MANAGER.addToCurrentSprites(sprite);
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
     }
 }
