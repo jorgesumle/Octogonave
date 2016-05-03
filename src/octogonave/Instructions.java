@@ -22,12 +22,12 @@ public class Instructions {
         VBox instructionsMenu = new VBox();
         instructionsMenu.setAlignment(Pos.CENTER);
         
-        instructionsMenu.setSpacing(Octogonave.getPADDING());
+        instructionsMenu.setSpacing(Main.getPADDING());
     
         Text title = new Text("Instrucciones");
         title.getStyleClass().add("smallTitle");
         
-        Text gameTitle = new Text(Octogonave.getGAME_TITLE());
+        Text gameTitle = new Text(Main.getGAME_TITLE());
         gameTitle.setStyle("-fx-font-style: italic;");
         Text instructionsText = new Text(Configuration.getInstructionsText());
         
@@ -37,11 +37,11 @@ public class Instructions {
         Button back = new Button("Atrás");
         back.setOnAction(e ->
             {
-                Octogonave.getScene().setRoot(Octogonave.getMenuStackPane());
+                Main.getScene().setRoot(Main.getMenuStackPane());
             }
         );
         
         instructionsMenu.getChildren().addAll(title, instructions, back);
-        Octogonave.getScene().setRoot(instructionsMenu);
+        Main.getScene().setRoot(instructionsMenu);
     }
 }
