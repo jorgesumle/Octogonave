@@ -15,8 +15,9 @@
  * junto a este programa.  Si no es así, vea <http://www.gnu.org/licenses/>.
  */
 
-package octogonave;
+package gameMenus;
 
+import gameElements.Main;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;

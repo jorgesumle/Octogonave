@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package octogonave;
+package gameMenus;
 
+import gameElements.Main;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -22,7 +23,7 @@ public class Instructions {
         VBox instructionsMenu = new VBox();
         instructionsMenu.setAlignment(Pos.CENTER);
         
-        instructionsMenu.setSpacing(Main.getPADDING());
+        instructionsMenu.setSpacing(Main.getMainMenu().getPADDING());
     
         Text title = new Text("Instrucciones");
         title.getStyleClass().add("smallTitle");
@@ -37,7 +38,7 @@ public class Instructions {
         Button back = new Button("Atrás");
         back.setOnAction(e ->
             {
-                Main.getScene().setRoot(Main.getMenuStackPane());
+                Main.getScene().setRoot(Main.getMainMenu());
             }
         );
         

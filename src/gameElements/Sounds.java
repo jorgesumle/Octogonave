@@ -15,7 +15,7 @@
  * junto a este programa.  Si no es así, vea <http://www.gnu.org/licenses/>.
  */
 
-package octogonave;
+package gameElements;
 
 import java.io.File;
 import java.net.MalformedURLException;

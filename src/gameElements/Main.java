@@ -14,22 +14,19 @@
  * Usted debería haber recibido una copia de la Licencia Pública General GNU
  * junto a este programa.  Si no es así, vea <http://www.gnu.org/licenses/>.
  */
-package octogonave;
+package gameElements;
 
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import gameMenus.Configuration;
+import gameMenus.MainMenu;
 
 
 /**
@@ -38,49 +35,26 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
     private static final short HEIGHT = 480, WIDTH = 640;
-    private static final String GAME_TITLE = "Octogonave";
-    private static final byte PADDING = 10;
-    private static Button playButton, instructionsButton, configButton, creditsButton, exitButton;
     private static Bullet bullet, bullet2;
     private static Pane root;
     private static Octogonave octogonave;
     private static Scene scene;
     private static SpriteManager spriteManager;
-    private static StackPane menuStackPane;
+    private static MainMenu mainMenu;
     private static Score playScore;
+    private static final String GAME_TITLE = "Octogonave";
 
     public static String getGAME_TITLE() {
         return GAME_TITLE;
     }
     
-    public static Button getPlayButton() {
-        return playButton;
-    }
-
-    public static Button getInstructionsButton() {
-        return instructionsButton;
-    }
-
-    public static Button getConfigButton() {
-        return configButton;
-    }
-
-    public static Button getCreditsButton() {
-        return creditsButton;
-    }
-    
-    public static StackPane getMenuStackPane(){
-        return menuStackPane;
-    }
-    
-    public static Button getExitButton() {
-        return exitButton;
+    public static MainMenu getMainMenu(){
+        return mainMenu;
     }
     
     public static Scene getScene() {
         return scene;
     }
-
 
     public static Pane getRoot() {
         return root;
@@ -92,10 +66,6 @@ public class Main extends Application {
 
     public static Octogonave getOctogonave() {
         return octogonave;
-    }
-
-    public static byte getPADDING() {
-        return PADDING;
     }
 
     public static Score getPlayScore() {
@@ -117,19 +87,20 @@ public class Main extends Application {
         scene = new Scene(root, WIDTH, HEIGHT); 
         scene.getStylesheets().add(this.getClass().getResource("menus.css").toExternalForm());
         primaryStage.getIcons().add(new Image("/octogonaveStillOriginal.png"));
-        primaryStage.setTitle(GAME_TITLE);
+        primaryStage.setTitle("Octogonave");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
         
-        createMainMenu();
-        makeMainMenuInteract();
+        mainMenu = new gameMenus.MainMenu();   
+        scene.setRoot(mainMenu);
+        mainMenu.makeButtonsInteract();
     }
 
     /**
      * Crea los nodos (Nodes) utilizados en el juego.
      */
-    private void createNodes(){
+    public static void createNodes(){
         octogonave = new Octogonave(320, 240);
         bullet = new Bullet(WIDTH-9, HEIGHT-12);
         bullet2 = new Bullet(WIDTH-10, HEIGHT-13);
@@ -139,7 +110,7 @@ public class Main extends Application {
     /**
      * Añade los nodos (Nodes) al StackPane principal.
      */
-    private static void addNodes(){
+    public static void addNodes(){
          
         root.getChildren().addAll(playScore,
                                   octogonave.getSpriteFrame(),
@@ -158,80 +129,16 @@ public class Main extends Application {
         );
     }
     
-    private static void manageSprites(){
+    public static void manageSprites(){
         spriteManager = new SpriteManager();
         spriteManager.addToCurrentSprites(bullet, bullet2);
-    }
-
-    private static void createMainMenu() {
-        menuStackPane = new StackPane();
-       
-        Configuration.setLanguageText();
-        
-        VBox menuVBox = new VBox();
-        menuVBox.setSpacing(PADDING);
-        menuVBox.setAlignment(Pos.CENTER);
-        
-        Text title = new Text(GAME_TITLE);
-        title.setId("title");
-        
-        playButton = new Button(Configuration.getPlayButtonText());
-        playButton.getStyleClass().add("button");    
-        instructionsButton = new Button(Configuration.getInstructionsButtonText());
-        instructionsButton.getStyleClass().add("instructions");   
-        configButton = new Button(Configuration.getConfigButtonText());
-        configButton.getStyleClass().add("config");
-        creditsButton = new Button(Configuration.getCreditsButtonText());
-        creditsButton.getStyleClass().add("credits");
-        exitButton = new Button(Configuration.getExitButtonText());
-        exitButton.getStyleClass().add("exit");
-        
-        menuVBox.getChildren().addAll(title, playButton, instructionsButton, configButton, creditsButton, exitButton);
-        
-        scene.setRoot(menuStackPane);
-        menuStackPane.getChildren().add(menuVBox);
-        
-    }
-
-    private void makeMainMenuInteract() {
-        playButton.setOnAction(e -> 
-            {
-                scene.setRoot(root);
-                createNodes();
-                addNodes();
-                manageSprites();
-                startGameLoop();
-            }
-        );
-        instructionsButton.setOnAction(e -> 
-            {
-                root.getChildren().clear();
-                Instructions.displayInstructions();
-            }
-        );
-        configButton.setOnAction(e -> 
-            {
-                Configuration.configMenu();
-                Configuration.applyLanguageChange();
-            }
-        );
-        creditsButton.setOnAction(e -> 
-            {
-                
-            }
-        );
-        exitButton.setOnAction(e -> 
-            {
-                System.exit(0);
-            }
-        );
     }
     
     /**
      * Arranca el AnimationTimer, que ejecutará la lógica de acción y actualización
      * del juego, que se ejecutará en cada fotograma en condiciones idóneas.
      */
-    private static void startGameLoop() {
+    public static void startGameLoop() {
         GameLoop gameLoop = new GameLoop(octogonave, spriteManager);
         gameLoop.start();
     }

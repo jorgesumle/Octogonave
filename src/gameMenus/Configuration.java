@@ -14,8 +14,9 @@
  * Usted debería haber recibido una copia de la Licencia Pública General GNU
  * junto a este programa.  Si no es así, vea <http://www.gnu.org/licenses/>.
  */
-package octogonave;
+package gameMenus;
 
+import gameElements.Main;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -89,7 +90,7 @@ public class Configuration {
         return text.get(11);
     }
     
-    protected static void loadConfig() {
+    public static void loadConfig() {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = null;
         Document configXML = null;
@@ -117,9 +118,9 @@ public class Configuration {
         musicOn = musicValue.getTextContent().equals("on");
     }
     
-    protected static void configMenu() {
+    public static void configMenu() {
         configMenu = new GridPane();
-        configMenu.setVgap(Main.getPADDING());
+        configMenu.setVgap(Main.getMainMenu().getPADDING());
         configMenu.setHgap(10);
         configMenu.setAlignment(Pos.CENTER);
         Main.getScene().setRoot(configMenu);
@@ -134,7 +135,7 @@ public class Configuration {
         Button back = new Button("Atrás");
         back.setOnAction(e ->
             {
-                Main.getScene().setRoot(Main.getMenuStackPane());
+                Main.getScene().setRoot(Main.getMainMenu());
                 applyLanguageChange();
                 saveConfig();
             }
@@ -191,16 +192,16 @@ public class Configuration {
         }
     }
 
-    protected static void applyLanguageChange() {
+    public static void applyLanguageChange() {
         setLanguageText();
         
-        Main.getPlayButton().setText(playButtonText);
-        Main.getInstructionsButton().setText(instructionsButtonText);
-        Main.getConfigButton().setText(configButtonText);
-        Main.getCreditsButton().setText(creditsButtonText);
-        Main.getExitButton().setText(exitButtonText);
+        Main.getMainMenu().getPlayButton().setText(playButtonText);
+        Main.getMainMenu().getInstructionsButton().setText(instructionsButtonText);
+        Main.getMainMenu().getConfigButton().setText(configButtonText);
+        Main.getMainMenu().getCreditsButton().setText(creditsButtonText);
+        Main.getMainMenu().getExitButton().setText(exitButtonText);
     }
-    protected static void setLanguageText(){
+    public static void setLanguageText(){
         playButtonText = text.get(2);
         instructionsButtonText = text.get(3);
         configButtonText = text.get(4);

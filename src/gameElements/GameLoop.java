@@ -15,8 +15,9 @@
  * junto a este programa.  Si no es así, vea <http://www.gnu.org/licenses/>.
  */
 
-package octogonave;
+package gameElements;
 
+import gameMenus.Configuration;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
