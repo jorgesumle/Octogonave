@@ -50,7 +50,6 @@ public class Octogonave extends Application {
     private static final byte PADDING = 10;
     private static long score = 0;
     private static Button playButton, instructionsButton, configButton, creditsButton, exitButton;
-    private static Diamond diamond, diamond2, diamond3, diamond4, diamond5;
     private static Bullet bullet, bullet2;
     private static Pane root;
     private static PlayerSpacecraft octogonave;
@@ -173,11 +172,6 @@ public class Octogonave extends Application {
      */
     private void createNodes(){
         octogonave = new PlayerSpacecraft("M 53,30 L 53,30 64,30 65,31 65,38 67,39 72,34 74,34 81,42 81,44 76,49 78,51 85,51 86,52 86,63 85,64 78,64 77,65 77,66 76,67 81,72 81,74 74,81 72,81 65,76 66,77 64,77 64,85 63,86 52,86 51,85 51,78 49,76 44,81 42,81 35,74 35,72 40,67 39,66 39,64 31,64 30,63 30,52 31,51 38,51 40,49 35,44 35,42 42,34 44,34 49,40 50,39 52,39 52,31 Z", 320, 240, octoNaveStill, octoNaveMov1, octoNaveMov2, octoNaveMov3);
-        diamond = new Diamond("M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 200, 100, diamondImg1, diamondImg2);
-        diamond2 = new Diamond("M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 460, 10, diamondImg1, diamondImg2);
-        diamond3 = new Diamond("M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 219, 12, diamondImg1, diamondImg2);
-        diamond4 = new Diamond("M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 600, 470, diamondImg1, diamondImg2);
-        diamond5 = new Diamond("M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 323, 260, diamondImg1, diamondImg2);
         bullet = new Bullet("M 4,0 L 4,0 5,0 6,1 6,8 9,11 9,12 0,12 0,11 3,8 3,1 Z", WIDTH-9, HEIGHT-12, bulletImg);
         bullet2 = new Bullet("M 4,0 L 4,0 5,0 6,1 6,8 9,11 9,12 0,12 0,11 3,8 3,1 Z", WIDTH-10, HEIGHT-13, bulletImg);
         scoreText = new Text(Long.toString(score));
@@ -192,12 +186,7 @@ public class Octogonave extends Application {
     private static void addNodes(){
          
         root.getChildren().addAll(scoreText,
-                                  octogonave.getSpriteFrame(), 
-                                  diamond.getSpriteFrame(),
-                                  diamond2.getSpriteFrame(),
-                                  diamond3.getSpriteFrame(),
-                                  diamond4.getSpriteFrame(),
-                                  diamond5.getSpriteFrame(),
+                                  octogonave.getSpriteFrame(),
                                   bullet.getSpriteFrame(),
                                   bullet2.getSpriteFrame());
         root.setBackground(
@@ -214,7 +203,7 @@ public class Octogonave extends Application {
     }
     private static void manageSprites(){
         spriteManager = new SpriteManager();
-        spriteManager.addToCurrentSprites(diamond, diamond2, diamond3, diamond4, diamond5, bullet, bullet2);
+        spriteManager.addToCurrentSprites(bullet, bullet2);
     }
 
     /**

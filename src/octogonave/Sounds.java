@@ -34,7 +34,7 @@ import javafx.util.Duration;
 public class Sounds {
     private static final String GAME_MUSIC_PATH = "src/Stealth Groover.aiff";
     private static MediaPlayer gameMusicPlayer; //Si no esta declarado aquí el, recolector de basura de Java lo detiene en diez segundos.
-    private static final AudioClip bonusSound = new AudioClip(Sounds.class.getResource("/bonusSound.wav").toString());
+    private static final AudioClip BONUS_SOUND = new AudioClip(Sounds.class.getResource("/bonusSound.wav").toString());
     /**
      * Reproduce la música del juego una y otra vez.
      */
@@ -52,6 +52,6 @@ public class Sounds {
     }
     
     protected static void playBonusSound(){
-        bonusSound.play();
+        BONUS_SOUND.play();
     }
 }
