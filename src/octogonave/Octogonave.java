@@ -178,8 +178,8 @@ public class Octogonave extends Application {
         diamond3 = new Diamond("M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 219, 12, diamondImg1, diamondImg2);
         diamond4 = new Diamond("M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 600, 470, diamondImg1, diamondImg2);
         diamond5 = new Diamond("M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z", 323, 260, diamondImg1, diamondImg2);
-        bullet = new Bullet("M 4,0 L 4,0 5,0 6,1 6,8 10,12 10,13 0,13 0,12 3,8 3,1 4,1 Z", WIDTH-9, HEIGHT-12, bulletImg);
-        bullet2 = new Bullet("M 4,0 L 4,0 5,0 6,1 6,8 10,12 10,13 0,13 0,12 3,8 3,1 4,1 Z", WIDTH-10, HEIGHT-13, bulletImg);
+        bullet = new Bullet("M 4,0 L 4,0 5,0 6,1 6,8 9,11 9,12 0,12 0,11 3,8 3,1 Z", WIDTH-9, HEIGHT-12, bulletImg);
+        bullet2 = new Bullet("M 4,0 L 4,0 5,0 6,1 6,8 9,11 9,12 0,12 0,11 3,8 3,1 Z", WIDTH-10, HEIGHT-13, bulletImg);
         scoreText = new Text(Long.toString(score));
         scoreText.setTranslateX(550);
         scoreText.setTranslateY(30);

@@ -266,6 +266,7 @@ public class PlayerSpacecraft extends Sprite{
         } else if(sprite instanceof YellowSapphire){
             Octogonave.setScore(Octogonave.getScore() + 1);
         }
+        Sounds.playBonusSound();
         Octogonave.updateScoreText();
     }
     

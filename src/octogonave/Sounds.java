@@ -17,7 +17,11 @@
 
 package octogonave;
 
-import java.nio.file.Paths;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -28,13 +32,18 @@ import javafx.util.Duration;
  * @author Jorge Maldonado Ventura 
  */
 public class Sounds {
-    private static final String GAME_MUSIC_URL = "Stealth Groover.aiff";
+    private static final String GAME_MUSIC_PATH = "src/Stealth Groover.aiff";
     private static MediaPlayer gameMusicPlayer; //Si no esta declarado aquí el, recolector de basura de Java lo detiene en diez segundos.
+    private static final AudioClip bonusSound = new AudioClip(Sounds.class.getResource("/bonusSound.wav").toString());
     /**
      * Reproduce la música del juego una y otra vez.
      */
     protected static void playMusic(){
-        gameMusicPlayer = new MediaPlayer(new Media(Paths.get("src/"+GAME_MUSIC_URL).toUri().toString()));
+        try {
+            gameMusicPlayer = new MediaPlayer(new Media(new File(GAME_MUSIC_PATH).toURI().toURL().toString()));
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(Sounds.class.getName()).log(Level.SEVERE, null, ex);
+        }
         gameMusicPlayer.setOnEndOfMedia(() -> {
             gameMusicPlayer.seek(Duration.ZERO);
             gameMusicPlayer.play();
@@ -42,4 +51,7 @@ public class Sounds {
         gameMusicPlayer.play();
     }
     
+    protected static void playBonusSound(){
+        bonusSound.play();
+    }
 }
