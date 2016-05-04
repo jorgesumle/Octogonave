@@ -18,6 +18,7 @@
 package gameElements;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
@@ -224,15 +225,15 @@ public class Octogonave extends Sprite{
         }
         
         try{
-            for(Sprite sprite: Main.getSpriteManager().getCURRENT_SPRITES()){            
+            for(Sprite sprite: Main.getMainMenu().getGame().getSpriteManager().getCURRENT_SPRITES()){            
                 if(collide(sprite)){
-                    Main.getSpriteManager().removeFromCurrentSprites(sprite);
+                    Main.getMainMenu().getGame().getSpriteManager().removeFromCurrentSprites(sprite);
                     updateScore(sprite);
                     Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
                 }
             }
-        } catch(Exception e){
-            //Este es un fallo no controlado correctamente, arréglalo luego.
+        } catch(Exception e){//Posible solución -> CopyOnWriteArrayList
+            //Esto no debería estar: es una solución sucia. //e.printStackTrace();
         }
     }
     
@@ -276,7 +277,7 @@ public class Octogonave extends Sprite{
      * @param sprite el objeto que recoge la nave.
      */
     private void updateScore(Sprite sprite) {
-        Score playScore = Main.getPlayScore();
+        Score playScore = Main.getMainMenu().getGame().getPlayScore();
         if(sprite instanceof Diamond){
             playScore.increaseScore(3);
         } else if(sprite instanceof Ruby){

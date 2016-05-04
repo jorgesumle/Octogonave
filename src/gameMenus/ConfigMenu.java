@@ -199,11 +199,11 @@ public class ConfigMenu {
     public static void applyLanguageChange() {
         setLanguageText();
         
-        Main.getMainMenu().getPLAYBUTTON().setText(playButtonText);
-        Main.getMainMenu().getINSTRUCTIONSBUTTON().setText(instructionsButtonText);
-        Main.getMainMenu().getCONFIGBUTTON().setText(configButtonText);
-        Main.getMainMenu().getCREDITSBUTTON().setText(creditsButtonText);
-        Main.getMainMenu().getEXITBUTTON().setText(exitButtonText);
+        Main.getMainMenu().getPLAY_BUTTON().setText(playButtonText);
+        Main.getMainMenu().getINSTRUCTIONS_BUTTON().setText(instructionsButtonText);
+        Main.getMainMenu().getCONFIG_BUTTON().setText(configButtonText);
+        Main.getMainMenu().getCREDITS_BUTTON().setText(creditsButtonText);
+        Main.getMainMenu().getEXIT_BUTTON().setText(exitButtonText);
     }
     public static void setLanguageText(){
         playButtonText = text.get(2);

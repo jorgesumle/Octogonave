@@ -34,7 +34,7 @@ public class Bullet extends Sprite{
     @Override
     public void update() {
         if(boundsLimitOrOutY() || boundsLimitOrOutX()){
-            Main.getSpriteManager().removeFromCurrentSprites(this);
+            Main.getMainMenu().getGame().getSpriteManager().removeFromCurrentSprites(this);
             Main.getRoot().getChildren().remove(getSpriteFrame());
         }
     }

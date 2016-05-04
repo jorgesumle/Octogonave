@@ -17,6 +17,7 @@
 
 package gameMenus;
 
+import gameElements.Game;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
@@ -30,14 +31,15 @@ import gameElements.Main;
  */
 public class MainMenu extends StackPane{
     
-    private final byte PADDING = 10;
+    private final byte PADDING;
     private final Button PLAY_BUTTON, INSTRUCTIONS_BUTTON, CONFIG_BUTTON, CREDITS_BUTTON, EXIT_BUTTON;
-    
+    private Game game;
     
     public MainMenu(){
         ConfigMenu.setLanguageText();
         
         VBox menuVBox = new VBox();
+        PADDING = 10;
         menuVBox.setSpacing(PADDING);
         menuVBox.setAlignment(Pos.CENTER);
         
@@ -59,27 +61,31 @@ public class MainMenu extends StackPane{
         getChildren().add(menuVBox);
     }
 
+    public Game getGame() {
+        return game;
+    }
+    
     public byte getPADDING() {
         return PADDING;
     }
 
-    public Button getPLAYBUTTON() {
+    public Button getPLAY_BUTTON() {
         return PLAY_BUTTON;
     }
 
-    public Button getINSTRUCTIONSBUTTON() {
+    public Button getINSTRUCTIONS_BUTTON() {
         return INSTRUCTIONS_BUTTON;
     }
 
-    public Button getCONFIGBUTTON() {
+    public Button getCONFIG_BUTTON() {
         return CONFIG_BUTTON;
     }
 
-    public Button getCREDITSBUTTON() {
+    public Button getCREDITS_BUTTON() {
         return CREDITS_BUTTON;
     }
 
-    public Button getEXITBUTTON() {
+    public Button getEXIT_BUTTON() {
         return EXIT_BUTTON;
     }
     
@@ -87,10 +93,7 @@ public class MainMenu extends StackPane{
         PLAY_BUTTON.setOnAction(e -> 
             {
                 Main.getScene().setRoot(Main.getRoot());
-                Main.createNodes();
-                Main.addNodes();
-                Main.manageSprites();
-                Main.startGameLoop();
+                game = new Game();
             }
         );
         INSTRUCTIONS_BUTTON.setOnAction(e -> 

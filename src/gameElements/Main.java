@@ -35,13 +35,9 @@ import gameMenus.MainMenu;
  */
 public class Main extends Application {
     private static final short HEIGHT = 480, WIDTH = 640;
-    private static Bullet bullet, bullet2;
     private static Pane root;
-    private static Octogonave octogonave;
     private static Scene scene;
-    private static SpriteManager spriteManager;
     private static MainMenu mainMenu;
-    private static Score playScore;
     private static final String GAME_TITLE = "Octogonave";
 
     public static String getGAME_TITLE() {
@@ -60,16 +56,12 @@ public class Main extends Application {
         return root;
     }
 
-    public static SpriteManager getSpriteManager() {
-        return spriteManager;
+    public static short getHEIGHT() {
+        return HEIGHT;
     }
 
-    public static Octogonave getOctogonave() {
-        return octogonave;
-    }
-
-    public static Score getPlayScore() {
-        return playScore;
+    public static short getWIDTH() {
+        return WIDTH;
     }
     
     public static void main(String[] args) {
@@ -95,52 +87,6 @@ public class Main extends Application {
         mainMenu = new gameMenus.MainMenu();   
         scene.setRoot(mainMenu);
         mainMenu.makeButtonsInteract();
-    }
-
-    /**
-     * Crea los nodos (Nodes) utilizados en el juego.
-     */
-    public static void createNodes(){
-        octogonave = new Octogonave(320, 240);
-        bullet = new Bullet(WIDTH-9, HEIGHT-12);
-        bullet2 = new Bullet(WIDTH-10, HEIGHT-13);
-        playScore = new Score(550, 30);
-        
-    }
-    /**
-     * Añade los nodos (Nodes) al StackPane principal.
-     */
-    public static void addNodes(){
-         
-        root.getChildren().addAll(playScore,
-                                  octogonave.getSpriteFrame(),
-                                  bullet.getSpriteFrame(),
-                                  bullet2.getSpriteFrame());
-        root.setBackground(
-            new javafx.scene.layout.Background(
-                    new BackgroundImage(                             
-                            new Image("/spaceBackgroundInvSmall.jpg", 640, 480, true, false, true), 
-                            BackgroundRepeat.NO_REPEAT, 
-                            BackgroundRepeat.NO_REPEAT, 
-                            BackgroundPosition.CENTER, 
-                            new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, false, true)
-                    )
-            )
-        );
-    }
-    
-    public static void manageSprites(){
-        spriteManager = new SpriteManager();
-        spriteManager.addToCurrentSprites(bullet, bullet2);
-    }
-    
-    /**
-     * Arranca el AnimationTimer, que ejecutará la lógica de acción y actualización
-     * del juego, que se ejecutará en cada fotograma en condiciones idóneas.
-     */
-    public static void startGameLoop() {
-        GameLoop gameLoop = new GameLoop(octogonave, spriteManager);
-        gameLoop.start();
     }
     
 }
