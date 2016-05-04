@@ -49,7 +49,7 @@ import org.xml.sax.SAXException;
  *
  * @author Jorge Maldonado Ventura
  */
-public class Configuration {
+public class ConfigMenu {
     private static final File SETTINGS_FILE = new File("settings.xml");
     private static ArrayList<String> text;
     private static String playButtonText, instructionsButtonText, configButtonText, creditsButtonText, 
@@ -88,6 +88,10 @@ public class Configuration {
     
     public static String getInstructionsText(){
         return text.get(11);
+    }
+    
+    public static String getBackButtonText(){
+        return text.get(12);
     }
     
     public static void loadConfig() {
@@ -132,7 +136,7 @@ public class Configuration {
         languageConfigNodes();  
         musicConfigNodes();
         
-        Button back = new Button("Atrás");
+        Button back = new Button(getBackButtonText());
         back.setOnAction(e ->
             {
                 Main.getScene().setRoot(Main.getMainMenu());
@@ -195,11 +199,11 @@ public class Configuration {
     public static void applyLanguageChange() {
         setLanguageText();
         
-        Main.getMainMenu().getPlayButton().setText(playButtonText);
-        Main.getMainMenu().getInstructionsButton().setText(instructionsButtonText);
-        Main.getMainMenu().getConfigButton().setText(configButtonText);
-        Main.getMainMenu().getCreditsButton().setText(creditsButtonText);
-        Main.getMainMenu().getExitButton().setText(exitButtonText);
+        Main.getMainMenu().getPLAYBUTTON().setText(playButtonText);
+        Main.getMainMenu().getINSTRUCTIONSBUTTON().setText(instructionsButtonText);
+        Main.getMainMenu().getCONFIGBUTTON().setText(configButtonText);
+        Main.getMainMenu().getCREDITSBUTTON().setText(creditsButtonText);
+        Main.getMainMenu().getEXITBUTTON().setText(exitButtonText);
     }
     public static void setLanguageText(){
         playButtonText = text.get(2);

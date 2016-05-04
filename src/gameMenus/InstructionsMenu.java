@@ -17,32 +17,29 @@ import javafx.scene.text.TextFlow;
  *
  * @author Jorge Maldonado Ventura
  */
-public class Instructions {
+public class InstructionsMenu extends VBox{
     
-    public static void displayInstructions() {
-        VBox instructionsMenu = new VBox();
-        instructionsMenu.setAlignment(Pos.CENTER);
+    public InstructionsMenu(){
+        setAlignment(Pos.CENTER);
+        setSpacing(Main.getMainMenu().getPADDING());
         
-        instructionsMenu.setSpacing(Main.getMainMenu().getPADDING());
-    
-        Text title = new Text("Instrucciones");
+        Text title = new Text(ConfigMenu.getInstructionsButtonText());
         title.getStyleClass().add("smallTitle");
         
         Text gameTitle = new Text(Main.getGAME_TITLE());
         gameTitle.setStyle("-fx-font-style: italic;");
-        Text instructionsText = new Text(Configuration.getInstructionsText());
+        Text instructionsText = new Text(ConfigMenu.getInstructionsText());
         
         TextFlow instructions = new TextFlow(gameTitle, instructionsText);
-        instructionsMenu.setMargin(instructions, new Insets(6));
+        setMargin(instructions, new Insets(6));
         
-        Button back = new Button("Atrás");
+        Button back = new Button(ConfigMenu.getBackButtonText());
         back.setOnAction(e ->
             {
                 Main.getScene().setRoot(Main.getMainMenu());
             }
         );
-        
-        instructionsMenu.getChildren().addAll(title, instructions, back);
-        Main.getScene().setRoot(instructionsMenu);
+        getChildren().addAll(title, instructions, back);
     }
+    
 }

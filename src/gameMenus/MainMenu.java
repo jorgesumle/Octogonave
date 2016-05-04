@@ -31,11 +31,11 @@ import gameElements.Main;
 public class MainMenu extends StackPane{
     
     private final byte PADDING = 10;
-    private Button playButton, instructionsButton, configButton, creditsButton, exitButton;
+    private final Button PLAY_BUTTON, INSTRUCTIONS_BUTTON, CONFIG_BUTTON, CREDITS_BUTTON, EXIT_BUTTON;
     
     
     public MainMenu(){
-        Configuration.setLanguageText();
+        ConfigMenu.setLanguageText();
         
         VBox menuVBox = new VBox();
         menuVBox.setSpacing(PADDING);
@@ -44,18 +44,18 @@ public class MainMenu extends StackPane{
         Text title = new Text(Main.getGAME_TITLE());
         title.setId("title");
         
-        playButton = new Button(Configuration.getPlayButtonText());
-        playButton.getStyleClass().add("button");    
-        instructionsButton = new Button(Configuration.getInstructionsButtonText());
-        instructionsButton.getStyleClass().add("instructions");   
-        configButton = new Button(Configuration.getConfigButtonText());
-        configButton.getStyleClass().add("config");
-        creditsButton = new Button(Configuration.getCreditsButtonText());
-        creditsButton.getStyleClass().add("credits");
-        exitButton = new Button(Configuration.getExitButtonText());
-        exitButton.getStyleClass().add("exit");
+        PLAY_BUTTON = new Button(ConfigMenu.getPlayButtonText());
+        PLAY_BUTTON.getStyleClass().add("button");    
+        INSTRUCTIONS_BUTTON = new Button(ConfigMenu.getInstructionsButtonText());
+        INSTRUCTIONS_BUTTON.getStyleClass().add("instructions");   
+        CONFIG_BUTTON = new Button(ConfigMenu.getConfigButtonText());
+        CONFIG_BUTTON.getStyleClass().add("config");
+        CREDITS_BUTTON = new Button(ConfigMenu.getCreditsButtonText());
+        CREDITS_BUTTON.getStyleClass().add("credits");
+        EXIT_BUTTON = new Button(ConfigMenu.getExitButtonText());
+        EXIT_BUTTON.getStyleClass().add("exit");
         
-        menuVBox.getChildren().addAll(title, playButton, instructionsButton, configButton, creditsButton, exitButton);
+        menuVBox.getChildren().addAll(title, PLAY_BUTTON, INSTRUCTIONS_BUTTON, CONFIG_BUTTON, CREDITS_BUTTON, EXIT_BUTTON);
         getChildren().add(menuVBox);
     }
 
@@ -63,28 +63,28 @@ public class MainMenu extends StackPane{
         return PADDING;
     }
 
-    public Button getPlayButton() {
-        return playButton;
+    public Button getPLAYBUTTON() {
+        return PLAY_BUTTON;
     }
 
-    public Button getInstructionsButton() {
-        return instructionsButton;
+    public Button getINSTRUCTIONSBUTTON() {
+        return INSTRUCTIONS_BUTTON;
     }
 
-    public Button getConfigButton() {
-        return configButton;
+    public Button getCONFIGBUTTON() {
+        return CONFIG_BUTTON;
     }
 
-    public Button getCreditsButton() {
-        return creditsButton;
+    public Button getCREDITSBUTTON() {
+        return CREDITS_BUTTON;
     }
 
-    public Button getExitButton() {
-        return exitButton;
+    public Button getEXITBUTTON() {
+        return EXIT_BUTTON;
     }
     
     public void makeButtonsInteract(){
-        playButton.setOnAction(e -> 
+        PLAY_BUTTON.setOnAction(e -> 
             {
                 Main.getScene().setRoot(Main.getRoot());
                 Main.createNodes();
@@ -93,24 +93,25 @@ public class MainMenu extends StackPane{
                 Main.startGameLoop();
             }
         );
-        instructionsButton.setOnAction(e -> 
+        INSTRUCTIONS_BUTTON.setOnAction(e -> 
             {
+                InstructionsMenu instructionsMenu = new InstructionsMenu();
                 Main.getRoot().getChildren().clear();
-                Instructions.displayInstructions();
+                Main.getScene().setRoot(instructionsMenu);
             }
         );
-        configButton.setOnAction(e -> 
+        CONFIG_BUTTON.setOnAction(e -> 
             {
-                Configuration.configMenu();
-                Configuration.applyLanguageChange();
+                ConfigMenu.configMenu();
+                ConfigMenu.applyLanguageChange();
             }
         );
-        creditsButton.setOnAction(e -> 
+        CREDITS_BUTTON.setOnAction(e -> 
             {
                 
             }
         );
-        exitButton.setOnAction(e -> 
+        EXIT_BUTTON.setOnAction(e -> 
             {
                 System.exit(0);
             }

@@ -25,7 +25,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import gameMenus.Configuration;
+import gameMenus.ConfigMenu;
 import gameMenus.MainMenu;
 
 
@@ -79,7 +79,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         
-        Configuration.loadConfig();
+        ConfigMenu.loadConfig();
         root = new Pane();
         root.prefHeight(HEIGHT);
         root.prefWidth(WIDTH);
