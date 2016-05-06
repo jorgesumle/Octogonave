@@ -26,7 +26,7 @@ import javafx.scene.text.Text;
 import gameElements.Main;
 
 /**
- *
+ * El menú que aparece al arrancar el programa.
  * @author Jorge Maldonado Ventura
  */
 public class MainMenu extends StackPane{

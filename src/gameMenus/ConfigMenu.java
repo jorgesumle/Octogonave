@@ -46,7 +46,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
- *
+ * El menú que permite modificar las configuración del juego.
  * @author Jorge Maldonado Ventura
  */
 public class ConfigMenu {

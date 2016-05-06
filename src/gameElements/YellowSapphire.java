@@ -8,7 +8,7 @@ package gameElements;
 import javafx.scene.image.Image;
 
 /**
- *
+ * Un zafiro amarillo.
  * @author Jorge Maldonado Ventura
  */
 public class YellowSapphire extends StaticSprite{

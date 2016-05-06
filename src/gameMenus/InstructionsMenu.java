@@ -14,7 +14,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 /**
- *
+ * La pantalla que muestra las instrucciones del juego.
  * @author Jorge Maldonado Ventura
  */
 public class InstructionsMenu extends VBox{

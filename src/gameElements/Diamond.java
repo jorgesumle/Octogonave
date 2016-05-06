@@ -20,7 +20,7 @@ package gameElements;
 import javafx.scene.image.Image;
 
 /**
- *
+ * Un diamante que muestra una animación.
  * @author Jorge Maldonado Ventura 
  */
 public class Diamond extends Sprite{

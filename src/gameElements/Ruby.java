@@ -20,7 +20,7 @@ package gameElements;
 import javafx.scene.image.Image;
 
 /**
- *
+ * Un rubí.
  * @author Jorge Maldonado Ventura 
  */
 public class Ruby extends StaticSprite{

@@ -24,7 +24,8 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 
 /**
- *
+ * Representa una partida, lleva asociado el controlador de los <i>sprites</i>, la Octogonave y la
+ * puntuación.
  * @author Jorge Maldonado Ventura
  */
 public class Game {

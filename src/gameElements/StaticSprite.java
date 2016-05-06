@@ -19,7 +19,8 @@ package gameElements;
 import javafx.scene.image.Image;
 
 /**
- *
+ * Un <i>sprite</i> que no tiene animación, es decir, siempre muestra el mismo
+ * fotograma.
  * @author Jorge Maldonado Ventura
  */
 public class StaticSprite extends Sprite{
