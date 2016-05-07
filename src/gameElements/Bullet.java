@@ -61,7 +61,7 @@ public class Bullet extends Sprite{
         setXAndYPosition();
         move();
         if(boundsLimitOrOutY() || boundsLimitOrOutX()){
-            Main.getMainMenu().getGame().getSpriteManager().removeFromCurrentSprites(this);
+            Main.getMainMenu().getGame().getGameLoop().addToSpritesToRemove(this);
             Main.getRoot().getChildren().remove(getSpriteFrame());
         }
     }
