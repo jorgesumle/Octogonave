@@ -18,7 +18,6 @@
 package gameElements;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
@@ -39,12 +38,10 @@ public class Octogonave extends Sprite{
             OCTO_NAVE_MOV_HURT_1 = new Image("/octogonaveMovingFireHurt1.png", 117, 117, true, false, true),
             OCTO_NAVE_MOV_HURT_2 = new Image("octogonaveMovingFireHurt2.png", 117, 117, true, false, true),
             OCTO_NAVE_MOV_HURT_3 = new Image("octogonaveMovingFireHurt3.png", 117, 117, true, false, true);
-    private boolean up;
-    private boolean right;
-    private boolean down;
-    private boolean left;
+    private boolean up, right, down, left, fireUp, fireRight, fireLeft, fireDown;
+    private final byte RELOAD_RATE = 6;
     private double velocity;
-    private byte currentFrame;
+    private byte currentFrame, reloadCounter;
     /**
      * Esta constante influye en la velocidad en la que se produce un cambio de fotograma de la nave, se le resta
      * posteriormente la velocidad para que a más velocidad mayor sea el cambio.
@@ -54,16 +51,17 @@ public class Octogonave extends Sprite{
     /**
      * Posición del <i>sprite</i> en el eje X. 
      */
-    protected double xPos;
+    private double xPos;
     /**
      * Posición del <i>sprite</i> en el eje Y.
      */
-    protected double yPos;
+    private double yPos;
     private byte lives;
     
     public Octogonave(double xLocation, double yLocation) {
         super(SVG_PATH, xLocation, yLocation, OCTO_NAVE_STILL, OCTO_NAVE_MOV_1, OCTO_NAVE_MOV_2, OCTO_NAVE_MOV_3);
         currentFrame = 1;
+        reloadCounter = 6;
         velocity = 5;
         frameChangeRate = 10;
         xPos = xLocation;
@@ -75,9 +73,10 @@ public class Octogonave extends Sprite{
     public void update() {
         determineKeyPressed();
         determineKeyReleased();
+        shoot();
         determineFrame();
         setXAndYPosition();
-        moveSpaceCraft();
+        move();
         checkCollision();
     }
     private void determineKeyPressed(){
@@ -95,6 +94,18 @@ public class Octogonave extends Sprite{
                         break;
                     case LEFT:
                         left = true;
+                        break;
+                    case W:
+                        fireUp = true;
+                        break;
+                    case D:
+                        fireRight = true;
+                        break;
+                    case S:
+                        fireDown = true;
+                        break;
+                    case A:
+                        fireLeft = true;
                         break;
                     case Z:
                         decreaseSpeed(1);
@@ -121,6 +132,18 @@ public class Octogonave extends Sprite{
                         break;
                     case LEFT:
                         left = false;
+                        break;
+                    case W:
+                        fireUp = false;
+                        break;
+                    case D:
+                        fireRight = false;
+                        break;
+                    case S:
+                        fireDown = false;
+                        break;
+                    case A:
+                        fireLeft = false;
                         break;
                 }
             }
@@ -185,7 +208,7 @@ public class Octogonave extends Sprite{
     /**
      * Mueve la nave, es decir, su spriteFrame y spriteBound.
      */
-    private void moveSpaceCraft() {
+    private void move() {
         spriteFrame.setTranslateX(xPos);
         spriteFrame.setTranslateY(yPos);
         spriteBound.setTranslateX(xPos);
@@ -224,16 +247,13 @@ public class Octogonave extends Sprite{
             velocity = 0.01;
         }
         
-        try{
-            for(Sprite sprite: Main.getMainMenu().getGame().getSpriteManager().getCURRENT_SPRITES()){            
-                if(collide(sprite)){
-                    Main.getMainMenu().getGame().getSpriteManager().removeFromCurrentSprites(sprite);
-                    updateScore(sprite);
-                    Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
-                }
+
+        for(Sprite sprite: Main.getMainMenu().getGame().getSpriteManager().getCURRENT_SPRITES()){            
+            if(collide(sprite)){
+                Main.getMainMenu().getGame().getGameLoop().addToSpritesToRemove(sprite);
+                updateScore(sprite);
+                Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
             }
-        } catch(Exception e){//Posible solución -> CopyOnWriteArrayList
-            //Esto no debería estar: es una solución sucia. //e.printStackTrace();
         }
     }
     
@@ -299,6 +319,32 @@ public class Octogonave extends Sprite{
     }
     private boolean boundsLimitOrOutY(){
         return yPos <= 0 - 30 || yPos >= Main.getScene().getHeight() - 87;
+    }
+
+    private void shoot() {
+        reloadCounter++;
+        if(reloadCounter >= RELOAD_RATE){
+            if(fireUp || fireLeft || fireDown || fireRight){
+                reloadCounter = 0;
+                Bullet bullet = new Bullet(xPos, yPos + 58.5 + 6.5);
+                if(fireUp){
+                    bullet.setVerticalVelocity(-1);
+                } else if(fireLeft){
+                    bullet.setHorizontalVelocity(-1);
+                    bullet.getSpriteFrame().setRotate(-90);
+                } else if(fireDown){
+                    bullet.setVerticalVelocity(1);
+                    bullet.getSpriteFrame().setRotate(180);
+                } else if(fireRight){
+                    bullet.setHorizontalVelocity(1);
+                    bullet.getSpriteFrame().setRotate(90);
+                }
+                Main.getMainMenu().getGame().getGameLoop().addToSpritesToAdd(bullet);
+                Main.getRoot().getChildren().add(bullet.getSpriteFrame());
+            } else{
+                reloadCounter--; //Para que no se pueda desbordar nunca la variable.
+            }
+        }
     }
 
 }

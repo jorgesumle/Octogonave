@@ -27,10 +27,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Se encarga de la lectura de archivos
+ * Se encarga de la lectura de los archivos de idiomas.
  * @author Jorge Maldonado Ventura 
  */
 public class LanguageFileReader {
+    
     public static ArrayList<String> readLanguageFile(String path){
         BufferedReader br = null;
         ArrayList<String> text = null;
@@ -48,6 +49,7 @@ public class LanguageFileReader {
             }
         return text;
     }
+    
     public static ArrayList<String> storeFileContentIntoList(BufferedReader br){
         String line;
         

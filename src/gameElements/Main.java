@@ -19,10 +19,6 @@ package gameElements;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import gameMenus.ConfigMenu;
@@ -78,7 +74,7 @@ public class Main extends Application {
         
         scene = new Scene(root, WIDTH, HEIGHT); 
         scene.getStylesheets().add(this.getClass().getResource("menus.css").toExternalForm());
-        primaryStage.getIcons().add(new Image("/octogonaveStillOriginal.png"));
+        primaryStage.getIcons().add(new Image("octogonaveStillOriginal.png"));
         primaryStage.setTitle("Octogonave");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
@@ -87,6 +83,7 @@ public class Main extends Application {
         mainMenu = new gameMenus.MainMenu();   
         scene.setRoot(mainMenu);
         mainMenu.makeButtonsInteract();
+    
     }
     
 }

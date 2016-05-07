@@ -18,6 +18,8 @@
 package gameElements;
 
 import gameMenus.ConfigMenu;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
@@ -34,14 +36,27 @@ import javafx.util.Duration;
 public class GameLoop extends AnimationTimer{
     private final Octogonave octogonave;
     private final SpriteManager SPRITE_MANAGER;
+    private ArrayList<Sprite> spritesToRemove;
+    private ArrayList<Sprite> spritesToAdd;
     public GameLoop(Octogonave octogonave, SpriteManager spriteManager){
         this.octogonave = octogonave;
         this.SPRITE_MANAGER = spriteManager;
+        spritesToRemove = new ArrayList();
+        spritesToAdd = new ArrayList();
         playTimeLine();
         if(ConfigMenu.isMusicOn()){
             Sounds.playMusic();
         }
     }
+    
+    protected void addToSpritesToRemove(Sprite sprite){
+        spritesToRemove.add(sprite);
+    }
+    
+    protected void addToSpritesToAdd(Sprite sprite){
+        spritesToAdd.add(sprite);
+    }
+    
     /**
      * Este código se ejecuta cada fotograma mientras el AnimationTimer este
      * activo.
@@ -54,6 +69,9 @@ public class GameLoop extends AnimationTimer{
         SPRITE_MANAGER.getCURRENT_SPRITES().stream().forEach((sprite) -> {
             sprite.update();
         });
+        SPRITE_MANAGER.removeFromCurrentSprites(spritesToRemove.stream().toArray(Sprite[]::new));
+        SPRITE_MANAGER.addToCurrentSprites(spritesToAdd.stream().toArray(Sprite[]::new));
+        spritesToRemove.clear();
     }
     /**
      * Empieza el AnimationTimer. Una vez empezado, el método handle(long) de 

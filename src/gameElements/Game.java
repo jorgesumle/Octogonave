@@ -30,16 +30,20 @@ import javafx.scene.layout.BackgroundSize;
  */
 public class Game {
     
-    private Bullet bullet, bullet2;
     private Octogonave octogonave;
     private SpriteManager spriteManager;
     private Score playScore;
+    private GameLoop gameLoop;
     
     public Game(){
         createNodes();
         addNodes();
         manageSprites();
         startGameLoop();
+    }
+
+    public GameLoop getGameLoop() {
+        return gameLoop;
     }
     
     public Octogonave getOctogonave() {
@@ -59,8 +63,6 @@ public class Game {
      */
     private void createNodes() {
         octogonave = new Octogonave(320, 240);
-        bullet = new Bullet(Main.getWIDTH() - 9, Main.getHEIGHT()  - 12);
-        bullet2 = new Bullet(Main.getWIDTH() - 10, Main.getHEIGHT() - 13);
         playScore = new Score(550, 30);
     }
     
@@ -68,7 +70,7 @@ public class Game {
      * Añade los nodos (Nodes) al Pane principal.
      */
     public void addNodes() {
-        Main.getRoot().getChildren().addAll(playScore, octogonave.getSpriteFrame(), bullet.getSpriteFrame(), bullet2.getSpriteFrame());
+        Main.getRoot().getChildren().addAll(playScore, octogonave.getSpriteFrame());
         Main.getRoot().setBackground(
                 new Background(
                         new BackgroundImage(
@@ -81,7 +83,6 @@ public class Game {
     
     private void manageSprites() {
         spriteManager = new SpriteManager();
-        spriteManager.addToCurrentSprites(bullet, bullet2);
     }
     
     /**
@@ -89,7 +90,7 @@ public class Game {
      * del juego, que se ejecutará en cada fotograma en condiciones idóneas.
      */
     private void startGameLoop() {
-        GameLoop gameLoop = new GameLoop(octogonave, spriteManager);
+        gameLoop = new GameLoop(octogonave, spriteManager);
         gameLoop.start();
     }    
     
