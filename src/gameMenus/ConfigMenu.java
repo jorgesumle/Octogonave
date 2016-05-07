@@ -55,8 +55,12 @@ public class ConfigMenu {
     private static String playButtonText, instructionsButtonText, configButtonText, creditsButtonText, 
             exitButtonText, languageLabelText;
     public static String selectedLanguage;
-    private static boolean musicOn;
+    private static boolean musicOn, soundsOn;
     private static GridPane configMenu;
+
+    public static boolean areSoundsOn() {
+        return soundsOn;
+    }
 
     public static boolean isMusicOn() {
         return musicOn;
@@ -120,6 +124,9 @@ public class ConfigMenu {
         NodeList musicTag = configXML.getElementsByTagName("music");
         Node musicValue = musicTag.item(0);
         musicOn = musicValue.getTextContent().equals("on");
+        NodeList soundsTag = configXML.getElementsByTagName("sounds");
+        Node soundsValue = soundsTag.item(0);
+        soundsOn = soundsValue.getTextContent().equals("on");
     }
     
     public static void configMenu() {
@@ -135,6 +142,7 @@ public class ConfigMenu {
         
         languageConfigNodes();  
         musicConfigNodes();
+        soundConfigNodes();
         
         Button back = new Button(getBackButtonText());
         back.setOnAction(e ->
@@ -144,7 +152,7 @@ public class ConfigMenu {
                 saveConfig();
             }
         );
-        configMenu.add(back, 0, 3, 2, 1);
+        configMenu.add(back, 0, 4, 2, 1);
     }
     private static void saveConfig(){
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -174,9 +182,16 @@ public class ConfigMenu {
         } else{
             music.appendChild(configXML.createTextNode("off"));
         }
+        Element sounds = (Element) configXML.createElement("sounds");
+        if(soundsOn){
+            sounds.appendChild(configXML.createTextNode("on"));
+        } else{
+            sounds.appendChild(configXML.createTextNode("off"));
+        }
         
         root.appendChild(language);
         root.appendChild(music);
+        root.appendChild(sounds);
         configXML.appendChild(root);
         
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -284,5 +299,32 @@ public class ConfigMenu {
         );
         configMenu.add(musicLabel, 0, 2);
         configMenu.add(musicButton, 1, 2);
+    }
+    
+    /**
+     * Se encarga de la creación del Label y Button relacionados con la
+     * configuración del sonido dentro del menú de configuración del juego.
+     */
+    private static void soundConfigNodes(){
+        Label musicLabel = new Label(text.get(13));
+        Button soundButton;
+        if(soundsOn){
+            soundButton = new Button(text.get(14));
+        } else{
+            soundButton = new Button(text.get(15));
+        }
+        soundButton.setOnAction(e -> 
+            {
+                if(soundsOn){
+                    soundButton.setText(text.get(15));
+                    soundsOn = false;
+                } else{
+                    soundButton.setText(text.get(14));
+                    soundsOn = true;
+                }
+            }
+        );
+        configMenu.add(musicLabel, 0, 3);
+        configMenu.add(soundButton, 1, 3);
     }
 }

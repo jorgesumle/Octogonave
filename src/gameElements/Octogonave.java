@@ -17,6 +17,7 @@
 
 package gameElements;
 
+import gameMenus.ConfigMenu;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.image.Image;
@@ -308,7 +309,9 @@ public class Octogonave extends Sprite{
         } else if(sprite instanceof YellowSapphire){
             playScore.increaseScore(1);
         }
-        Sounds.playBonusSound();
+        if(ConfigMenu.areSoundsOn()){
+            Sounds.playBonusSound();
+        }
         playScore.updateScoreText();
     }
     

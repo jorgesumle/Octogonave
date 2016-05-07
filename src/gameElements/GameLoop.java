@@ -19,7 +19,6 @@ package gameElements;
 
 import gameMenus.ConfigMenu;
 import java.util.ArrayList;
-import java.util.Arrays;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
