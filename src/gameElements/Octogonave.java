@@ -38,6 +38,7 @@ public class Octogonave extends Sprite{
             OCTO_NAVE_MOV_HURT_1 = new Image("/octogonaveMovingFireHurt1.png", 117, 117, true, false, true),
             OCTO_NAVE_MOV_HURT_2 = new Image("octogonaveMovingFireHurt2.png", 117, 117, true, false, true),
             OCTO_NAVE_MOV_HURT_3 = new Image("octogonaveMovingFireHurt3.png", 117, 117, true, false, true);
+    private static final float HALF_OF_IMAGE_WIDTH = 58.5f;
     private boolean up, right, down, left, fireUp, fireRight, fireLeft, fireDown;
     private final byte RELOAD_RATE = 6;
     private double velocity;
@@ -250,9 +251,11 @@ public class Octogonave extends Sprite{
 
         for(Sprite sprite: Main.getMainMenu().getGame().getSpriteManager().getCURRENT_SPRITES()){            
             if(collide(sprite)){
-                Main.getMainMenu().getGame().getGameLoop().addToSpritesToRemove(sprite);
-                updateScore(sprite);
-                Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
+                if(sprite instanceof Diamond || sprite instanceof Ruby || sprite instanceof YellowSapphire){
+                    Main.getMainMenu().getGame().getGameLoop().addToSpritesToRemove(sprite);
+                    updateScore(sprite);
+                    Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
+                }
             }
         }
     }
@@ -326,16 +329,20 @@ public class Octogonave extends Sprite{
         if(reloadCounter >= RELOAD_RATE){
             if(fireUp || fireLeft || fireDown || fireRight){
                 reloadCounter = 0;
-                Bullet bullet = new Bullet(xPos, yPos + 58.5 + 6.5);
+                Bullet bullet = null;
                 if(fireUp){
+                    bullet = new Bullet(xPos + HALF_OF_IMAGE_WIDTH + 0.5 - 5, yPos + (30 - 13));
                     bullet.setVerticalVelocity(-1);
                 } else if(fireLeft){
+                    bullet = new Bullet(xPos + HALF_OF_IMAGE_WIDTH - 5, yPos - 30);
                     bullet.setHorizontalVelocity(-1);
                     bullet.getSpriteFrame().setRotate(-90);
                 } else if(fireDown){
+                    bullet = new Bullet(xPos + HALF_OF_IMAGE_WIDTH + 0.5 - 5, yPos + HALF_OF_IMAGE_WIDTH * 2 -30);
                     bullet.setVerticalVelocity(1);
                     bullet.getSpriteFrame().setRotate(180);
                 } else if(fireRight){
+                    bullet = new Bullet(xPos + HALF_OF_IMAGE_WIDTH - 5, yPos - 30);
                     bullet.setHorizontalVelocity(1);
                     bullet.getSpriteFrame().setRotate(90);
                 }
