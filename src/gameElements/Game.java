@@ -38,7 +38,7 @@ public class Game {
     public Game(){
         createNodes();
         addNodes();
-        manageSprites();
+        spriteManager = new SpriteManager();
         startGameLoop();
     }
 
@@ -79,10 +79,6 @@ public class Game {
                                 BackgroundRepeat.NO_REPEAT, 
                                 BackgroundPosition.CENTER, 
                                 new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, false, true))));
-    }
-    
-    private void manageSprites() {
-        spriteManager = new SpriteManager();
     }
     
     /**

@@ -18,7 +18,6 @@
 package gameElements;
 
 import gameMenus.ConfigMenu;
-import java.util.ArrayList;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
@@ -35,42 +34,40 @@ import javafx.util.Duration;
 public class GameLoop extends AnimationTimer{
     private final Octogonave octogonave;
     private final SpriteManager SPRITE_MANAGER;
-    private ArrayList<Sprite> spritesToRemove;
-    private ArrayList<Sprite> spritesToAdd;
     public GameLoop(Octogonave octogonave, SpriteManager spriteManager){
         this.octogonave = octogonave;
         this.SPRITE_MANAGER = spriteManager;
-        spritesToRemove = new ArrayList();
-        spritesToAdd = new ArrayList();
         playTimeLine();
         if(ConfigMenu.isMusicOn()){
             Sounds.playMusic();
         }
     }
-    
-    protected void addToSpritesToRemove(Sprite sprite){
-        spritesToRemove.add(sprite);
-    }
-    
-    protected void addToSpritesToAdd(Sprite sprite){
-        spritesToAdd.add(sprite);
-    }
-    
+
     /**
      * Este código se ejecuta cada fotograma mientras el AnimationTimer este
-     * activo.
+     * activo. Actualiza todos los <i>sprites</i> del juego.
      * @param now El registro del pulso (fotograma) actual en nanosegundos. 
-     * Este valor es el mismo para todos losl AnimationTimers llamados en el mismo pulso. 
+     * Este valor es el mismo para todos los AnimationTimers llamados en el mismo pulso. 
      */
     @Override
     public void handle(long now) {
         octogonave.update(); 
-        SPRITE_MANAGER.getCURRENT_SPRITES().stream().forEach((sprite) -> {
+        
+        SPRITE_MANAGER.getCURRENT_NORMAL().stream().forEach((sprite) -> {
             sprite.update();
         });
-        SPRITE_MANAGER.removeFromCurrentSprites(spritesToRemove.stream().toArray(Sprite[]::new));
-        SPRITE_MANAGER.addToCurrentSprites(spritesToAdd.stream().toArray(Sprite[]::new));
-        spritesToRemove.clear();
+        SPRITE_MANAGER.removeFromCURRENT_NORMAL(SPRITE_MANAGER.getNORMAL_TO_REMOVE().stream().toArray(Sprite[]::new));
+        SPRITE_MANAGER.clearNORMAL_TO_REMOVE();
+        SPRITE_MANAGER.addToCURRENT_NORMAL(SPRITE_MANAGER.getNORMAL_TO_ADD().stream().toArray(Sprite[]::new));
+        SPRITE_MANAGER.clearNORMAL_TO_ADD();
+        
+        SPRITE_MANAGER.getCURRENT_BULLETS().stream().forEach((sprite) -> {
+            sprite.update();
+        });
+        SPRITE_MANAGER.removeFromCURRENT_BULLETS(SPRITE_MANAGER.getBULLETS_TO_REMOVE().stream().toArray(Sprite[]::new));
+        SPRITE_MANAGER.clearBULLETS_TO_REMOVE();
+        SPRITE_MANAGER.addToCURRENT_BULLETS(SPRITE_MANAGER.getBULLETS_TO_ADD().stream().toArray(Sprite[]::new));
+        SPRITE_MANAGER.clearBULLETS_TO_ADD();
     }
     /**
      * Empieza el AnimationTimer. Una vez empezado, el método handle(long) de 
@@ -109,7 +106,7 @@ public class GameLoop extends AnimationTimer{
                     break;
             }
             Main.getRoot().getChildren().add(sprite.getSpriteFrame());
-            SPRITE_MANAGER.addToCurrentSprites(sprite);
+            SPRITE_MANAGER.addToNORMAL_TO_ADD(sprite);
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();

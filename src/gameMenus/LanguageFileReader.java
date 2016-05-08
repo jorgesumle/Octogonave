@@ -50,7 +50,7 @@ public class LanguageFileReader {
         return text;
     }
     
-    public static ArrayList<String> storeFileContentIntoList(BufferedReader br){
+    private static ArrayList<String> storeFileContentIntoList(BufferedReader br){
         String line;
         
         ArrayList<String> lines = new ArrayList<>();

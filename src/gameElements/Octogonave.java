@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
 
@@ -251,10 +250,10 @@ public class Octogonave extends Sprite{
         }
         
 
-        for(Sprite sprite: Main.getMainMenu().getGame().getSpriteManager().getCURRENT_SPRITES()){            
+        for(Sprite sprite: Main.getMainMenu().getGame().getSpriteManager().getCURRENT_NORMAL()){            
             if(collide(sprite)){
                 if(sprite instanceof Diamond || sprite instanceof Ruby || sprite instanceof YellowSapphire){
-                    Main.getMainMenu().getGame().getGameLoop().addToSpritesToRemove(sprite);
+                    Main.getMainMenu().getGame().getSpriteManager().addToNORMAL_TO_REMOVE(sprite);
                     updateScore(sprite);
                     Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
                 }
@@ -336,24 +335,24 @@ public class Octogonave extends Sprite{
                 Bullet bullet = null;
                 if(fireUp){
                     bullet = new Bullet(xPos + HALF_OF_IMAGE_WIDTH + 0.5 - 5, yPos + 30 - 13);
-                    bullet.setVerticalVelocity(-1);
+                    bullet.setVerticalVelocity(-3);
                 } else if(fireLeft){
                     bullet = new Bullet(xPos + 30 - 13, yPos + HALF_OF_IMAGE_WIDTH - 11 / 2);
-                    bullet.setHorizontalVelocity(-1);
+                    bullet.setHorizontalVelocity(-3);
                     bullet.getSpriteFrame().setRotate(-90);
                     bullet.getSpriteBound().setRotate(-90);
                 } else if(fireDown){
                     bullet = new Bullet(xPos + HALF_OF_IMAGE_WIDTH + 0.5 - 5, yPos + HALF_OF_IMAGE_WIDTH * 2 - 30);
-                    bullet.setVerticalVelocity(1);
+                    bullet.setVerticalVelocity(3);
                     bullet.getSpriteFrame().setRotate(180);
                     bullet.getSpriteBound().setRotate(180);
                 } else if(fireRight){
                     bullet = new Bullet(xPos + HALF_OF_IMAGE_WIDTH  * 2 - 30 + 13, yPos + HALF_OF_IMAGE_WIDTH - 11 / 2);
-                    bullet.setHorizontalVelocity(1);
+                    bullet.setHorizontalVelocity(3);
                     bullet.getSpriteFrame().setRotate(90);
                     bullet.getSpriteBound().setRotate(90);
                 }
-                Main.getMainMenu().getGame().getGameLoop().addToSpritesToAdd(bullet);
+                Main.getMainMenu().getGame().getSpriteManager().addToBULLETS_TO_ADD(bullet);
                 Main.getRoot().getChildren().add(bullet.getSpriteFrame());
             } else{
                 reloadCounter--; //Para que no se pueda desbordar nunca la variable.
