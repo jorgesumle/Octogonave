@@ -103,6 +103,8 @@ class Bullet extends Sprite{
             if(collide(sprite)){
                 Main.getMainMenu().getGame().getSpriteManager().addToNORMAL_TO_REMOVE(sprite);
                 Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
+                Main.getMainMenu().getGame().getSpriteManager().addToBULLETS_TO_REMOVE(this);
+                Main.getRoot().getChildren().remove(getSpriteFrame());
             }
         }
     }
