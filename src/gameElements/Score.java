@@ -12,10 +12,10 @@ import javafx.scene.text.Text;
  *
  * @author Jorge Maldonado Ventura
  */
-public class Score extends Text{
+class Score extends Text{
     private long score;
     
-    public Score(double xLocation, double yLocation){
+    Score(double xLocation, double yLocation){
         score = 0;
         setTranslateX(xLocation);
         setTranslateY(yLocation);
@@ -27,7 +27,7 @@ public class Score extends Text{
      * Aumenta la puntuación de la partida.
      * @param addedScore la cantidad en que se quiere aumentar la puntuación.
      */
-    protected void increaseScore(int addedScore){
+    void increaseScore(int addedScore){
         score += addedScore;
     }
     
@@ -35,7 +35,7 @@ public class Score extends Text{
      * Actualiza el texto que aparece en pantalla con la puntuación actual,
      * obtenida de la variable {@link #score}.
      */
-    protected void updateScoreText() {
+    void updateScoreText() {
         setText(Long.toString(score));
     }
 }

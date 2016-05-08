@@ -17,10 +17,6 @@
 
 package gameElements;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -31,14 +27,14 @@ import javafx.util.Duration;
  *
  * @author Jorge Maldonado Ventura 
  */
-public class Sounds {
+class Sounds {
     private static final String GAME_MUSIC_PATH = "/Stealth Groover.aiff";
     private static MediaPlayer gameMusicPlayer; //Si no esta declarado aquí el, recolector de basura de Java lo detiene en diez segundos.
     private static final AudioClip BONUS_SOUND = new AudioClip(Sounds.class.getResource("/bonusSound.wav").toExternalForm());
     /**
      * Reproduce la música del juego una y otra vez.
      */
-    protected static void playMusic(){
+    static void playMusic(){
         gameMusicPlayer = new MediaPlayer(new Media(Sounds.class.getResource(GAME_MUSIC_PATH).toExternalForm()));
         gameMusicPlayer.setOnEndOfMedia(() -> {
             gameMusicPlayer.seek(Duration.ZERO);
@@ -47,7 +43,7 @@ public class Sounds {
         gameMusicPlayer.play();
     }
     
-    protected static void playBonusSound(){
+    static void playBonusSound(){
         BONUS_SOUND.play();
     }
 }

@@ -31,10 +31,10 @@ import javafx.util.Duration;
  * está en marcha.
  * @author Jorge Maldonado Ventura 
  */
-public class GameLoop extends AnimationTimer{
+class GameLoop extends AnimationTimer{
     private final Octogonave octogonave;
     private final SpriteManager SPRITE_MANAGER;
-    public GameLoop(Octogonave octogonave, SpriteManager spriteManager){
+    GameLoop(Octogonave octogonave, SpriteManager spriteManager){
         this.octogonave = octogonave;
         this.SPRITE_MANAGER = spriteManager;
         playTimeLine();
@@ -89,7 +89,7 @@ public class GameLoop extends AnimationTimer{
     /**
      * Empieza el TimeLine, que añade nuevos sprites al juego cada 5 segundos.
      */
-    public void playTimeLine(){
+    private void playTimeLine(){
         Timeline timeline = new Timeline();
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5000), (ActionEvent e) -> {
             Sprite sprite;

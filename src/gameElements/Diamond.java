@@ -23,7 +23,7 @@ import javafx.scene.image.Image;
  * Un diamante que muestra una animación.
  * @author Jorge Maldonado Ventura 
  */
-public class Diamond extends Sprite{
+class Diamond extends Sprite{
     private static final Image DIAMOND_IMG_1 = new Image("/diamond.png", 32, 24, true, false, true),
             DIAMOND_IMG_2 = new Image("/diamond2.png", 32, 24, true, false, true);
     private static final String SVG_PATH = "M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z";
@@ -32,14 +32,14 @@ public class Diamond extends Sprite{
     private boolean changeFrame;
     private byte selectedFrame;
     
-    public Diamond(double xLocation, double yLocation) {
+    Diamond(double xLocation, double yLocation) {
         super(SVG_PATH, xLocation, yLocation, DIAMOND_IMG_1, DIAMOND_IMG_2);
         selectedFrame = 0;
         changeFrame = false;
     }
 
     @Override
-    public void update() {
+    void update() {
         setCurrentFrame();
     }
     private void setCurrentFrame(){

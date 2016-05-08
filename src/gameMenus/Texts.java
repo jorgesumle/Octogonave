@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class Texts{
     private static ArrayList<String> texts;
     
-    public static String getLanguage(){
+    static String getLanguage(){
         return texts.get(0);
     }
     
@@ -33,59 +33,59 @@ public class Texts{
         return texts.get(1);
     }
     
-    public static String getPlayButton() {
+    static String getPlayButton() {
         return texts.get(2);
     }
 
-    public static String getInstructionsButton() {
+    static String getInstructionsButton() {
         return texts.get(3);
     }
 
-    public static String getConfigButton() {
+    static String getConfigButton() {
         return texts.get(4);
     }
 
-    public static String getCreditsButton() {
+    static String getCreditsButton() {
         return texts.get(5);
     }
 
-    public static String getExitButton() {
+    static String getExitButton() {
         return texts.get(6);
     }
 
-    public static String getLanguageLabel() {
+    static String getLanguageLabel() {
         return texts.get(7);
     }
 
-    public static String getMusicLabel() {
+    static String getMusicLabel() {
         return texts.get(8);
     }
 
-    public static String getOnMusicButton() {
+    static String getOnMusicButton() {
         return texts.get(9);
     }
 
-    public static String getOffMusicButton() {
+    static String getOffMusicButton() {
         return texts.get(10);
     }
 
-    public static String getInstructionsText() {
+    static String getInstructionsText() {
         return texts.get(11);
     }
 
-    public static String getBackButton() {
+    static String getBackButton() {
         return texts.get(12);
     }
 
-    public static String getSoundsLabel() {
+    static String getSoundsLabel() {
         return texts.get(13);
     }
 
-    public static String getOnSoundsButton() {
+    static String getOnSoundsButton() {
         return texts.get(14);
     }
 
-    public static String getOffSoundsButton() {
+    static String getOffSoundsButton() {
         return texts.get(15);
     }
     

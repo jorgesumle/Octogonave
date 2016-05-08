@@ -57,7 +57,7 @@ public abstract class Sprite {
      * @param yLocation la coordenada Y.
      * @param spriteImages las imágenes que utiliza el <i>sprite</i>.
      */
-    public Sprite(String SVGData, double xLocation, double yLocation, Image... spriteImages){
+    protected Sprite(String SVGData, double xLocation, double yLocation, Image... spriteImages){
         spriteBound = new SVGPath();
         spriteBound.setContent(SVGData);
         spriteBound.setTranslateX(xLocation);
@@ -72,47 +72,47 @@ public abstract class Sprite {
     /**
      * Este código se actualiza en cada fotograma.
      */
-    public abstract void update();
+    abstract void update();
     /**
      * 
      * @return las imágenes que utiliza el <i>sprite</i>.
      */
-    public List<Image> getSpriteImages() {
+    protected List<Image> getSpriteImages() {
         return spriteImages;
     }
     /**
      * Asigna nuevas imagenes al <i>sprite</i>.
      * @param spriteImages las imagenes que utiliza el <i>sprite</i>.
      */
-    public void setSpriteImages(List<Image> spriteImages) {
+    protected void setSpriteImages(List<Image> spriteImages) {
         this.spriteImages = spriteImages;
     }
     /**
      * 
      * @return la imagen que actualmente tiene asignada el <i>sprite</i>.
      */
-    public ImageView getSpriteFrame() {
+    protected ImageView getSpriteFrame() {
         return spriteFrame;
     }
     /**
      * Asigna la imagen que se verá en pantalla del <i>sprite</i>.
      * @param spriteFrame la imagen del <i>sprite</i> que se quiere mostrar en pantalla.
      */
-    public void setSpriteFrame(ImageView spriteFrame) {
+    protected void setSpriteFrame(ImageView spriteFrame) {
         this.spriteFrame = spriteFrame;
     }
     /**
      * 
      * @return la ruta SVG del <i>sprite</i>.
      */
-    public SVGPath getSpriteBound() {
+    protected SVGPath getSpriteBound() {
         return spriteBound;
     }   
     /**
      * Asigna una nueva ruta SVG al <i>sprite</i>.
      * @param spriteBound la ruta SVG que se quiere asignar al <i>sprite</i>.
      */
-    public void setSpriteBound(SVGPath spriteBound) {
+    protected void setSpriteBound(SVGPath spriteBound) {
         this.spriteBound = spriteBound;
     }
     

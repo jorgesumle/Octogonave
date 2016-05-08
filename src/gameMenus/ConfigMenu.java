@@ -50,13 +50,13 @@ import org.xml.sax.SAXException;
 public class ConfigMenu extends GridPane{
     private static final File SETTINGS_FILE = new File("settings.xml");
 
-    public static String selectedLanguage;
+    private static String selectedLanguage;
     private static boolean musicOn, soundsOn;
     private Label language, musicLabel, soundsLabel;
     private Button musicButton, soundsButton, back;
     private Text title;
     
-    protected ConfigMenu(){
+    ConfigMenu(){
   
         setVgap(Main.getMainMenu().getPADDING());
         setHgap(10);
@@ -177,7 +177,7 @@ public class ConfigMenu extends GridPane{
         }
     }
 
-    public void applyLanguageChange() {
+    private void applyLanguageChange() {
         Main.getMainMenu().getPLAY_BUTTON().setText(Texts.getPlayButton());
         Main.getMainMenu().getINSTRUCTIONS_BUTTON().setText(Texts.getInstructionsButton());
         Main.getMainMenu().getCONFIG_BUTTON().setText(Texts.getConfigButton());

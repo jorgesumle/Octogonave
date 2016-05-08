@@ -17,12 +17,14 @@
 package gameElements;
 
 import javafx.scene.image.Image;
+import javafx.scene.shape.SVGPath;
+import javafx.scene.shape.Shape;
 
 /**
  *
  * @author Jorge Maldonado Ventura
  */
-public class Bullet extends Sprite{
+class Bullet extends Sprite{
     private static final Image BULLET_IMG = new Image("/bullet.png", 10, 13, true, false, true);
     private static final String SVG_PATH = "M 4,0 L 4,0 5,0 6,1 6,8 9,11 9,12 0,12 0,11 3,8 3,1 Z";
     private double verticalVelocity;
@@ -36,34 +38,25 @@ public class Bullet extends Sprite{
      */
     private double yPos;
     
-    public Bullet(double xLocation, double yLocation) {
+    Bullet(double xLocation, double yLocation) {
         super(SVG_PATH, xLocation, yLocation, BULLET_IMG);
         xPos = xLocation;
         yPos = yLocation;
     }
-    
-    public Bullet(double xLocation, double yLocation, double horizontalVelocity, double verticalVelocity) {
-        this(xLocation, yLocation);
-        this.verticalVelocity = verticalVelocity;
-        this.horizontalVelocity = horizontalVelocity;
-    }
 
-    public void setVerticalVelocity(double verticalVelocity) {
+    void setVerticalVelocity(double verticalVelocity) {
         this.verticalVelocity = verticalVelocity;
     }
 
-    public void setHorizontalVelocity(double horizontalVelocity) {
+    void setHorizontalVelocity(double horizontalVelocity) {
         this.horizontalVelocity = horizontalVelocity;
     }
 
     @Override
-    public void update() {
+    void update() {
         setXAndYPosition();
         move();
-        if(boundsLimitOrOutY() || boundsLimitOrOutX()){
-            Main.getMainMenu().getGame().getSpriteManager().addToBULLETS_TO_REMOVE(this);
-            Main.getRoot().getChildren().remove(getSpriteFrame());
-        }
+        checkCollision();
     }
     
     /**
@@ -97,4 +90,30 @@ public class Bullet extends Sprite{
         spriteBound.setTranslateY(yPos);
     }
     
+    /**
+     * Comprueba si ha colisionado con alguno de los <i>sprites</i> presentes
+     * en el ArrayList CURRENT_NORMAL de SpriteManager y realiza las acciones oportunas.
+     */
+    private void checkCollision() {
+        if(boundsLimitOrOutY() || boundsLimitOrOutX()){
+            Main.getMainMenu().getGame().getSpriteManager().addToBULLETS_TO_REMOVE(this);
+            Main.getRoot().getChildren().remove(getSpriteFrame());
+        }
+        for(Sprite sprite: Main.getMainMenu().getGame().getSpriteManager().getCURRENT_NORMAL()){
+            if(collide(sprite)){
+                Main.getMainMenu().getGame().getSpriteManager().addToNORMAL_TO_REMOVE(sprite);
+                Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
+            }
+        }
+    }
+    
+    private boolean collide(Sprite sprite){
+        if(spriteFrame.getBoundsInParent().intersects(sprite.spriteFrame.getBoundsInParent())){
+            Shape intersection = SVGPath.intersect(spriteBound, sprite.spriteBound);
+            if(!intersection.getBoundsInLocal().isEmpty()){
+                return true;
+            }
+        }
+        return false;
+    }
 }

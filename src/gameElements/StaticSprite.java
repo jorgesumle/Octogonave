@@ -25,11 +25,11 @@ import javafx.scene.image.Image;
  */
 public class StaticSprite extends Sprite{
     
-    public StaticSprite(String SVGData, double xLocation, double yLocation, Image... spriteImages) {
+    protected StaticSprite(String SVGData, double xLocation, double yLocation, Image... spriteImages) {
         super(SVGData, xLocation, yLocation, spriteImages);
     }
 
     @Override
-    public void update() {}
+    void update() {}
     
 }

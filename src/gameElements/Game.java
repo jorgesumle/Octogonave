@@ -42,19 +42,19 @@ public class Game {
         startGameLoop();
     }
 
-    public GameLoop getGameLoop() {
+    GameLoop getGameLoop() {
         return gameLoop;
     }
     
-    public Octogonave getOctogonave() {
+    Octogonave getOctogonave() {
         return octogonave;
     }
     
-    public Score getPlayScore() {
+    Score getPlayScore() {
         return playScore;
     }
     
-    public SpriteManager getSpriteManager() {
+    SpriteManager getSpriteManager() {
         return spriteManager;
     }
     
@@ -69,7 +69,7 @@ public class Game {
     /**
      * Añade los nodos (Nodes) al Pane principal.
      */
-    public void addNodes() {
+    private void addNodes() {
         Main.getRoot().getChildren().addAll(playScore, octogonave.getSpriteFrame());
         Main.getRoot().setBackground(
                 new Background(

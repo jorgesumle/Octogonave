@@ -66,27 +66,27 @@ public class MainMenu extends StackPane{
         return game;
     }
     
-    public byte getPADDING() {
+    byte getPADDING() {
         return PADDING;
     }
 
-    public Button getPLAY_BUTTON() {
+    Button getPLAY_BUTTON() {
         return PLAY_BUTTON;
     }
 
-    public Button getINSTRUCTIONS_BUTTON() {
+    Button getINSTRUCTIONS_BUTTON() {
         return INSTRUCTIONS_BUTTON;
     }
 
-    public Button getCONFIG_BUTTON() {
+    Button getCONFIG_BUTTON() {
         return CONFIG_BUTTON;
     }
 
-    public Button getCREDITS_BUTTON() {
+    Button getCREDITS_BUTTON() {
         return CREDITS_BUTTON;
     }
 
-    public Button getEXIT_BUTTON() {
+    Button getEXIT_BUTTON() {
         return EXIT_BUTTON;
     }
     
