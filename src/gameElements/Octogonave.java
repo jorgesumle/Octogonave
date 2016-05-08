@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
 
@@ -334,20 +335,23 @@ public class Octogonave extends Sprite{
                 reloadCounter = 0;
                 Bullet bullet = null;
                 if(fireUp){
-                    bullet = new Bullet(xPos + HALF_OF_IMAGE_WIDTH + 0.5 - 5, yPos + (30 - 13));
+                    bullet = new Bullet(xPos + HALF_OF_IMAGE_WIDTH + 0.5 - 5, yPos + 30 - 13);
                     bullet.setVerticalVelocity(-1);
                 } else if(fireLeft){
-                    bullet = new Bullet(xPos + HALF_OF_IMAGE_WIDTH - 5, yPos - 30);
+                    bullet = new Bullet(xPos + 30 - 13, yPos + HALF_OF_IMAGE_WIDTH - 11 / 2);
                     bullet.setHorizontalVelocity(-1);
                     bullet.getSpriteFrame().setRotate(-90);
+                    bullet.getSpriteBound().setRotate(-90);
                 } else if(fireDown){
-                    bullet = new Bullet(xPos + HALF_OF_IMAGE_WIDTH + 0.5 - 5, yPos + HALF_OF_IMAGE_WIDTH * 2 -30);
+                    bullet = new Bullet(xPos + HALF_OF_IMAGE_WIDTH + 0.5 - 5, yPos + HALF_OF_IMAGE_WIDTH * 2 - 30);
                     bullet.setVerticalVelocity(1);
                     bullet.getSpriteFrame().setRotate(180);
+                    bullet.getSpriteBound().setRotate(180);
                 } else if(fireRight){
-                    bullet = new Bullet(xPos + HALF_OF_IMAGE_WIDTH - 5, yPos - 30);
+                    bullet = new Bullet(xPos + HALF_OF_IMAGE_WIDTH  * 2 - 30 + 13, yPos + HALF_OF_IMAGE_WIDTH - 11 / 2);
                     bullet.setHorizontalVelocity(1);
                     bullet.getSpriteFrame().setRotate(90);
+                    bullet.getSpriteBound().setRotate(90);
                 }
                 Main.getMainMenu().getGame().getGameLoop().addToSpritesToAdd(bullet);
                 Main.getRoot().getChildren().add(bullet.getSpriteFrame());

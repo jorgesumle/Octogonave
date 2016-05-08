@@ -19,10 +19,8 @@ package gameMenus;
 import gameElements.Main;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -49,14 +47,39 @@ import org.xml.sax.SAXException;
  * El menú que permite modificar las configuración del juego.
  * @author Jorge Maldonado Ventura
  */
-public class ConfigMenu {
+public class ConfigMenu extends GridPane{
     private static final File SETTINGS_FILE = new File("settings.xml");
-    private static ArrayList<String> text;
-    private static String playButtonText, instructionsButtonText, configButtonText, creditsButtonText, 
-            exitButtonText, languageLabelText;
+
     public static String selectedLanguage;
     private static boolean musicOn, soundsOn;
-    private static GridPane configMenu;
+    private Label language, musicLabel, soundsLabel;
+    private Button musicButton, soundsButton, back;
+    private Text title;
+    
+    protected ConfigMenu(){
+  
+        setVgap(Main.getMainMenu().getPADDING());
+        setHgap(10);
+        setAlignment(Pos.CENTER);
+        
+        title = new Text(Texts.getConfigButton());
+        title.getStyleClass().add("smallTitle");
+        add(title, 0, 0, 2, 1);
+        
+        languageConfigNodes();  
+        musicConfigNodes();
+        soundConfigNodes();
+        
+        back = new Button(Texts.getBackButton());
+        back.setOnAction(e ->
+            {
+                Main.getScene().setRoot(Main.getMainMenu());
+                applyLanguageChange();
+                saveConfig();
+            }
+        );
+        add(back, 0, 4, 2, 1);
+    }
 
     public static boolean areSoundsOn() {
         return soundsOn;
@@ -64,38 +87,6 @@ public class ConfigMenu {
 
     public static boolean isMusicOn() {
         return musicOn;
-    }
-
-    public static String getPlayButtonText() {
-        return playButtonText;
-    }
-
-    public static String getInstructionsButtonText() {
-        return instructionsButtonText;
-    }
-
-    public static String getConfigButtonText() {
-        return configButtonText;
-    }
-
-    public static String getCreditsButtonText() {
-        return creditsButtonText;
-    }
-
-    public static String getExitButtonText() {
-        return exitButtonText;
-    }
-
-    public static String getLanguageLabelText() {
-        return languageLabelText;
-    }
-    
-    public static String getInstructionsText(){
-        return text.get(11);
-    }
-    
-    public static String getBackButtonText(){
-        return text.get(12);
     }
     
     public static void loadConfig() {
@@ -112,13 +103,13 @@ public class ConfigMenu {
         Node languageValue = languageTag.item(0);
         if(languageValue.getTextContent().equals("castellano")){
             selectedLanguage = "castellano";
-            text = LanguageFileReader.readLanguageFile("lang/castellano.lang");
+            Texts.setTexts(LanguageFileReader.readLanguageFile("lang/castellano.lang"));
         } else if(languageValue.getTextContent().equals("english")){
             selectedLanguage = "english";
-            text = LanguageFileReader.readLanguageFile("lang/english.lang");
+            Texts.setTexts(LanguageFileReader.readLanguageFile("lang/english.lang"));
         } else if(languageValue.getTextContent().equals("deutsch")){
             selectedLanguage = "deutsch";
-            text = LanguageFileReader.readLanguageFile("lang/deutsch.lang");
+            Texts.setTexts(LanguageFileReader.readLanguageFile("lang/deutsch.lang"));
         }
         
         NodeList musicTag = configXML.getElementsByTagName("music");
@@ -129,32 +120,7 @@ public class ConfigMenu {
         soundsOn = soundsValue.getTextContent().equals("on");
     }
     
-    public static void configMenu() {
-        configMenu = new GridPane();
-        configMenu.setVgap(Main.getMainMenu().getPADDING());
-        configMenu.setHgap(10);
-        configMenu.setAlignment(Pos.CENTER);
-        Main.getScene().setRoot(configMenu);
-        
-        Text title = new Text(configButtonText);
-        title.getStyleClass().add("smallTitle");
-        configMenu.add(title, 0, 0, 2, 1);
-        
-        languageConfigNodes();  
-        musicConfigNodes();
-        soundConfigNodes();
-        
-        Button back = new Button(getBackButtonText());
-        back.setOnAction(e ->
-            {
-                Main.getScene().setRoot(Main.getMainMenu());
-                applyLanguageChange();
-                saveConfig();
-            }
-        );
-        configMenu.add(back, 0, 4, 2, 1);
-    }
-    private static void saveConfig(){
+    private void saveConfig(){
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = null;
         try {
@@ -165,7 +131,7 @@ public class ConfigMenu {
         Document configXML = documentBuilder.newDocument();
         Element root = (Element) configXML.createElement("settings");
         Element language = (Element) configXML.createElement("language");
-        switch (text.get(0)) {
+        switch (Texts.getLanguage()) {
             case "castellano":
                 language.appendChild(configXML.createTextNode("castellano"));
                 break;
@@ -211,24 +177,30 @@ public class ConfigMenu {
         }
     }
 
-    public static void applyLanguageChange() {
-        setLanguageText();
-        
-        Main.getMainMenu().getPLAY_BUTTON().setText(playButtonText);
-        Main.getMainMenu().getINSTRUCTIONS_BUTTON().setText(instructionsButtonText);
-        Main.getMainMenu().getCONFIG_BUTTON().setText(configButtonText);
-        Main.getMainMenu().getCREDITS_BUTTON().setText(creditsButtonText);
-        Main.getMainMenu().getEXIT_BUTTON().setText(exitButtonText);
-    }
-    public static void setLanguageText(){
-        playButtonText = text.get(2);
-        instructionsButtonText = text.get(3);
-        configButtonText = text.get(4);
-        creditsButtonText = text.get(5);
-        exitButtonText = text.get(6);
+    public void applyLanguageChange() {
+        Main.getMainMenu().getPLAY_BUTTON().setText(Texts.getPlayButton());
+        Main.getMainMenu().getINSTRUCTIONS_BUTTON().setText(Texts.getInstructionsButton());
+        Main.getMainMenu().getCONFIG_BUTTON().setText(Texts.getConfigButton());
+        Main.getMainMenu().getCREDITS_BUTTON().setText(Texts.getCreditsButton());
+        Main.getMainMenu().getEXIT_BUTTON().setText(Texts.getExitButton());
+        language.setText(Texts.getLanguage());
+        musicLabel.setText(Texts.getMusicLabel());
+        soundsLabel.setText(Texts.getSoundsLabel());
+        title.setText(Texts.getConfigButton());
+        if(musicOn){
+            musicButton.setText(Texts.getOnMusicButton());
+        } else{
+            musicButton.setText(Texts.getOffMusicButton());
+        }
+        if(soundsOn){
+            soundsButton.setText(Texts.getOnSoundsButton());
+        } else{
+            soundsButton.setText(Texts.getOffSoundsButton());
+        }
+        back.setText(Texts.getBackButton());
     }
 
-    private static void setSelectedElement(ChoiceBox languages) {
+    private void setSelectedElement(ChoiceBox languages) {
         switch(selectedLanguage){
             case "castellano":
                 languages.getSelectionModel().select(0);
@@ -246,85 +218,84 @@ public class ConfigMenu {
      * Se encarga de la creación del Label y ChoiceBox relacionados con la
      * configuración del idioma dentro del menú de configuración del juego.
      */
-    private static void languageConfigNodes(){
-        Label language = new Label(text.get(7));
-        configMenu.add(language, 0, 1);
+    private void languageConfigNodes(){
+        language = new Label(Texts.getLanguageLabel());
+        add(language, 0, 1);
         
         ChoiceBox languages = new ChoiceBox<>();
         languages.getItems().add("castellano");
         languages.getItems().add("deutsch");
         languages.getItems().add("english");
         setSelectedElement(languages);
-        languages.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-                if(languages.getItems().get((Integer) number2) == "castellano"){
-                    selectedLanguage = "castellano";
-                    text = LanguageFileReader.readLanguageFile("lang/castellano.lang");
-                } else if(languages.getItems().get((Integer) number2) == "deutsch"){
-                    selectedLanguage = "deutsch";
-                    text = LanguageFileReader.readLanguageFile("lang/deutsch.lang");
-                } else if(languages.getItems().get((Integer) number2) == "english"){
-                    selectedLanguage = "english";
-                    text = LanguageFileReader.readLanguageFile("lang/english.lang");
-                } 
-                saveConfig();
+        languages.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> observableValue, Number number, Number number2) -> {
+            if(languages.getItems().get((Integer) number2) == "castellano"){
+                selectedLanguage = "castellano";
+                Texts.setTexts(LanguageFileReader.readLanguageFile("lang/castellano.lang"));
+            } else if(languages.getItems().get((Integer) number2) == "deutsch"){
+                selectedLanguage = "deutsch";
+                Texts.setTexts(LanguageFileReader.readLanguageFile("lang/deutsch.lang"));
+            } else if(languages.getItems().get((Integer) number2) == "english"){
+                selectedLanguage = "english";
+                Texts.setTexts(LanguageFileReader.readLanguageFile("lang/english.lang"));
             }
+            saveConfig();
+            applyLanguageChange();
         });
-        configMenu.add(languages, 1, 1);
+        add(languages, 1, 1);
     }
     
     /**
      * Se encarga de la creación del Label y Button relacionados con la
      * configuración de música dentro del menú de configuración del juego.
      */
-    private static void musicConfigNodes(){
-        Label musicLabel = new Label(text.get(8));
-        Button musicButton;
+    private void musicConfigNodes(){
+        musicLabel = new Label(Texts.getMusicLabel());
+
         if(musicOn){
-            musicButton = new Button(text.get(9));
+            musicButton = new Button(Texts.getOnMusicButton());
         } else{
-            musicButton = new Button(text.get(10));
+            musicButton = new Button(Texts.getOffMusicButton());
         }
         musicButton.setOnAction(e -> 
             {
                 if(musicOn){
-                    musicButton.setText(text.get(10));
+                    musicButton.setText(Texts.getOffMusicButton());
                     musicOn = false;
                 } else{
-                    musicButton.setText(text.get(9));
+                    musicButton.setText(Texts.getOnMusicButton());
                     musicOn = true;
                 }
             }
         );
-        configMenu.add(musicLabel, 0, 2);
-        configMenu.add(musicButton, 1, 2);
+        add(musicLabel, 0, 2);
+        add(musicButton, 1, 2);
     }
     
     /**
      * Se encarga de la creación del Label y Button relacionados con la
      * configuración del sonido dentro del menú de configuración del juego.
      */
-    private static void soundConfigNodes(){
-        Label musicLabel = new Label(text.get(13));
-        Button soundButton;
+    private void soundConfigNodes(){
+        soundsLabel = new Label(Texts.getSoundsLabel());
+
         if(soundsOn){
-            soundButton = new Button(text.get(14));
+            soundsButton = new Button(Texts.getOnSoundsButton());
         } else{
-            soundButton = new Button(text.get(15));
+            soundsButton = new Button(Texts.getOffSoundsButton());
         }
-        soundButton.setOnAction(e -> 
+        soundsButton.setOnAction(e -> 
             {
                 if(soundsOn){
-                    soundButton.setText(text.get(15));
+                    soundsButton.setText(Texts.getOffSoundsButton());
                     soundsOn = false;
                 } else{
-                    soundButton.setText(text.get(14));
+                    soundsButton.setText(Texts.getOnSoundsButton());
                     soundsOn = true;
                 }
             }
         );
-        configMenu.add(musicLabel, 0, 3);
-        configMenu.add(soundButton, 1, 3);
+        add(soundsLabel, 0, 3);
+        add(soundsButton, 1, 3);
     }
+
 }

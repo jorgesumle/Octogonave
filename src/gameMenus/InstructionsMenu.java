@@ -23,17 +23,17 @@ public class InstructionsMenu extends VBox{
         setAlignment(Pos.CENTER);
         setSpacing(Main.getMainMenu().getPADDING());
         
-        Text title = new Text(ConfigMenu.getInstructionsButtonText());
+        Text title = new Text(Texts.getInstructionsButton());
         title.getStyleClass().add("smallTitle");
         
-        Text gameTitle = new Text(Main.getGAME_TITLE());
+        Text gameTitle = new Text(Texts.getProgramTitle());
         gameTitle.setStyle("-fx-font-style: italic;");
-        Text instructionsText = new Text(ConfigMenu.getInstructionsText());
+        Text instructionsText = new Text(Texts.getInstructionsText());
         
         TextFlow instructions = new TextFlow(gameTitle, instructionsText);
         setMargin(instructions, new Insets(6));
         
-        Button back = new Button(ConfigMenu.getBackButtonText());
+        Button back = new Button(Texts.getBackButton());
         back.setOnAction(e ->
             {
                 Main.getScene().setRoot(Main.getMainMenu());

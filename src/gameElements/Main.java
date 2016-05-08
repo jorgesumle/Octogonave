@@ -23,6 +23,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import gameMenus.ConfigMenu;
 import gameMenus.MainMenu;
+import gameMenus.Texts;
 
 
 /**
@@ -34,11 +35,6 @@ public class Main extends Application {
     private static Pane root;
     private static Scene scene;
     private static MainMenu mainMenu;
-    private static final String GAME_TITLE = "Octogonave";
-
-    public static String getGAME_TITLE() {
-        return GAME_TITLE;
-    }
     
     public static MainMenu getMainMenu(){
         return mainMenu;
@@ -66,7 +62,6 @@ public class Main extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        
         ConfigMenu.loadConfig();
         root = new Pane();
         root.prefHeight(HEIGHT);
@@ -75,7 +70,7 @@ public class Main extends Application {
         scene = new Scene(root, WIDTH, HEIGHT); 
         scene.getStylesheets().add(this.getClass().getResource("menus.css").toExternalForm());
         primaryStage.getIcons().add(new Image("octogonaveStillOriginal.png"));
-        primaryStage.setTitle("Octogonave");
+        primaryStage.setTitle(Texts.getProgramTitle());
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
@@ -83,7 +78,6 @@ public class Main extends Application {
         mainMenu = new gameMenus.MainMenu();   
         scene.setRoot(mainMenu);
         mainMenu.makeButtonsInteract();
-    
     }
     
 }

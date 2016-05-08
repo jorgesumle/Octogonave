@@ -34,27 +34,28 @@ public class MainMenu extends StackPane{
     private final byte PADDING;
     private final Button PLAY_BUTTON, INSTRUCTIONS_BUTTON, CONFIG_BUTTON, CREDITS_BUTTON, EXIT_BUTTON;
     private Game game;
+    private ConfigMenu configMenu;
+    private InstructionsMenu instructionsMenu;
     
     public MainMenu(){
-        ConfigMenu.setLanguageText();
         
         VBox menuVBox = new VBox();
         PADDING = 10;
         menuVBox.setSpacing(PADDING);
         menuVBox.setAlignment(Pos.CENTER);
         
-        Text title = new Text(Main.getGAME_TITLE());
+        Text title = new Text(Texts.getProgramTitle());
         title.setId("title");
         
-        PLAY_BUTTON = new Button(ConfigMenu.getPlayButtonText());
+        PLAY_BUTTON = new Button(Texts.getPlayButton());
         PLAY_BUTTON.getStyleClass().add("button");    
-        INSTRUCTIONS_BUTTON = new Button(ConfigMenu.getInstructionsButtonText());
+        INSTRUCTIONS_BUTTON = new Button(Texts.getInstructionsButton());
         INSTRUCTIONS_BUTTON.getStyleClass().add("instructions");   
-        CONFIG_BUTTON = new Button(ConfigMenu.getConfigButtonText());
+        CONFIG_BUTTON = new Button(Texts.getConfigButton());
         CONFIG_BUTTON.getStyleClass().add("config");
-        CREDITS_BUTTON = new Button(ConfigMenu.getCreditsButtonText());
+        CREDITS_BUTTON = new Button(Texts.getCreditsButton());
         CREDITS_BUTTON.getStyleClass().add("credits");
-        EXIT_BUTTON = new Button(ConfigMenu.getExitButtonText());
+        EXIT_BUTTON = new Button(Texts.getExitButton());
         EXIT_BUTTON.getStyleClass().add("exit");
         
         menuVBox.getChildren().addAll(title, PLAY_BUTTON, INSTRUCTIONS_BUTTON, CONFIG_BUTTON, CREDITS_BUTTON, EXIT_BUTTON);
@@ -98,15 +99,20 @@ public class MainMenu extends StackPane{
         );
         INSTRUCTIONS_BUTTON.setOnAction(e -> 
             {
-                InstructionsMenu instructionsMenu = new InstructionsMenu();
+                if(instructionsMenu == null){
+                    instructionsMenu = new InstructionsMenu();
+                }
                 Main.getRoot().getChildren().clear();
                 Main.getScene().setRoot(instructionsMenu);
             }
         );
         CONFIG_BUTTON.setOnAction(e -> 
             {
-                ConfigMenu.configMenu();
-                ConfigMenu.applyLanguageChange();
+                if(configMenu == null){
+                    configMenu = new ConfigMenu();
+                }
+                Main.getRoot().getChildren().clear();
+                Main.getScene().setRoot(configMenu);
             }
         );
         CREDITS_BUTTON.setOnAction(e -> 
