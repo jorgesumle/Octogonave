@@ -81,6 +81,7 @@ class Octogonave extends Sprite{
         move();
         checkCollision();
     }
+    
     private void determineKeyPressed(){
         scene.setOnKeyPressed((KeyEvent event) -> 
             {
@@ -281,7 +282,7 @@ class Octogonave extends Sprite{
     /**
      * Comprueba si la nave ha colisionado con un <i>sprite</i> determinado.
      * @param sprite el <i>sprite</i> con el que desea comprobar si se ha colisionado
-     * @return true si se ha producido una colisión y false en caso contrario.
+     * @return <tt>true</tt> si se ha producido una colisión; <tt>false</tt> en caso contrario.
      */
     private boolean collide(Sprite sprite){
         if(spriteFrame.getBoundsInParent().intersects(sprite.spriteFrame.getBoundsInParent())){
@@ -301,11 +302,11 @@ class Octogonave extends Sprite{
     private void updateScore(Sprite sprite) {
         Score playScore = Main.getMainMenu().getGame().getPlayScore();
         if(sprite instanceof Diamond){
-            playScore.increaseScore(3);
+            playScore.increaseScore(Diamond.getBONUS());
         } else if(sprite instanceof Ruby){
-            playScore.increaseScore(2);
+            playScore.increaseScore(Ruby.getBONUS());
         } else if(sprite instanceof YellowSapphire){
-            playScore.increaseScore(1);
+            playScore.increaseScore(YellowSapphire.getBONUS());
         }
         if(ConfigMenu.areSoundsOn()){
             Sounds.playBonusSound();
@@ -315,7 +316,7 @@ class Octogonave extends Sprite{
     
     /**
      * Informa de si la nave está tocando el límite de la ventana o ha salido de ella.
-     * @return true si ha contactado con el límite o está fuera y false si se encuentra dentro de
+     * @return <tt>true</tt> si ha contactado con el límite o está fuera; <tt>false</tt> si se encuentra dentro de
      * la ventana.
      */
     private boolean boundsLimitOrOutX(){

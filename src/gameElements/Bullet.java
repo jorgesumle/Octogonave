@@ -61,7 +61,7 @@ class Bullet extends Sprite{
     
     /**
      * Comprueba si la bala está en contacto con el borde del eje X de la ventana o ha salido de esta.
-     * @return true si la bala ha salido del eje X de la ventana y false en caso contrario..
+     * @return <tt>true</tt> si la bala ha salido del eje X de la ventana; <tt>false</tt> en caso contrario..
      */
     private boolean boundsLimitOrOutX(){
         return getSpriteFrame().getTranslateX() <= 0 - getSpriteFrame().getFitWidth() || getSpriteFrame().getTranslateX() >= Main.getScene().getWidth() - getSpriteFrame().getFitWidth();
@@ -69,7 +69,7 @@ class Bullet extends Sprite{
     
     /**
      * Comprueba si la bala está en contacto con el borde del eje Y de la ventana o ha salido de esta.
-     * @return true si la bala ha salido del eje Y de la ventana y false en caso contrario.
+     * @return <tt>true</tt> si la bala ha salido del eje Y de la ventana; <tt>false</tt> en caso contrario.
      */
     private boolean boundsLimitOrOutY(){
         return getSpriteFrame().getTranslateY() <= 0 - getSpriteFrame().getFitHeight() || getSpriteFrame().getTranslateY() >= Main.getScene().getHeight() - getSpriteFrame().getFitHeight();
@@ -81,7 +81,7 @@ class Bullet extends Sprite{
     }
     
     /**
-     * Mueve la bala, es decir, su spriteFrame y spriteBound.
+     * Mueve la bala, es decir, su <tt>spriteFrame</tt> y <tt>spriteBound</tt>.
      */
     private void move() {
         spriteFrame.setTranslateX(xPos);
@@ -92,7 +92,7 @@ class Bullet extends Sprite{
     
     /**
      * Comprueba si ha colisionado con alguno de los <i>sprites</i> presentes
-     * en el ArrayList CURRENT_NORMAL de SpriteManager y realiza las acciones oportunas.
+     * en el <tt>ArrayList</tt> <tt>CURRENT_NORMAL</tt> de <tt>SpriteManager</tt> y realiza las acciones oportunas.
      */
     private void checkCollision() {
         if(boundsLimitOrOutY() || boundsLimitOrOutX()){

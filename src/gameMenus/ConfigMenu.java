@@ -17,10 +17,6 @@
 package gameMenus;
 
 import gameElements.Main;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -28,27 +24,12 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 /**
  * El menú que permite modificar las configuración del juego.
  * @author Jorge Maldonado Ventura
  */
 public class ConfigMenu extends GridPane{
-    private static final File SETTINGS_FILE = new File("settings.xml");
 
     private static String selectedLanguage;
     private static boolean musicOn, soundsOn;
@@ -75,7 +56,7 @@ public class ConfigMenu extends GridPane{
             {
                 Main.getScene().setRoot(Main.getMainMenu());
                 applyLanguageChange();
-                saveConfig();
+                Config.saveConfig();
             }
         );
         add(back, 0, 4, 2, 1);
@@ -88,94 +69,20 @@ public class ConfigMenu extends GridPane{
     public static boolean isMusicOn() {
         return musicOn;
     }
-    
-    public static void loadConfig() {
-        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder = null;
-        Document configXML = null;
-        try {
-            documentBuilder = documentBuilderFactory.newDocumentBuilder();   
-            configXML = documentBuilder.parse(SETTINGS_FILE);
-        } catch (ParserConfigurationException | SAXException | IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        NodeList languageTag = configXML.getElementsByTagName("language");
-        Node languageValue = languageTag.item(0);
-        if(languageValue.getTextContent().equals("castellano")){
-            selectedLanguage = "castellano";
-            Texts.setTexts(LanguageFileReader.readLanguageFile("lang/castellano.lang"));
-        } else if(languageValue.getTextContent().equals("english")){
-            selectedLanguage = "english";
-            Texts.setTexts(LanguageFileReader.readLanguageFile("lang/english.lang"));
-        } else if(languageValue.getTextContent().equals("deutsch")){
-            selectedLanguage = "deutsch";
-            Texts.setTexts(LanguageFileReader.readLanguageFile("lang/deutsch.lang"));
-        }
-        
-        NodeList musicTag = configXML.getElementsByTagName("music");
-        Node musicValue = musicTag.item(0);
-        musicOn = musicValue.getTextContent().equals("on");
-        NodeList soundsTag = configXML.getElementsByTagName("sounds");
-        Node soundsValue = soundsTag.item(0);
-        soundsOn = soundsValue.getTextContent().equals("on");
+
+    public static void setMusicOn(boolean musicOn) {
+        ConfigMenu.musicOn = musicOn;
+    }
+
+    public static void setSoundsOn(boolean soundsOn) {
+        ConfigMenu.soundsOn = soundsOn;
+    }
+
+    public static void setSelectedLanguage(String selectedLanguage) {
+        ConfigMenu.selectedLanguage = selectedLanguage;
     }
     
-    private void saveConfig(){
-        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder = null;
-        try {
-            documentBuilder = documentBuilderFactory.newDocumentBuilder();     
-        } catch (ParserConfigurationException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Document configXML = documentBuilder.newDocument();
-        Element root = (Element) configXML.createElement("settings");
-        Element language = (Element) configXML.createElement("language");
-        switch (Texts.getLanguage()) {
-            case "castellano":
-                language.appendChild(configXML.createTextNode("castellano"));
-                break;
-            case "english":
-                language.appendChild(configXML.createTextNode("english"));
-                break;
-            case "deutsch":
-                language.appendChild(configXML.createTextNode("deutsch"));
-                break;       
-        }
-        Element music = (Element) configXML.createElement("music");
-        if(musicOn){
-            music.appendChild(configXML.createTextNode("on"));
-        } else{
-            music.appendChild(configXML.createTextNode("off"));
-        }
-        Element sounds = (Element) configXML.createElement("sounds");
-        if(soundsOn){
-            sounds.appendChild(configXML.createTextNode("on"));
-        } else{
-            sounds.appendChild(configXML.createTextNode("off"));
-        }
-        
-        root.appendChild(language);
-        root.appendChild(music);
-        root.appendChild(sounds);
-        configXML.appendChild(root);
-        
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = null;
-        try {
-            transformer = transformerFactory.newTransformer();
-        } catch (TransformerConfigurationException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        DOMSource source = new DOMSource(configXML);
-        
-        StreamResult streamResult = new StreamResult(SETTINGS_FILE);
-        try {
-            transformer.transform(source, streamResult);
-        } catch (TransformerException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    
 
     private void applyLanguageChange() {
         Main.getMainMenu().getPLAY_BUTTON().setText(Texts.getPlayButton());
@@ -238,7 +145,7 @@ public class ConfigMenu extends GridPane{
                 selectedLanguage = "english";
                 Texts.setTexts(LanguageFileReader.readLanguageFile("lang/english.lang"));
             }
-            saveConfig();
+            Config.saveConfig();
             applyLanguageChange();
         });
         add(languages, 1, 1);

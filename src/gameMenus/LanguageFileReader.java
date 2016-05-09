@@ -32,6 +32,11 @@ import java.util.logging.Logger;
  */
 class LanguageFileReader {
     
+    /**
+     * Lee el archivo de idiomas especificado.
+     * @param path la ruta donde se encuentra el archivo de idiomas a leer.
+     * @return un ArrayList con todos los textos que aparecen en el videojuego.
+     */
     static ArrayList<String> readLanguageFile(String path){
         BufferedReader br = null;
         ArrayList<String> text = null;
@@ -50,6 +55,13 @@ class LanguageFileReader {
         return text;
     }
     
+    /**
+     * Guarda el contenido de un fichero en un ArrayList. El salto de línea
+     * actúa como delimitador, es decir, la primera línea se guarda en la posición
+     * 0, la segunda en la 1...
+     * @param br un BufferedReader con un FileReader con la ruta especificada.
+     * @return los textos en un ArrayList de cadenas.
+     */
     private static ArrayList<String> storeFileContentIntoList(BufferedReader br){
         String line;
         

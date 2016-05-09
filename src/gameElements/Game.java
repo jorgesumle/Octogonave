@@ -59,7 +59,7 @@ public class Game {
     }
     
     /**
-     * Crea los nodos (Nodes) utilizados en el juego.
+     * Crea las instancias de <tt>Nodes</tt> utilizados en el juego.
      */
     private void createNodes() {
         octogonave = new Octogonave(320, 240);
@@ -67,7 +67,7 @@ public class Game {
     }
     
     /**
-     * Añade los nodos (Nodes) al Pane principal.
+     * Añade las instancias de <tt>Node</tt> al Pane principal.
      */
     private void addNodes() {
         Main.getRoot().getChildren().addAll(playScore, octogonave.getSpriteFrame());
@@ -82,7 +82,7 @@ public class Game {
     }
     
     /**
-     * Arranca el AnimationTimer, que ejecutará la lógica de acción y actualización
+     * Arranca el <tt>AnimationTimer</tt>, que ejecutará la lógica de acción y actualización
      * del juego, que se ejecutará en cada fotograma en condiciones idóneas.
      */
     private void startGameLoop() {

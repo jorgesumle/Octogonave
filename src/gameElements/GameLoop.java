@@ -44,10 +44,11 @@ class GameLoop extends AnimationTimer{
     }
 
     /**
-     * Este código se ejecuta cada fotograma mientras el AnimationTimer este
+     * Este código se ejecuta cada fotograma mientras el <tt>AnimationTimer</tt> este
      * activo. Actualiza todos los <i>sprites</i> del juego.
      * @param now El registro del pulso (fotograma) actual en nanosegundos. 
-     * Este valor es el mismo para todos los AnimationTimers llamados en el mismo pulso. 
+     * Este valor es el mismo para todos las instancias de <tt>AnimationTimer</tt> 
+     * llamadas en el mismo pulso. 
      */
     @Override
     public void handle(long now) {

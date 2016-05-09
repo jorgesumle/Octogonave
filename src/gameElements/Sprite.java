@@ -57,6 +57,7 @@ public abstract class Sprite {
      * @param yLocation la coordenada Y.
      * @param spriteImages las imágenes que utiliza el <i>sprite</i>.
      */
+    
     protected Sprite(String SVGData, double xLocation, double yLocation, Image... spriteImages){
         spriteBound = new SVGPath();
         spriteBound.setContent(SVGData);
@@ -69,10 +70,12 @@ public abstract class Sprite {
         this.spriteImages.addAll(Arrays.asList(spriteImages));
         scene = Main.getScene();
     }
+    
     /**
      * Este código se actualiza en cada fotograma.
      */
     abstract void update();
+    
     /**
      * 
      * @return las imágenes que utiliza el <i>sprite</i>.
@@ -80,6 +83,7 @@ public abstract class Sprite {
     protected List<Image> getSpriteImages() {
         return spriteImages;
     }
+    
     /**
      * Asigna nuevas imagenes al <i>sprite</i>.
      * @param spriteImages las imagenes que utiliza el <i>sprite</i>.
@@ -87,6 +91,7 @@ public abstract class Sprite {
     protected void setSpriteImages(List<Image> spriteImages) {
         this.spriteImages = spriteImages;
     }
+    
     /**
      * 
      * @return la imagen que actualmente tiene asignada el <i>sprite</i>.
@@ -94,6 +99,7 @@ public abstract class Sprite {
     protected ImageView getSpriteFrame() {
         return spriteFrame;
     }
+    
     /**
      * Asigna la imagen que se verá en pantalla del <i>sprite</i>.
      * @param spriteFrame la imagen del <i>sprite</i> que se quiere mostrar en pantalla.
@@ -101,13 +107,15 @@ public abstract class Sprite {
     protected void setSpriteFrame(ImageView spriteFrame) {
         this.spriteFrame = spriteFrame;
     }
+    
     /**
      * 
      * @return la ruta SVG del <i>sprite</i>.
      */
     protected SVGPath getSpriteBound() {
         return spriteBound;
-    }   
+    } 
+    
     /**
      * Asigna una nueva ruta SVG al <i>sprite</i>.
      * @param spriteBound la ruta SVG que se quiere asignar al <i>sprite</i>.

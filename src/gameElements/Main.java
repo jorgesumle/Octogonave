@@ -16,6 +16,7 @@
  */
 package gameElements;
 
+import gameMenus.Config;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -27,47 +28,68 @@ import gameMenus.Texts;
 
 
 /**
- * Clase principal.
+ * Contiene las propiedades y métodos básicos y necesarios para una aplicación
+ * JavaFX. Entre ellas se encuentran las propiedades de la ventana, la <tt>Scene</tt>
+ * principal, el <tt>Node</tt> raíz y el menú principal, que se crea en el método
+ * <tt>start()</tt>
  * @author Jorge Maldonado Ventura
  */
 public class Main extends Application {
-    private static final short HEIGHT = 480, WIDTH = 640;
+    private static final short WINDOW_HEIGHT = 480, WINDOW_WIDTH = 640;
     private static Pane root;
     private static Scene scene;
     private static MainMenu mainMenu;
     
+    /**
+     * Devuelve el menú principal.
+     * @return el menú principal.
+     */
     public static MainMenu getMainMenu(){
         return mainMenu;
     }
     
+    /**
+     * Devuelve el Scene principal.
+     * @return el <tt>Scene</tt> principal.
+     */
     public static Scene getScene() {
         return scene;
     }
-
+    
+    /**
+     * Devuelve el Root principal.
+     * @return el <tt>Root</tt> principal.
+     */
     public static Pane getRoot() {
         return root;
     }
-
-    public static short getHEIGHT() {
-        return HEIGHT;
+    
+    public static short getWINDOW_HEIGHT() {
+        return WINDOW_HEIGHT;
     }
 
-    public static short getWIDTH() {
-        return WIDTH;
+    public static short getWINDOW_WIDTH() {
+        return WINDOW_WIDTH;
     }
     
     public static void main(String[] args) {
         launch(args);
     }
     
+    /**
+     * Crea y vincula los recursos necesarios para el correcto funcionamiento
+     * del programa: el <tt>.css</tt> de los menús, la <tt>Scene</tt>, el <tt>Stage</tt>,
+     * el icono de la ventana y el menú principal (<tt>MainMenu</tt>).
+     * @param primaryStage el <tt>Stage</tt> principal.
+     */
     @Override
     public void start(Stage primaryStage) {
-        ConfigMenu.loadConfig();
+        Config.loadConfig();
         root = new Pane();
-        root.prefHeight(HEIGHT);
-        root.prefWidth(WIDTH);
+        root.prefHeight(WINDOW_HEIGHT);
+        root.prefWidth(WINDOW_WIDTH);
         
-        scene = new Scene(root, WIDTH, HEIGHT); 
+        scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT); 
         scene.getStylesheets().add(MainMenu.class.getResource("menus.css").toExternalForm());
         primaryStage.getIcons().add(new Image("octogonaveStillOriginal.png"));
         primaryStage.setTitle(Texts.getProgramTitle());
