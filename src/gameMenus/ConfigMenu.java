@@ -34,7 +34,7 @@ public class ConfigMenu extends GridPane{
     private static String selectedLanguage;
     private static boolean musicOn, soundsOn;
     private Label language, musicLabel, soundsLabel;
-    private Button musicButton, soundsButton, back;
+    private Button musicButton, soundsButton, backButton;
     private Text title;
     
     ConfigMenu(){
@@ -51,15 +51,15 @@ public class ConfigMenu extends GridPane{
         musicConfigNodes();
         soundConfigNodes();
         
-        back = new Button(Texts.getBackButton());
-        back.setOnAction(e ->
+        backButton = new Button(Texts.getBackButton());
+        backButton.setOnAction(e ->
             {
                 Main.getScene().setRoot(Main.getMainMenu());
                 applyLanguageChange();
                 Config.saveConfig();
             }
         );
-        add(back, 0, 4, 2, 1);
+        add(backButton, 0, 4, 2, 1);
     }
 
     public static boolean areSoundsOn() {
@@ -104,7 +104,7 @@ public class ConfigMenu extends GridPane{
         } else{
             soundsButton.setText(Texts.getOffSoundsButton());
         }
-        back.setText(Texts.getBackButton());
+        backButton.setText(Texts.getBackButton());
     }
 
     private void setSelectedElement(ChoiceBox languages) {

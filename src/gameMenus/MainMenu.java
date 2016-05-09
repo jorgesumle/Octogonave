@@ -90,6 +90,9 @@ public class MainMenu extends StackPane{
         return EXIT_BUTTON;
     }
     
+    /**
+     * Aporta funcionalidad a los botones del menú principal.
+     */
     public void makeButtonsInteract(){
         PLAY_BUTTON.setOnAction(e -> 
             {

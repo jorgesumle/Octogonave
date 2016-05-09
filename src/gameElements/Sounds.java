@@ -42,8 +42,5 @@ class Sounds {
         });
         gameMusicPlayer.play();
     }
-    
-    static void playBonusSound(){
-        BONUS_SOUND.play();
-    }
+
 }

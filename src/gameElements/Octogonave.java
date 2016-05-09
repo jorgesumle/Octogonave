@@ -22,8 +22,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
+import javafx.util.Duration;
 
 /**
  * El héroe del juego.
@@ -44,6 +48,9 @@ class Octogonave extends Sprite{
     private final byte RELOAD_RATE = 6;
     private double velocity;
     private byte currentFrame, reloadCounter;
+    private AudioClip shootSound = new AudioClip(Sounds.class.getResource("/shoot.wav").toExternalForm()),
+            bonusSound = new AudioClip(Sounds.class.getResource("/bonusSound.wav").toExternalForm());
+    private MediaPlayer movingSpacecraft = new MediaPlayer(new Media(this.getClass().getResource("/movingSpacecraft.wav").toExternalForm()));
     /**
      * Esta constante influye en la velocidad en la que se produce un cambio de fotograma de la nave, se le resta
      * posteriormente la velocidad para que a más velocidad mayor sea el cambio.
@@ -69,6 +76,14 @@ class Octogonave extends Sprite{
         xPos = xLocation;
         yPos = yLocation;
         lives = 2;
+        
+        movingSpacecraft.setOnEndOfMedia(() -> {
+            movingSpacecraft.seek(Duration.ZERO);
+            movingSpacecraft.play();
+        });
+        movingSpacecraft.setOnStopped(() -> {
+            movingSpacecraft.seek(Duration.ZERO);
+        });
     }
 
     @Override
@@ -85,6 +100,7 @@ class Octogonave extends Sprite{
     private void determineKeyPressed(){
         scene.setOnKeyPressed((KeyEvent event) -> 
             {
+                movingSpacecraft.play();
                 switch(event.getCode()){
                     case UP:
                         up = true;
@@ -121,8 +137,9 @@ class Octogonave extends Sprite{
         );
     }
     private void determineKeyReleased(){
-        scene.setOnKeyReleased((KeyEvent event) -> 
+        scene.setOnKeyReleased((KeyEvent event) ->                 
             {
+                
                 switch(event.getCode()){
                     case UP:
                         up = false;
@@ -193,6 +210,8 @@ class Octogonave extends Sprite{
             spriteFrame.setRotate(180);
         } else{
             spriteFrame.setImage(spriteImages.get(0));
+            movingSpacecraft.stop();
+            
         }
     }
     
@@ -301,6 +320,7 @@ class Octogonave extends Sprite{
      */
     private void updateScore(Sprite sprite) {
         Score playScore = Main.getMainMenu().getGame().getPlayScore();
+        bonusSound.play();
         if(sprite instanceof Diamond){
             playScore.increaseScore(Diamond.getBONUS());
         } else if(sprite instanceof Ruby){
@@ -309,7 +329,7 @@ class Octogonave extends Sprite{
             playScore.increaseScore(YellowSapphire.getBONUS());
         }
         if(ConfigMenu.areSoundsOn()){
-            Sounds.playBonusSound();
+
         }
         playScore.updateScoreText();
     }
@@ -330,10 +350,11 @@ class Octogonave extends Sprite{
         reloadCounter++;
         if(reloadCounter >= RELOAD_RATE){
             if(fireUp || fireLeft || fireDown || fireRight){
+                shootSound.play();
                 reloadCounter = 0;
                 Bullet bullet = null;
                 if(fireUp){
-                    bullet = new Bullet(xPos + HALF_OF_IMAGE_WIDTH + 0.5 - 5, yPos + 30 - 13);
+                    bullet = new Bullet(xPos + HALF_OF_IMAGE_WIDTH - 5, yPos + 30 - 13);
                     bullet.setVerticalVelocity(-3);
                 } else if(fireLeft){
                     bullet = new Bullet(xPos + 30 - 13, yPos + HALF_OF_IMAGE_WIDTH - 11 / 2);
@@ -341,7 +362,7 @@ class Octogonave extends Sprite{
                     bullet.getSpriteFrame().setRotate(-90);
                     bullet.getSpriteBound().setRotate(-90);
                 } else if(fireDown){
-                    bullet = new Bullet(xPos + HALF_OF_IMAGE_WIDTH + 0.5 - 5, yPos + HALF_OF_IMAGE_WIDTH * 2 - 30);
+                    bullet = new Bullet(xPos + HALF_OF_IMAGE_WIDTH - 5, yPos + HALF_OF_IMAGE_WIDTH * 2 - 30);
                     bullet.setVerticalVelocity(3);
                     bullet.getSpriteFrame().setRotate(180);
                     bullet.getSpriteBound().setRotate(180);
@@ -350,7 +371,11 @@ class Octogonave extends Sprite{
                     bullet.setHorizontalVelocity(3);
                     bullet.getSpriteFrame().setRotate(90);
                     bullet.getSpriteBound().setRotate(90);
-                }
+                } else if(fireUp && fireRight){
+                    
+                } else if(fireDown && fireRight){
+                    
+                } 
                 Main.getMainMenu().getGame().getSpriteManager().addToBULLETS_TO_ADD(bullet);
                 Main.getRoot().getChildren().add(bullet.getSpriteFrame());
             } else{

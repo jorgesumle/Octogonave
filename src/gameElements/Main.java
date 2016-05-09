@@ -16,13 +16,11 @@
  */
 package gameElements;
 
-import gameMenus.Config;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import gameMenus.ConfigMenu;
 import gameMenus.MainMenu;
 import gameMenus.Texts;
 
@@ -63,7 +61,7 @@ public class Main extends Application {
     public static Pane getRoot() {
         return root;
     }
-    
+
     public static short getWINDOW_HEIGHT() {
         return WINDOW_HEIGHT;
     }
@@ -84,7 +82,7 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
-        Config.loadConfig();
+        gameMenus.Config.loadConfig();
         root = new Pane();
         root.prefHeight(WINDOW_HEIGHT);
         root.prefWidth(WINDOW_WIDTH);

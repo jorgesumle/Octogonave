@@ -72,11 +72,6 @@ public abstract class Sprite {
     }
     
     /**
-     * Este código se actualiza en cada fotograma.
-     */
-    abstract void update();
-    
-    /**
      * 
      * @return las imágenes que utiliza el <i>sprite</i>.
      */
@@ -123,5 +118,10 @@ public abstract class Sprite {
     protected void setSpriteBound(SVGPath spriteBound) {
         this.spriteBound = spriteBound;
     }
+    
+    /**
+     * Este código se actualiza en cada fotograma en condiciones óptimas.
+     */
+    abstract void update();
     
 }
