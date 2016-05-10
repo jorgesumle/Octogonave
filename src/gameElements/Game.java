@@ -88,6 +88,6 @@ public class Game {
     private void startGameLoop() {
         gameLoop = new GameLoop(octogonave, spriteManager);
         gameLoop.start();
-    }    
+    }
     
 }

@@ -31,8 +31,6 @@ import javafx.scene.text.Text;
  */
 public class ConfigMenu extends GridPane{
 
-    private static String selectedLanguage;
-    private static boolean musicOn, soundsOn;
     private Label language, musicLabel, soundsLabel;
     private Button musicButton, soundsButton, backButton;
     private Text title;
@@ -62,28 +60,6 @@ public class ConfigMenu extends GridPane{
         add(backButton, 0, 4, 2, 1);
     }
 
-    public static boolean areSoundsOn() {
-        return soundsOn;
-    }
-
-    public static boolean isMusicOn() {
-        return musicOn;
-    }
-
-    public static void setMusicOn(boolean musicOn) {
-        ConfigMenu.musicOn = musicOn;
-    }
-
-    public static void setSoundsOn(boolean soundsOn) {
-        ConfigMenu.soundsOn = soundsOn;
-    }
-
-    public static void setSelectedLanguage(String selectedLanguage) {
-        ConfigMenu.selectedLanguage = selectedLanguage;
-    }
-    
-    
-
     private void applyLanguageChange() {
         Main.getMainMenu().getPLAY_BUTTON().setText(Texts.getPlayButton());
         Main.getMainMenu().getINSTRUCTIONS_BUTTON().setText(Texts.getInstructionsButton());
@@ -94,12 +70,12 @@ public class ConfigMenu extends GridPane{
         musicLabel.setText(Texts.getMusicLabel());
         soundsLabel.setText(Texts.getSoundsLabel());
         title.setText(Texts.getConfigButton());
-        if(musicOn){
+        if(Config.isMusicOn()){
             musicButton.setText(Texts.getOnMusicButton());
         } else{
             musicButton.setText(Texts.getOffMusicButton());
         }
-        if(soundsOn){
+        if(Config.areSoundsOn()){
             soundsButton.setText(Texts.getOnSoundsButton());
         } else{
             soundsButton.setText(Texts.getOffSoundsButton());
@@ -108,7 +84,7 @@ public class ConfigMenu extends GridPane{
     }
 
     private void setSelectedElement(ChoiceBox languages) {
-        switch(selectedLanguage){
+        switch(Config.getSelectedLanguage()){
             case "castellano":
                 languages.getSelectionModel().select(0);
                 break;
@@ -136,13 +112,13 @@ public class ConfigMenu extends GridPane{
         setSelectedElement(languages);
         languages.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> observableValue, Number number, Number number2) -> {
             if(languages.getItems().get((Integer) number2) == "castellano"){
-                selectedLanguage = "castellano";
+                Config.setSelectedLanguage("castellano");
                 Texts.setTexts(LanguageFileReader.readLanguageFile("lang/castellano.lang"));
             } else if(languages.getItems().get((Integer) number2) == "deutsch"){
-                selectedLanguage = "deutsch";
+                Config.setSelectedLanguage("deutsch");
                 Texts.setTexts(LanguageFileReader.readLanguageFile("lang/deutsch.lang"));
             } else if(languages.getItems().get((Integer) number2) == "english"){
-                selectedLanguage = "english";
+                Config.setSelectedLanguage("english");
                 Texts.setTexts(LanguageFileReader.readLanguageFile("lang/english.lang"));
             }
             Config.saveConfig();
@@ -158,19 +134,19 @@ public class ConfigMenu extends GridPane{
     private void musicConfigNodes(){
         musicLabel = new Label(Texts.getMusicLabel());
 
-        if(musicOn){
+        if(Config.isMusicOn()){
             musicButton = new Button(Texts.getOnMusicButton());
         } else{
             musicButton = new Button(Texts.getOffMusicButton());
         }
         musicButton.setOnAction(e -> 
             {
-                if(musicOn){
+                if(Config.isMusicOn()){
                     musicButton.setText(Texts.getOffMusicButton());
-                    musicOn = false;
+                    Config.setMusicOn(false);
                 } else{
                     musicButton.setText(Texts.getOnMusicButton());
-                    musicOn = true;
+                    Config.setMusicOn(true);
                 }
             }
         );
@@ -185,19 +161,19 @@ public class ConfigMenu extends GridPane{
     private void soundConfigNodes(){
         soundsLabel = new Label(Texts.getSoundsLabel());
 
-        if(soundsOn){
+        if(Config.areSoundsOn()){
             soundsButton = new Button(Texts.getOnSoundsButton());
         } else{
             soundsButton = new Button(Texts.getOffSoundsButton());
         }
         soundsButton.setOnAction(e -> 
             {
-                if(soundsOn){
+                if(Config.areSoundsOn()){
                     soundsButton.setText(Texts.getOffSoundsButton());
-                    soundsOn = false;
+                    Config.setSoundsOn(false);
                 } else{
                     soundsButton.setText(Texts.getOnSoundsButton());
-                    soundsOn = true;
+                    Config.setSoundsOn(true);
                 }
             }
         );

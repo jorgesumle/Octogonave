@@ -17,17 +17,15 @@
 
 package gameElements;
 
+import gameMenus.Config;
 import gameMenus.ConfigMenu;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.AudioClip;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
-import javafx.util.Duration;
 
 /**
  * El héroe del juego.
@@ -44,13 +42,13 @@ class Octogonave extends Sprite{
             OCTO_NAVE_MOV_HURT_2 = new Image("octogonaveMovingFireHurt2.png", 117, 117, true, false, true),
             OCTO_NAVE_MOV_HURT_3 = new Image("octogonaveMovingFireHurt3.png", 117, 117, true, false, true);
     private static final float HALF_OF_IMAGE_WIDTH = 58.5f;
-    private boolean up, right, down, left, fireUp, fireRight, fireLeft, fireDown;
+    private boolean up, right, down, left, fireUp, fireRight, fireLeft, fireDown, playingMovingSound;
     private final byte RELOAD_RATE = 6;
     private double velocity;
     private byte currentFrame, reloadCounter;
-    private AudioClip shootSound = new AudioClip(Sounds.class.getResource("/shoot.wav").toExternalForm()),
-            bonusSound = new AudioClip(Sounds.class.getResource("/bonusSound.wav").toExternalForm());
-    private MediaPlayer movingSpacecraft = new MediaPlayer(new Media(this.getClass().getResource("/movingSpacecraft.wav").toExternalForm()));
+    private AudioClip shootSound = new AudioClip(this.getClass().getResource("/shoot.wav").toExternalForm()),
+            bonusSound = new AudioClip(this.getClass().getResource("/bonusSound.wav").toExternalForm()),
+            movingSpacecraft = new AudioClip(this.getClass().getResource("/movingSpacecraft.wav").toExternalForm());
     /**
      * Esta constante influye en la velocidad en la que se produce un cambio de fotograma de la nave, se le resta
      * posteriormente la velocidad para que a más velocidad mayor sea el cambio.
@@ -76,14 +74,7 @@ class Octogonave extends Sprite{
         xPos = xLocation;
         yPos = yLocation;
         lives = 2;
-        
-        movingSpacecraft.setOnEndOfMedia(() -> {
-            movingSpacecraft.seek(Duration.ZERO);
-            movingSpacecraft.play();
-        });
-        movingSpacecraft.setOnStopped(() -> {
-            movingSpacecraft.seek(Duration.ZERO);
-        });
+        movingSpacecraft.setCycleCount(AudioClip.INDEFINITE);
     }
 
     @Override
@@ -100,7 +91,9 @@ class Octogonave extends Sprite{
     private void determineKeyPressed(){
         scene.setOnKeyPressed((KeyEvent event) -> 
             {
-                movingSpacecraft.play();
+                if(Config.areSoundsOn() && !movingSpacecraft.isPlaying()){
+                    movingSpacecraft.play();
+                }
                 switch(event.getCode()){
                     case UP:
                         up = true;
@@ -137,9 +130,8 @@ class Octogonave extends Sprite{
         );
     }
     private void determineKeyReleased(){
-        scene.setOnKeyReleased((KeyEvent event) ->                 
+        scene.setOnKeyReleased((KeyEvent event) ->
             {
-                
                 switch(event.getCode()){
                     case UP:
                         up = false;
@@ -210,8 +202,9 @@ class Octogonave extends Sprite{
             spriteFrame.setRotate(180);
         } else{
             spriteFrame.setImage(spriteImages.get(0));
-            movingSpacecraft.stop();
-            
+            if(Config.areSoundsOn() && movingSpacecraft.isPlaying()){
+                movingSpacecraft.stop();
+            }
         }
     }
     
@@ -320,16 +313,15 @@ class Octogonave extends Sprite{
      */
     private void updateScore(Sprite sprite) {
         Score playScore = Main.getMainMenu().getGame().getPlayScore();
-        bonusSound.play();
+        if(Config.areSoundsOn()){
+            bonusSound.play();
+        }
         if(sprite instanceof Diamond){
             playScore.increaseScore(Diamond.getBONUS());
         } else if(sprite instanceof Ruby){
             playScore.increaseScore(Ruby.getBONUS());
         } else if(sprite instanceof YellowSapphire){
             playScore.increaseScore(YellowSapphire.getBONUS());
-        }
-        if(ConfigMenu.areSoundsOn()){
-
         }
         playScore.updateScoreText();
     }
@@ -350,7 +342,9 @@ class Octogonave extends Sprite{
         reloadCounter++;
         if(reloadCounter >= RELOAD_RATE){
             if(fireUp || fireLeft || fireDown || fireRight){
-                shootSound.play();
+                if(Config.areSoundsOn()){
+                    shootSound.play();
+                }
                 reloadCounter = 0;
                 Bullet bullet = null;
                 if(fireUp){

@@ -17,12 +17,15 @@
 
 package gameElements;
 
+import gameMenus.Config;
 import gameMenus.ConfigMenu;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 /**
@@ -34,12 +37,14 @@ import javafx.util.Duration;
 class GameLoop extends AnimationTimer{
     private final Octogonave octogonave;
     private final SpriteManager SPRITE_MANAGER;
+    private final String GAME_MUSIC_PATH = "/Stealth Groover.aiff";
+    private MediaPlayer gameMusicPlayer; //Si no esta declarado aquí el, recolector de basura de Java lo detiene en diez segundos.
     GameLoop(Octogonave octogonave, SpriteManager spriteManager){
         this.octogonave = octogonave;
         this.SPRITE_MANAGER = spriteManager;
         playTimeLine();
-        if(ConfigMenu.isMusicOn()){
-            Sounds.playMusic();
+        if(Config.isMusicOn()){
+            playMusic();
         }
     }
 
@@ -111,5 +116,17 @@ class GameLoop extends AnimationTimer{
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+    }
+    
+    /**
+     * Reproduce la música del juego una y otra vez.
+     */
+    private void playMusic(){
+        gameMusicPlayer = new MediaPlayer(new Media(this.getClass().getResource(GAME_MUSIC_PATH).toExternalForm()));
+        gameMusicPlayer.setOnRepeat(() -> {
+            gameMusicPlayer.seek(Duration.ZERO);
+            gameMusicPlayer.play();
+        });
+        gameMusicPlayer.play();
     }
 }

@@ -43,6 +43,32 @@ import org.xml.sax.SAXException;
 public class Config {
 
     private static final File SETTINGS_FILE = new File("settings.xml");
+    private static boolean soundsOn;
+    private static String selectedLanguage;
+    private static boolean musicOn;
+    
+    public static boolean areSoundsOn() {
+        return soundsOn;
+    }
+    
+    public static String getSelectedLanguage() {
+        return selectedLanguage;
+    }
+    
+    public static boolean isMusicOn() {
+        return musicOn;
+    }
+    
+    static void setMusicOn(boolean musicOn) {
+        Config.musicOn = musicOn;
+    }
+    
+    static void setSelectedLanguage(String selectedLanguage) {
+        Config.selectedLanguage = selectedLanguage;
+    }
+    static void setSoundsOn(boolean soundsOn) {
+        Config.soundsOn = soundsOn;
+    }
     
     public static void loadConfig() {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -57,21 +83,21 @@ public class Config {
         NodeList languageTag = configXML.getElementsByTagName("language");
         Node languageValue = languageTag.item(0);
         if (languageValue.getTextContent().equals("castellano")) {
-            ConfigMenu.setSelectedLanguage("castellano");
+            selectedLanguage = "castellano";
             Texts.setTexts(LanguageFileReader.readLanguageFile("lang/castellano.lang"));
         } else if (languageValue.getTextContent().equals("english")) {
-            ConfigMenu.setSelectedLanguage("english");
+            selectedLanguage = "english";
             Texts.setTexts(LanguageFileReader.readLanguageFile("lang/english.lang"));
         } else if (languageValue.getTextContent().equals("deutsch")) {
-            ConfigMenu.setSelectedLanguage("deutsch");
+            selectedLanguage = "deutsch";
             Texts.setTexts(LanguageFileReader.readLanguageFile("lang/deutsch.lang"));
         }
         NodeList musicTag = configXML.getElementsByTagName("music");
         Node musicValue = musicTag.item(0);
-        ConfigMenu.setMusicOn(musicValue.getTextContent().equals("on"));
+        musicOn = musicValue.getTextContent().equals("on");
         NodeList soundsTag = configXML.getElementsByTagName("sounds");
         Node soundsValue = soundsTag.item(0);
-        ConfigMenu.setSoundsOn(soundsValue.getTextContent().equals("on"));
+        soundsOn = soundsValue.getTextContent().equals("on");
     }
 
     static void saveConfig() {
@@ -97,13 +123,13 @@ public class Config {
                 break;
         }
         Element music = (Element) configXML.createElement("music");
-        if (ConfigMenu.isMusicOn()) {
+        if (isMusicOn()) {
             music.appendChild(configXML.createTextNode("on"));
         } else {
             music.appendChild(configXML.createTextNode("off"));
         }
         Element sounds = (Element) configXML.createElement("sounds");
-        if (ConfigMenu.areSoundsOn()) {
+        if (areSoundsOn()) {
             sounds.appendChild(configXML.createTextNode("on"));
         } else {
             sounds.appendChild(configXML.createTextNode("off"));
@@ -127,5 +153,5 @@ public class Config {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }
