@@ -32,33 +32,27 @@ import gameElements.Main;
 public class MainMenu extends StackPane{
     
     private final byte PADDING;
-    private final Button PLAY_BUTTON, INSTRUCTIONS_BUTTON, CONFIG_BUTTON, CREDITS_BUTTON, EXIT_BUTTON;
+    private final Button playButton, instructionsButton, configButton, creditsButton, exitButton;
     private Game game;
     private ConfigMenu configMenu;
     private InstructionsMenu instructionsMenu;
+    private Text title;
     
     public MainMenu(){
-        
         VBox menuVBox = new VBox();
         PADDING = 10;
         menuVBox.setSpacing(PADDING);
         menuVBox.setAlignment(Pos.CENTER);
-        
-        Text title = new Text(Texts.getProgramTitle());
+        title = new Text();
         title.setId("title");
-        
-        PLAY_BUTTON = new Button(Texts.getPlayButton());
-        PLAY_BUTTON.getStyleClass().add("button");    
-        INSTRUCTIONS_BUTTON = new Button(Texts.getInstructionsButton());
-        INSTRUCTIONS_BUTTON.getStyleClass().add("instructions");   
-        CONFIG_BUTTON = new Button(Texts.getConfigButton());
-        CONFIG_BUTTON.getStyleClass().add("config");
-        CREDITS_BUTTON = new Button(Texts.getCreditsButton());
-        CREDITS_BUTTON.getStyleClass().add("credits");
-        EXIT_BUTTON = new Button(Texts.getExitButton());
-        EXIT_BUTTON.getStyleClass().add("exit");
-        
-        menuVBox.getChildren().addAll(title, PLAY_BUTTON, INSTRUCTIONS_BUTTON, CONFIG_BUTTON, CREDITS_BUTTON, EXIT_BUTTON);
+        playButton = new Button();
+        playButton.getStyleClass().add("button");    
+        instructionsButton = new Button();
+        configButton = new Button();
+        creditsButton = new Button();
+        exitButton = new Button();
+        setTexts();
+        menuVBox.getChildren().addAll(title, playButton, instructionsButton, configButton, creditsButton, exitButton);
         getChildren().add(menuVBox);
     }
 
@@ -70,37 +64,41 @@ public class MainMenu extends StackPane{
         return PADDING;
     }
 
-    Button getPLAY_BUTTON() {
-        return PLAY_BUTTON;
+    public InstructionsMenu getInstructionsMenu() {
+        return instructionsMenu;
     }
 
-    Button getINSTRUCTIONS_BUTTON() {
-        return INSTRUCTIONS_BUTTON;
+    Button getPlayButton() {
+        return playButton;
     }
 
-    Button getCONFIG_BUTTON() {
-        return CONFIG_BUTTON;
+    Button getInstructionsButton() {
+        return instructionsButton;
     }
 
-    Button getCREDITS_BUTTON() {
-        return CREDITS_BUTTON;
+    Button getConfigButton() {
+        return configButton;
     }
 
-    Button getEXIT_BUTTON() {
-        return EXIT_BUTTON;
+    Button getCreditsButton() {
+        return creditsButton;
+    }
+
+    Button getExitButton() {
+        return exitButton;
     }
     
     /**
      * Aporta funcionalidad a los botones del menú principal.
      */
     public void makeButtonsInteract(){
-        PLAY_BUTTON.setOnAction(e -> 
+        playButton.setOnAction(e -> 
             {
                 Main.getScene().setRoot(Main.getRoot());
                 game = new Game();
             }
         );
-        INSTRUCTIONS_BUTTON.setOnAction(e -> 
+        instructionsButton.setOnAction(e -> 
             {
                 if(instructionsMenu == null){
                     instructionsMenu = new InstructionsMenu();
@@ -109,7 +107,7 @@ public class MainMenu extends StackPane{
                 Main.getScene().setRoot(instructionsMenu);
             }
         );
-        CONFIG_BUTTON.setOnAction(e -> 
+        configButton.setOnAction(e -> 
             {
                 if(configMenu == null){
                     configMenu = new ConfigMenu();
@@ -118,16 +116,28 @@ public class MainMenu extends StackPane{
                 Main.getScene().setRoot(configMenu);
             }
         );
-        CREDITS_BUTTON.setOnAction(e -> 
+        creditsButton.setOnAction(e -> 
             {
                 
             }
         );
-        EXIT_BUTTON.setOnAction(e -> 
+        exitButton.setOnAction(e -> 
             {
                 System.exit(0);
             }
         );
+    }
+    
+    /**
+     * Asigna el texto de las instancias de <tt>Node</tt> que contienen texto.
+     */
+    public void setTexts(){
+        title.setText(Texts.getProgramTitle());
+        playButton.setText(Texts.getPlayButton());
+        instructionsButton.setText(Texts.getInstructionsButton());
+        configButton.setText(Texts.getConfigButton());
+        creditsButton.setText(Texts.getCreditsButton());
+        exitButton.setText(Texts.getExitButton());
     }
     
 }

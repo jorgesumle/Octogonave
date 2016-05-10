@@ -18,7 +18,6 @@
 package gameElements;
 
 import gameMenus.Config;
-import gameMenus.ConfigMenu;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.image.Image;
@@ -42,7 +41,7 @@ class Octogonave extends Sprite{
             OCTO_NAVE_MOV_HURT_2 = new Image("octogonaveMovingFireHurt2.png", 117, 117, true, false, true),
             OCTO_NAVE_MOV_HURT_3 = new Image("octogonaveMovingFireHurt3.png", 117, 117, true, false, true);
     private static final float HALF_OF_IMAGE_WIDTH = 58.5f;
-    private boolean up, right, down, left, fireUp, fireRight, fireLeft, fireDown, playingMovingSound;
+    private boolean up, right, down, left, fireUp, fireRight, fireLeft, fireDown;
     private final byte RELOAD_RATE = 6;
     private double velocity;
     private byte currentFrame, reloadCounter;
@@ -231,11 +230,15 @@ class Octogonave extends Sprite{
     }
     
     private void increaseSpeed(double pixelsPerMove){
-        velocity += pixelsPerMove;
+        if(velocity <= 10){
+            velocity += pixelsPerMove;
+            movingSpacecraft.setVolume(velocity / 10);
+        }
     }
     private void decreaseSpeed(double pixelsPerMove){
-        if(!(velocity <= 1)){
+        if(velocity > 1){
             velocity -= pixelsPerMove;
+            movingSpacecraft.setVolume(velocity / 10);
         }
     }
     

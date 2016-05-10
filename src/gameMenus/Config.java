@@ -42,7 +42,7 @@ import org.xml.sax.SAXException;
  */
 public class Config {
 
-    private static final File SETTINGS_FILE = new File("settings.xml");
+    private static File settingsFile = new File("settings.xml");
     private static boolean soundsOn;
     private static String selectedLanguage;
     private static boolean musicOn;
@@ -51,7 +51,7 @@ public class Config {
         return soundsOn;
     }
     
-    public static String getSelectedLanguage() {
+    static String getSelectedLanguage() {
         return selectedLanguage;
     }
     
@@ -76,7 +76,7 @@ public class Config {
         Document configXML = null;
         try {
             documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            configXML = documentBuilder.parse(SETTINGS_FILE);
+            configXML = documentBuilder.parse(settingsFile);
         } catch (ParserConfigurationException | SAXException | IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -146,7 +146,7 @@ public class Config {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
         DOMSource source = new DOMSource(configXML);
-        StreamResult streamResult = new StreamResult(SETTINGS_FILE);
+        StreamResult streamResult = new StreamResult(settingsFile);
         try {
             transformer.transform(source, streamResult);
         } catch (TransformerException ex) {

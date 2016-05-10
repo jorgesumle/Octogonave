@@ -98,5 +98,4 @@ public class Texts{
         Texts.texts = texts;
     }
     
-    
 }

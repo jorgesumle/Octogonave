@@ -17,8 +17,6 @@
 
 package gameElements;
 
-import gameMenus.Config;
-import gameMenus.ConfigMenu;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
@@ -43,7 +41,7 @@ class GameLoop extends AnimationTimer{
         this.octogonave = octogonave;
         this.SPRITE_MANAGER = spriteManager;
         playTimeLine();
-        if(Config.isMusicOn()){
+        if(gameMenus.Config.isMusicOn()){
             playMusic();
         }
     }
@@ -123,7 +121,7 @@ class GameLoop extends AnimationTimer{
      */
     private void playMusic(){
         gameMusicPlayer = new MediaPlayer(new Media(this.getClass().getResource(GAME_MUSIC_PATH).toExternalForm()));
-        gameMusicPlayer.setOnRepeat(() -> {
+        gameMusicPlayer.setOnEndOfMedia(() -> {
             gameMusicPlayer.seek(Duration.ZERO);
             gameMusicPlayer.play();
         });

@@ -31,50 +31,37 @@ import javafx.scene.text.Text;
  */
 public class ConfigMenu extends GridPane{
 
-    private Label language, musicLabel, soundsLabel;
+    private Label languageLabel, musicLabel, soundsLabel;
     private Button musicButton, soundsButton, backButton;
     private Text title;
+    private ChoiceBox languageChoiceBox;
     
     ConfigMenu(){
-  
         setVgap(Main.getMainMenu().getPADDING());
-        setHgap(10);
+        setHgap(Main.getMainMenu().getPADDING());
         setAlignment(Pos.CENTER);
-        
-        title = new Text(Texts.getConfigButton());
-        title.getStyleClass().add("smallTitle");
-        add(title, 0, 0, 2, 1);
-        
-        languageConfigNodes();  
-        musicConfigNodes();
-        soundConfigNodes();
-        
-        backButton = new Button(Texts.getBackButton());
-        backButton.setOnAction(e ->
-            {
-                Main.getScene().setRoot(Main.getMainMenu());
-                applyLanguageChange();
-                Config.saveConfig();
-            }
-        );
-        add(backButton, 0, 4, 2, 1);
+        createTitleText();
+        createLanguageConfigNodes();  
+        createMusicConfigNodes();
+        createSoundConfigNodes();
+        createBackButton();
+        setTexts();
+        addNodes();
     }
-
-    private void applyLanguageChange() {
-        Main.getMainMenu().getPLAY_BUTTON().setText(Texts.getPlayButton());
-        Main.getMainMenu().getINSTRUCTIONS_BUTTON().setText(Texts.getInstructionsButton());
-        Main.getMainMenu().getCONFIG_BUTTON().setText(Texts.getConfigButton());
-        Main.getMainMenu().getCREDITS_BUTTON().setText(Texts.getCreditsButton());
-        Main.getMainMenu().getEXIT_BUTTON().setText(Texts.getExitButton());
-        language.setText(Texts.getLanguage());
-        musicLabel.setText(Texts.getMusicLabel());
-        soundsLabel.setText(Texts.getSoundsLabel());
+    
+    /**
+     * Asigna el texto de las instancias de <tt>Node</tt> que contienen texto.
+     */
+    private void setTexts() {
         title.setText(Texts.getConfigButton());
+        languageLabel.setText(Texts.getLanguageLabel());
+        musicLabel.setText(Texts.getMusicLabel());
         if(Config.isMusicOn()){
             musicButton.setText(Texts.getOnMusicButton());
         } else{
             musicButton.setText(Texts.getOffMusicButton());
         }
+        soundsLabel.setText(Texts.getSoundsLabel());
         if(Config.areSoundsOn()){
             soundsButton.setText(Texts.getOnSoundsButton());
         } else{
@@ -82,62 +69,73 @@ public class ConfigMenu extends GridPane{
         }
         backButton.setText(Texts.getBackButton());
     }
-
-    private void setSelectedElement(ChoiceBox languages) {
+    
+    /**
+     * Elige la opción activa del <tt>ChoiceBox</tt>, según la configuración.
+     */
+    private void setLanguageChoiceBoxText() {
         switch(Config.getSelectedLanguage()){
             case "castellano":
-                languages.getSelectionModel().select(0);
+                languageChoiceBox.getSelectionModel().select(0);
                 break;
             case "deutsch":
-                languages.getSelectionModel().select(1);
+                languageChoiceBox.getSelectionModel().select(1);
                 break;
             case "english":
-                languages.getSelectionModel().select(2);
+                languageChoiceBox.getSelectionModel().select(2);
                 break;
         }
+    }
+    
+    /**
+     * Crea un <tt>Text</tt> para el título.
+     */
+    private void createTitleText(){
+        title = new Text();
+        title.getStyleClass().add("smallTitle");
     }
     
     /**
      * Se encarga de la creación del Label y ChoiceBox relacionados con la
      * configuración del idioma dentro del menú de configuración del juego.
      */
-    private void languageConfigNodes(){
-        language = new Label(Texts.getLanguageLabel());
-        add(language, 0, 1);
+    private void createLanguageConfigNodes(){
+        languageLabel = new Label();
         
-        ChoiceBox languages = new ChoiceBox<>();
-        languages.getItems().add("castellano");
-        languages.getItems().add("deutsch");
-        languages.getItems().add("english");
-        setSelectedElement(languages);
-        languages.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> observableValue, Number number, Number number2) -> {
-            if(languages.getItems().get((Integer) number2) == "castellano"){
+        languageChoiceBox = new ChoiceBox<>();
+        languageChoiceBox.getItems().add("castellano");
+        languageChoiceBox.getItems().add("deutsch");
+        languageChoiceBox.getItems().add("english");
+        setLanguageChoiceBoxText();
+        languageChoiceBox.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> observableValue, Number number, Number number2) -> {
+            if(languageChoiceBox.getItems().get((Integer) number2) == "castellano"){
                 Config.setSelectedLanguage("castellano");
                 Texts.setTexts(LanguageFileReader.readLanguageFile("lang/castellano.lang"));
-            } else if(languages.getItems().get((Integer) number2) == "deutsch"){
+            } else if(languageChoiceBox.getItems().get((Integer) number2) == "deutsch"){
                 Config.setSelectedLanguage("deutsch");
                 Texts.setTexts(LanguageFileReader.readLanguageFile("lang/deutsch.lang"));
-            } else if(languages.getItems().get((Integer) number2) == "english"){
+            } else if(languageChoiceBox.getItems().get((Integer) number2) == "english"){
                 Config.setSelectedLanguage("english");
                 Texts.setTexts(LanguageFileReader.readLanguageFile("lang/english.lang"));
             }
             Config.saveConfig();
-            applyLanguageChange();
+            setTexts();
+            Main.getMainMenu().setTexts();
+            Main.getMainMenu().getInstructionsMenu().setTexts();
         });
-        add(languages, 1, 1);
     }
     
     /**
      * Se encarga de la creación del Label y Button relacionados con la
      * configuración de música dentro del menú de configuración del juego.
      */
-    private void musicConfigNodes(){
-        musicLabel = new Label(Texts.getMusicLabel());
+    private void createMusicConfigNodes(){
+        musicLabel = new Label();
 
         if(Config.isMusicOn()){
-            musicButton = new Button(Texts.getOnMusicButton());
+            musicButton = new Button();
         } else{
-            musicButton = new Button(Texts.getOffMusicButton());
+            musicButton = new Button();
         }
         musicButton.setOnAction(e -> 
             {
@@ -150,21 +148,20 @@ public class ConfigMenu extends GridPane{
                 }
             }
         );
-        add(musicLabel, 0, 2);
-        add(musicButton, 1, 2);
+        
     }
     
     /**
      * Se encarga de la creación del Label y Button relacionados con la
      * configuración del sonido dentro del menú de configuración del juego.
      */
-    private void soundConfigNodes(){
-        soundsLabel = new Label(Texts.getSoundsLabel());
+    private void createSoundConfigNodes(){
+        soundsLabel = new Label();
 
         if(Config.areSoundsOn()){
-            soundsButton = new Button(Texts.getOnSoundsButton());
+            soundsButton = new Button();
         } else{
-            soundsButton = new Button(Texts.getOffSoundsButton());
+            soundsButton = new Button();
         }
         soundsButton.setOnAction(e -> 
             {
@@ -176,9 +173,34 @@ public class ConfigMenu extends GridPane{
                     Config.setSoundsOn(true);
                 }
             }
+        );   
+    }
+    
+    /**
+     * Crea el botón para volver al menú principal.
+     */
+    private void createBackButton(){
+        backButton = new Button();
+        backButton.setOnAction(e ->
+            {
+                Main.getScene().setRoot(Main.getMainMenu());
+                Config.saveConfig();
+            }
         );
+    }
+    
+    /**
+     * Añade los nodos creados con {@code: add()} para hacerlos visibles.
+     */
+    private void addNodes(){
+        add(title, 0, 0, 2, 1);
+        add(languageLabel, 0, 1);
+        add(languageChoiceBox, 1, 1);
+        add(musicLabel, 0, 2);
+        add(musicButton, 1, 2);
         add(soundsLabel, 0, 3);
         add(soundsButton, 1, 3);
+        add(backButton, 0, 4, 2, 1);
     }
 
 }

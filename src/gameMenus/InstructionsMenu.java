@@ -29,28 +29,41 @@ import javafx.scene.text.TextFlow;
  * @author Jorge Maldonado Ventura
  */
 class InstructionsMenu extends VBox{
-    
+    private Text titleText, gameTitleText, instructionsText;
+    private Button backButton;
     InstructionsMenu(){
         setAlignment(Pos.CENTER);
         setSpacing(Main.getMainMenu().getPADDING());
         
-        Text title = new Text(Texts.getInstructionsButton());
-        title.getStyleClass().add("smallTitle");
+        titleText = new Text();
+        titleText.getStyleClass().add("smallTitle");
         
-        Text gameTitle = new Text(Texts.getProgramTitle());
-        gameTitle.setStyle("-fx-font-style: italic;");
-        Text instructionsText = new Text(Texts.getInstructionsText());
+        gameTitleText = new Text();
+        gameTitleText.setStyle("-fx-font-style: italic;");
+        instructionsText = new Text();
         
-        TextFlow instructions = new TextFlow(gameTitle, instructionsText);
+        TextFlow instructions = new TextFlow(gameTitleText, instructionsText);
         setMargin(instructions, new Insets(6));
         
-        Button back = new Button(Texts.getBackButton());
-        back.setOnAction(e ->
+        backButton = new Button();
+        backButton.setOnAction(e ->
             {
                 Main.getScene().setRoot(Main.getMainMenu());
             }
         );
-        getChildren().addAll(title, instructions, back);
+        
+        setTexts();
+        getChildren().addAll(titleText, instructions, backButton);
+        
+    }
+    /**
+     * Asigna el texto de las instancias de <tt>Node</tt> que contienen texto.
+     */
+    void setTexts() {
+        titleText.setText(Texts.getInstructionsButton());
+        gameTitleText.setText(Texts.getProgramTitle());
+        instructionsText.setText(Texts.getInstructionsText());
+        backButton.setText(Texts.getBackButton());
     }
     
 }
