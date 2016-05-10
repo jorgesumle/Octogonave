@@ -131,7 +131,7 @@ public class MainMenu extends StackPane{
     /**
      * Asigna el texto de las instancias de <tt>Node</tt> que contienen texto.
      */
-    public void setTexts(){
+    void setTexts(){
         title.setText(Texts.getProgramTitle());
         playButton.setText(Texts.getPlayButton());
         instructionsButton.setText(Texts.getInstructionsButton());

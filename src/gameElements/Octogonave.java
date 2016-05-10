@@ -350,28 +350,48 @@ class Octogonave extends Sprite{
                 }
                 reloadCounter = 0;
                 Bullet bullet = null;
-                if(fireUp){
-                    bullet = new Bullet(xPos + HALF_OF_IMAGE_WIDTH - 5, yPos + 30 - 13);
+                if(fireUp && fireRight){
+                    bullet = new Bullet(xPos + 78, yPos + 28);
+                    bullet.setHorizontalVelocity(3);
+                    bullet.setVerticalVelocity(-3);
+                    bullet.getSpriteFrame().setRotate(45);
+                    bullet.getSpriteBound().setRotate(45);
+                } else if(fireDown && fireRight){
+                    bullet = new Bullet(xPos + 78, yPos + 76);
+                    bullet.setHorizontalVelocity(3);
+                    bullet.setVerticalVelocity(3);
+                    bullet.getSpriteFrame().setRotate(135);
+                    bullet.getSpriteBound().setRotate(135);
+                } else if(fireDown && fireLeft){
+                    bullet = new Bullet(xPos + 30, yPos + 76);
+                    bullet.setHorizontalVelocity(-3);
+                    bullet.setVerticalVelocity(3);
+                    bullet.getSpriteFrame().setRotate(225);
+                    bullet.getSpriteBound().setRotate(225);
+                } else if(fireLeft && fireUp){
+                    bullet = new Bullet(xPos + 30, yPos + 27);
+                    bullet.setHorizontalVelocity(-3);
+                    bullet.setVerticalVelocity(-3);
+                    bullet.getSpriteFrame().setRotate(315);
+                    bullet.getSpriteBound().setRotate(315);
+                } else if(fireUp){
+                    bullet = new Bullet(xPos + 53.5f, yPos + 17); //(xPos + la mitad de la anchura de octogonave - la mitad de la anchura de la bala, yPos + la transparencia de la imagen de octogonave - la altura de la bala.
                     bullet.setVerticalVelocity(-3);
                 } else if(fireLeft){
-                    bullet = new Bullet(xPos + 30 - 13, yPos + HALF_OF_IMAGE_WIDTH - 11 / 2);
+                    bullet = new Bullet(xPos + 19, yPos + 52); //(xPos + la transparencia de la imagen de octogonave - la anchura de la bala, yPos + la mitad de la anchura de octogonave - la mitad de la altura de la bala).
                     bullet.setHorizontalVelocity(-3);
-                    bullet.getSpriteFrame().setRotate(-90);
+                    bullet.getSpriteFrame().setRotate(-93);
                     bullet.getSpriteBound().setRotate(-90);
                 } else if(fireDown){
-                    bullet = new Bullet(xPos + HALF_OF_IMAGE_WIDTH - 5, yPos + HALF_OF_IMAGE_WIDTH * 2 - 30);
+                    bullet = new Bullet(xPos + 53.5f, yPos + 87); //(xPos + la mitad de la anchura de la nave - la mitad de la anchura de la bala, yPos + la anchura de Octogonave - la transparencia de la imagen de octogonave)
                     bullet.setVerticalVelocity(3);
                     bullet.getSpriteFrame().setRotate(180);
                     bullet.getSpriteBound().setRotate(180);
                 } else if(fireRight){
-                    bullet = new Bullet(xPos + HALF_OF_IMAGE_WIDTH  * 2 - 30 + 13, yPos + HALF_OF_IMAGE_WIDTH - 11 / 2);
+                    bullet = new Bullet(xPos + 89, yPos + HALF_OF_IMAGE_WIDTH - 7); //(xPos + la anchura de Octogonave - la transparencia de la imagen de octogonave, yPos)
                     bullet.setHorizontalVelocity(3);
                     bullet.getSpriteFrame().setRotate(90);
                     bullet.getSpriteBound().setRotate(90);
-                } else if(fireUp && fireRight){
-                    
-                } else if(fireDown && fireRight){
-                    
                 } 
                 Main.getMainMenu().getGame().getSpriteManager().addToBULLETS_TO_ADD(bullet);
                 Main.getRoot().getChildren().add(bullet.getSpriteFrame());

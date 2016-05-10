@@ -54,8 +54,8 @@ class InstructionsMenu extends VBox{
         
         setTexts();
         getChildren().addAll(titleText, instructions, backButton);
-        
     }
+    
     /**
      * Asigna el texto de las instancias de <tt>Node</tt> que contienen texto.
      */

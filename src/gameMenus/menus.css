@@ -18,17 +18,21 @@
     Created on : 15-abr-2016, 12:02:28
     Author     : Jorge Maldonado Ventura
 */
+
 .button { 
     -fx-background-color: #DDFFA4;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
+
 .button:hover {
     -fx-background-color: #9ACD32;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
+
 .button:pressed{
     -fx-background-color: #33e130;
 }
+
 #title{
    -fx-font-size: 34px;
    -fx-font-family: "Arial Black";
@@ -44,6 +48,7 @@
    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
    -fx-font-weight: bold;
 }
+
 .text{
     -fx-font-size: 16px;
     -fx-font-family: "Arial";
