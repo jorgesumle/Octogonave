@@ -380,7 +380,7 @@ class Octogonave extends Sprite{
                 } else if(fireLeft){
                     bullet = new Bullet(xPos + 19, yPos + 52); //(xPos + la transparencia de la imagen de octogonave - la anchura de la bala, yPos + la mitad de la anchura de octogonave - la mitad de la altura de la bala).
                     bullet.setHorizontalVelocity(-3);
-                    bullet.getSpriteFrame().setRotate(-93);
+                    bullet.getSpriteFrame().setRotate(-90);
                     bullet.getSpriteBound().setRotate(-90);
                 } else if(fireDown){
                     bullet = new Bullet(xPos + 53.5f, yPos + 87); //(xPos + la mitad de la anchura de la nave - la mitad de la anchura de la bala, yPos + la anchura de Octogonave - la transparencia de la imagen de octogonave)
