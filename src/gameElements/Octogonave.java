@@ -42,7 +42,7 @@ class Octogonave extends Sprite{
             OCTO_NAVE_MOV_HURT_3 = new Image("octogonaveMovingFireHurt3.png", 117, 117, true, false, true);
     private static final float HALF_OF_IMAGE_WIDTH = 58.5f;
     private boolean up, right, down, left, fireUp, fireRight, fireLeft, fireDown;
-    private final byte RELOAD_RATE = 6;
+    private final byte RELOAD_RATE = 3; //
     private double velocity;
     private byte currentFrame, reloadCounter;
     private AudioClip shootSound = new AudioClip(this.getClass().getResource("/shoot.wav").toExternalForm()),
@@ -233,12 +233,14 @@ class Octogonave extends Sprite{
         if(velocity <= 10){
             velocity += pixelsPerMove;
             movingSpacecraft.setVolume(velocity / 10);
+            System.out.println(velocity / 10);
         }
     }
     private void decreaseSpeed(double pixelsPerMove){
         if(velocity > 1){
             velocity -= pixelsPerMove;
             movingSpacecraft.setVolume(velocity / 10);
+            System.out.println(velocity / 10);
         }
     }
     
@@ -352,44 +354,44 @@ class Octogonave extends Sprite{
                 Bullet bullet = null;
                 if(fireUp && fireRight){
                     bullet = new Bullet(xPos + 78, yPos + 28);
-                    bullet.setHorizontalVelocity(3);
-                    bullet.setVerticalVelocity(-3);
+                    bullet.setHorizontalVelocity(7);
+                    bullet.setVerticalVelocity(-7);
                     bullet.getSpriteFrame().setRotate(45);
                     bullet.getSpriteBound().setRotate(45);
                 } else if(fireDown && fireRight){
                     bullet = new Bullet(xPos + 78, yPos + 76);
-                    bullet.setHorizontalVelocity(3);
-                    bullet.setVerticalVelocity(3);
+                    bullet.setHorizontalVelocity(7);
+                    bullet.setVerticalVelocity(7);
                     bullet.getSpriteFrame().setRotate(135);
                     bullet.getSpriteBound().setRotate(135);
                 } else if(fireDown && fireLeft){
                     bullet = new Bullet(xPos + 30, yPos + 76);
-                    bullet.setHorizontalVelocity(-3);
-                    bullet.setVerticalVelocity(3);
+                    bullet.setHorizontalVelocity(-7);
+                    bullet.setVerticalVelocity(7);
                     bullet.getSpriteFrame().setRotate(225);
                     bullet.getSpriteBound().setRotate(225);
                 } else if(fireLeft && fireUp){
                     bullet = new Bullet(xPos + 30, yPos + 27);
-                    bullet.setHorizontalVelocity(-3);
-                    bullet.setVerticalVelocity(-3);
+                    bullet.setHorizontalVelocity(-7);
+                    bullet.setVerticalVelocity(-7);
                     bullet.getSpriteFrame().setRotate(315);
                     bullet.getSpriteBound().setRotate(315);
                 } else if(fireUp){
-                    bullet = new Bullet(xPos + 53.5f, yPos + 17); //(xPos + la mitad de la anchura de octogonave - la mitad de la anchura de la bala, yPos + la transparencia de la imagen de octogonave - la altura de la bala.
-                    bullet.setVerticalVelocity(-3);
+                    bullet = new Bullet(xPos + 54, yPos + 17); //(xPos + la mitad de la anchura de octogonave - la mitad de la anchura de la bala, yPos + la transparencia de la imagen de octogonave - la altura de la bala.
+                    bullet.setVerticalVelocity(-7);
                 } else if(fireLeft){
                     bullet = new Bullet(xPos + 19, yPos + 52); //(xPos + la transparencia de la imagen de octogonave - la anchura de la bala, yPos + la mitad de la anchura de octogonave - la mitad de la altura de la bala).
-                    bullet.setHorizontalVelocity(-3);
+                    bullet.setHorizontalVelocity(-7);
                     bullet.getSpriteFrame().setRotate(-90);
                     bullet.getSpriteBound().setRotate(-90);
                 } else if(fireDown){
-                    bullet = new Bullet(xPos + 53.5f, yPos + 87); //(xPos + la mitad de la anchura de la nave - la mitad de la anchura de la bala, yPos + la anchura de Octogonave - la transparencia de la imagen de octogonave)
-                    bullet.setVerticalVelocity(3);
+                    bullet = new Bullet(xPos + 54, yPos + 87); //(xPos + la mitad de la anchura de la nave - la mitad de la anchura de la bala, yPos + la anchura de Octogonave - la transparencia de la imagen de octogonave)
+                    bullet.setVerticalVelocity(7);
                     bullet.getSpriteFrame().setRotate(180);
                     bullet.getSpriteBound().setRotate(180);
                 } else if(fireRight){
-                    bullet = new Bullet(xPos + 89, yPos + HALF_OF_IMAGE_WIDTH - 7); //(xPos + la anchura de Octogonave - la transparencia de la imagen de octogonave, yPos)
-                    bullet.setHorizontalVelocity(3);
+                    bullet = new Bullet(xPos + 89, yPos + 52); //(xPos + la anchura de Octogonave - la transparencia de la imagen de octogonave, yPos)
+                    bullet.setHorizontalVelocity(7);
                     bullet.getSpriteFrame().setRotate(90);
                     bullet.getSpriteBound().setRotate(90);
                 } 

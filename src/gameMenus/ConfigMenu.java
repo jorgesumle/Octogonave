@@ -120,8 +120,6 @@ public class ConfigMenu extends GridPane{
             }
             Config.saveConfig();
             setTexts();
-            Main.getMainMenu().setTexts();
-            Main.getMainMenu().getInstructionsMenu().setTexts();
         });
     }
     
@@ -184,7 +182,8 @@ public class ConfigMenu extends GridPane{
         backButton.setOnAction(e ->
             {
                 Main.getScene().setRoot(Main.getMainMenu());
-                Config.saveConfig();
+                Main.getMainMenu().setTexts();
+                Config.saveConfig(); 
             }
         );
     }
