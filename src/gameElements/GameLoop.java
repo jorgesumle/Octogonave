@@ -96,21 +96,8 @@ class GameLoop extends AnimationTimer{
     private void playTimeLine(){
         Timeline timeline = new Timeline();
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5000), (ActionEvent e) -> {
-            Sprite sprite;
-            byte randomNumber = (byte)(Math.random() * 3);
-            switch (randomNumber) {
-                case 0:
-                    sprite = new Diamond((Math.random() * (640 - 32 + 1) ), (Math.random() * (480 - 24 + 1)));
-                    break;
-                case 1:
-                    sprite = new Ruby((Math.random() * (640 - 32 + 1)), (Math.random() * (480 - 32 + 1)));
-                    break;
-                default:
-                    sprite = new YellowSapphire((Math.random() * (640 - 22 + 1)), (Math.random() * (480 - 21 + 1)));
-                    break;
-            }
-            Main.getRoot().getChildren().add(sprite.getSpriteFrame());
-            SPRITE_MANAGER.addToNORMAL_TO_ADD(sprite);
+            //createGem();
+            createAsteroid();
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
@@ -126,5 +113,30 @@ class GameLoop extends AnimationTimer{
             gameMusicPlayer.play();
         });
         gameMusicPlayer.play();
+    }
+    
+    private void createGem(){
+        Sprite sprite;
+        byte randomNumber = (byte)(Math.random() * 3);
+        switch (randomNumber) {
+            case 0:
+                sprite = new Diamond((Math.random() * (640 - 32 + 1) ), (Math.random() * (480 - 24 + 1)));
+                break;
+            case 1:
+                sprite = new Ruby((Math.random() * (640 - 32 + 1)), (Math.random() * (480 - 32 + 1)));
+                break;
+            default:
+                sprite = new YellowSapphire((Math.random() * (640 - 22 + 1)), (Math.random() * (480 - 21 + 1)));
+                break;
+        }
+        Main.getRoot().getChildren().add(sprite.getSpriteFrame());
+        SPRITE_MANAGER.addToNORMAL_TO_ADD(sprite);
+    }
+    
+    private void createAsteroid(){
+        Asteroid asteroid = new Asteroid("M 36,20 L 36,20 3,88 4,110 11,114 20,158 56,176 60,186 97,196 124,190 137,203 162,189 166,170 181,144 187,144 194,126 195,106 190,99 195,89 179,26 102,0 Z", 
+                (double)(Math.random() * Main.getWINDOW_WIDTH() + 40), (double)(Math.random() * Main.getWINDOW_HEIGHT() + 40), 1, 1);
+        Main.getRoot().getChildren().add(asteroid.getSpriteFrame());
+        SPRITE_MANAGER.addToNORMAL_TO_ADD(asteroid);
     }
 }
