@@ -23,7 +23,7 @@ import javafx.scene.image.Image;
  * @author Jorge Maldonado Ventura
  */
 public class Asteroid extends Sprite{
-    private static Image asteroidImage = new Image("/asteroid.png", 40, 40, true, false, true);
+    private static Image asteroidImage = new Image("/asteroid.png", 199, 205, true, false, true);
     private double horizontalVelocity;
     private double verticalVelocity;
     double xPos;
@@ -35,7 +35,7 @@ public class Asteroid extends Sprite{
         xPos = xLocation;
         yPos = yLocation;
     }
-
+    
     @Override
     void update() {
         setXAndYPosition();
@@ -54,25 +54,28 @@ public class Asteroid extends Sprite{
     }
     
     private void checkCollision(){
-        if(boundsLimitOrOutY() || boundsLimitOrOutX()){
+        if(boundsOutY() || boundsOutX()){
             Main.getMainMenu().getGame().getSpriteManager().addToNORMAL_TO_REMOVE(this);
             Main.getRoot().getChildren().remove(getSpriteFrame());
+            System.out.println("Destruido");
+            System.out.println(getSpriteFrame().getTranslateX());
+            System.out.println(getSpriteFrame().getTranslateY());
         }
     }
     
     /**
-     * Comprueba si la bala está en contacto con el borde del eje X de la ventana o ha salido de esta.
-     * @return <tt>true</tt> si la bala ha salido del eje X de la ventana; <tt>false</tt> en caso contrario..
+     * Comprueba si el asteroide ha salido de la ventana por el eje X.
+     * @return <tt>true</tt> si el asteroide ha salido del eje X de la ventana; <tt>false</tt> en caso contrario.
      */
-    private boolean boundsLimitOrOutX(){
-        return getSpriteFrame().getTranslateX() <= 0 - getSpriteFrame().getFitWidth() || getSpriteFrame().getTranslateX() >= Main.getScene().getWidth() - getSpriteFrame().getFitWidth();
+    private boolean boundsOutX(){
+        return getSpriteFrame().getTranslateX() <= 0 - getSpriteFrame().getFitWidth() || getSpriteFrame().getTranslateX() >= Main.getScene().getWidth();
     }
     
     /**
-     * Comprueba si la bala está en contacto con el borde del eje Y de la ventana o ha salido de esta.
-     * @return <tt>true</tt> si la bala ha salido del eje Y de la ventana; <tt>false</tt> en caso contrario.
+     * Comprueba si el asteroide ha salido de la ventana por el eje Y.
+     * @return <tt>true</tt> si el asteroide ha salido del eje Y de la ventana; <tt>false</tt> en caso contrario.
      */
-    private boolean boundsLimitOrOutY(){
-        return getSpriteFrame().getTranslateY() <= 0 - getSpriteFrame().getFitHeight() || getSpriteFrame().getTranslateY() >= Main.getScene().getHeight() - getSpriteFrame().getFitHeight();
+    private boolean boundsOutY(){
+        return getSpriteFrame().getTranslateY() <= 0 - getSpriteFrame().getFitHeight() || getSpriteFrame().getTranslateY() >= Main.getScene().getHeight();
     }
 }

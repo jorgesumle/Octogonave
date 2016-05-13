@@ -61,7 +61,7 @@ class Bullet extends Sprite{
     
     /**
      * Comprueba si la bala está en contacto con el borde del eje X de la ventana o ha salido de esta.
-     * @return <tt>true</tt> si la bala ha salido del eje X de la ventana; <tt>false</tt> en caso contrario..
+     * @return <tt>true</tt> si la bala ha salido del eje X de la ventana; <tt>false</tt> en caso contrario.
      */
     private boolean boundsLimitOrOutX(){
         return getSpriteFrame().getTranslateX() <= 0 - getSpriteFrame().getFitWidth() || getSpriteFrame().getTranslateX() >= Main.getScene().getWidth() - getSpriteFrame().getFitWidth();
