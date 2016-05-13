@@ -16,10 +16,27 @@
  */
 package gameMenus;
 
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
+
 /**
  *
  * @author Jorge Maldonado Ventura
  */
-public class HighestScoresScreen {
+class HighestScoresScreen extends GridPane{
+    HighestScoresScreen(){
+        Text title = new Text();
+        
+        Text score1 = new Text();
+        Text score2 = new Text();
+        Text score3 = new Text();
+        Text score4 = new Text();
+        Text score5 = new Text();
+        
+        setTexts();
+    }
     
+    private void setTexts(){
+        
+    }
 }

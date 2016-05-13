@@ -57,9 +57,6 @@ public class Asteroid extends Sprite{
         if(boundsOutY() || boundsOutX()){
             Main.getMainMenu().getGame().getSpriteManager().addToNORMAL_TO_REMOVE(this);
             Main.getRoot().getChildren().remove(getSpriteFrame());
-            System.out.println("Destruido");
-            System.out.println(getSpriteFrame().getTranslateX());
-            System.out.println(getSpriteFrame().getTranslateY());
         }
     }
     

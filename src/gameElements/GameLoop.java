@@ -139,22 +139,18 @@ class GameLoop extends AnimationTimer{
         Asteroid asteroid = null;
         switch(random.nextInt(3)){
             case 0: //arriba
-                System.out.println("Arriba");
                 asteroid = new Asteroid("M 36,20 L 36,20 3,88 4,110 11,114 20,158 56,176 60,186 97,196 124,190 137,203 162,189 166,170 181,144 187,144 194,126 195,106 190,99 195,89 179,26 102,0 Z", 
                         random.nextDouble() * -199 + Main.getWINDOW_WIDTH() + 198, 0 - 204, 1 * randomDir(), 1);
                 break;
             case 1: //derecha
-                System.out.println("Derecha");
                 asteroid = new Asteroid("M 36,20 L 36,20 3,88 4,110 11,114 20,158 56,176 60,186 97,196 124,190 137,203 162,189 166,170 181,144 187,144 194,126 195,106 190,99 195,89 179,26 102,0 Z", 
                         Main.getWINDOW_WIDTH() + 198, random.nextDouble() * -204 + Main.getWINDOW_HEIGHT() + 204, -1, 1 * randomDir());
                 break;
             case 2: //abajo
-                System.out.println("Izquierda");
                 asteroid = new Asteroid("M 36,20 L 36,20 3,88 4,110 11,114 20,158 56,176 60,186 97,196 124,190 137,203 162,189 166,170 181,144 187,144 194,126 195,106 190,99 195,89 179,26 102,0 Z", 
                         random.nextDouble() * -199 + Main.getWINDOW_WIDTH() + 198, Main.getWINDOW_HEIGHT() + 204, 1 * randomDir(), -1);
                 break;
             case 3: //izquierda
-                System.out.println("Abajo");
                 asteroid = new Asteroid("M 36,20 L 36,20 3,88 4,110 11,114 20,158 56,176 60,186 97,196 124,190 137,203 162,189 166,170 181,144 187,144 194,126 195,106 190,99 195,89 179,26 102,0 Z", 
                         0 - 198, random.nextDouble() * -204 + Main.getWINDOW_HEIGHT() + 204, 1, 1 * randomDir());
                 break;

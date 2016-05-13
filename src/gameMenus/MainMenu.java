@@ -115,6 +115,8 @@ public class MainMenu extends StackPane{
                 if(highestScoresScreen == null){
                     highestScoresScreen = new HighestScoresScreen();
                 }
+                Main.getRoot().getChildren().clear();
+                Main.getScene().setRoot(highestScoresScreen);
             }
         );
         configButton.setOnAction(e -> 
@@ -131,6 +133,8 @@ public class MainMenu extends StackPane{
                 if(creditsScreen == null){
                     creditsScreen = new CreditsScreen();
                 }
+                Main.getRoot().getChildren().clear();
+                Main.getScene().setRoot(creditsScreen);
             }
         );
         exitButton.setOnAction(e -> 
