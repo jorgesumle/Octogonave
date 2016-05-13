@@ -89,6 +89,9 @@ public class Texts{
         return texts.get(15);
     }
     
+    static String getHighestScoresButton() {
+        return texts.get(16);
+    }
     
     public ArrayList<String> getTexts() {
         return texts;

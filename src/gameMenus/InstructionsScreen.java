@@ -28,10 +28,10 @@ import javafx.scene.text.TextFlow;
  * La pantalla que muestra las instrucciones del juego.
  * @author Jorge Maldonado Ventura
  */
-class InstructionsMenu extends VBox{
+class InstructionsScreen extends VBox{
     private Text titleText, gameTitleText, instructionsText;
     private Button backButton;
-    InstructionsMenu(){
+    InstructionsScreen(){
         setAlignment(Pos.CENTER);
         setSpacing(Main.getMainMenu().getPADDING());
         
