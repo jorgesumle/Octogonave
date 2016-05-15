@@ -96,14 +96,14 @@ class Bullet extends Sprite{
      */
     private void checkCollision() {
         if(boundsLimitOrOutY() || boundsLimitOrOutX()){
-            Main.getMainMenu().getGame().getSpriteManager().addToBULLETS_TO_REMOVE(this);
+            Main.getMainMenu().getGame().getSpriteManager().addToBulletsToRemove(this);
             Main.getRoot().getChildren().remove(getSpriteFrame());
         }
-        for(Sprite sprite: Main.getMainMenu().getGame().getSpriteManager().getCURRENT_NORMAL()){
+        for(Sprite sprite: Main.getMainMenu().getGame().getSpriteManager().getCurrentNormal()){
             if(collide(sprite)){
-                Main.getMainMenu().getGame().getSpriteManager().addToNORMAL_TO_REMOVE(sprite);
+                Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(sprite);
                 Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
-                Main.getMainMenu().getGame().getSpriteManager().addToBULLETS_TO_REMOVE(this);
+                Main.getMainMenu().getGame().getSpriteManager().addToBulletsToRemove(this);
                 Main.getRoot().getChildren().remove(getSpriteFrame());
             }
         }

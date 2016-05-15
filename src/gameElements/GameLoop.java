@@ -35,13 +35,13 @@ import javafx.util.Duration;
  */
 class GameLoop extends AnimationTimer{
     private final Octogonave octogonave;
-    private final SpriteManager SPRITE_MANAGER;
+    private final SpriteManager spriteManager;
     private final String GAME_MUSIC_PATH = "/Stealth Groover.aiff";
     private MediaPlayer gameMusicPlayer; //Si no esta declarado aquí el, recolector de basura de Java lo detiene en diez segundos.
     private Random random;
     GameLoop(Octogonave octogonave, SpriteManager spriteManager){
         this.octogonave = octogonave;
-        this.SPRITE_MANAGER = spriteManager;
+        this.spriteManager = spriteManager;
         random = new Random();
         playTimeLine();
         if(gameMenus.Config.isMusicOn()){
@@ -60,21 +60,21 @@ class GameLoop extends AnimationTimer{
     public void handle(long now) {
         octogonave.update(); 
         
-        SPRITE_MANAGER.getCURRENT_NORMAL().stream().forEach((sprite) -> {
+        spriteManager.getCurrentNormal().stream().forEach((sprite) -> {
             sprite.update();
         });
-        SPRITE_MANAGER.removeFromCURRENT_NORMAL(SPRITE_MANAGER.getNORMAL_TO_REMOVE().stream().toArray(Sprite[]::new));
-        SPRITE_MANAGER.clearNORMAL_TO_REMOVE();
-        SPRITE_MANAGER.addToCURRENT_NORMAL(SPRITE_MANAGER.getNORMAL_TO_ADD().stream().toArray(Sprite[]::new));
-        SPRITE_MANAGER.clearNORMAL_TO_ADD();
+        spriteManager.removeFromCurrentNormal(spriteManager.getNormalToRemove().stream().toArray(Sprite[]::new));
+        spriteManager.clearNormalToRemove();
+        spriteManager.addToCurrentNormal(spriteManager.getNormalToAdd().stream().toArray(Sprite[]::new));
+        spriteManager.clearNormalToAdd();
         
-        SPRITE_MANAGER.getCURRENT_BULLETS().stream().forEach((sprite) -> {
+        spriteManager.getCurrentBullets().stream().forEach((sprite) -> {
             sprite.update();
         });
-        SPRITE_MANAGER.removeFromCURRENT_BULLETS(SPRITE_MANAGER.getBULLETS_TO_REMOVE().stream().toArray(Sprite[]::new));
-        SPRITE_MANAGER.clearBULLETS_TO_REMOVE();
-        SPRITE_MANAGER.addToCURRENT_BULLETS(SPRITE_MANAGER.getBULLETS_TO_ADD().stream().toArray(Sprite[]::new));
-        SPRITE_MANAGER.clearBULLETS_TO_ADD();
+        spriteManager.removeFromCurrentBullets(spriteManager.getBulletsToRemove().stream().toArray(Sprite[]::new));
+        spriteManager.clearBulletsToRemove();
+        spriteManager.addToCurrentBullets(spriteManager.getBulletsToAdd().stream().toArray(Sprite[]::new));
+        spriteManager.clearBulletsToAdd();
     }
     /**
      * Empieza el AnimationTimer. Una vez empezado, el método handle(long) de 
@@ -132,32 +132,36 @@ class GameLoop extends AnimationTimer{
                 break;
         }
         Main.getRoot().getChildren().add(sprite.getSpriteFrame());
-        SPRITE_MANAGER.addToNORMAL_TO_ADD(sprite);
+        spriteManager.addToNormalToAdd(sprite);
     }
     
     private void createAsteroid(){
         Asteroid asteroid = null;
-        switch(random.nextInt(3)){
-            case 0: //arriba
+        switch(random.nextInt(4)){
+            case 0: //arriba-abajo
+                System.out.println("0");
                 asteroid = new Asteroid("M 36,20 L 36,20 3,88 4,110 11,114 20,158 56,176 60,186 97,196 124,190 137,203 162,189 166,170 181,144 187,144 194,126 195,106 190,99 195,89 179,26 102,0 Z", 
-                        random.nextDouble() * -199 + Main.getWINDOW_WIDTH() + 198, 0 - 204, 1 * randomDir(), 1);
+                        random.nextDouble() * (198 + Main.getWINDOW_WIDTH()) - 198, 0 - 204, 1 * randomDir(), 1);
                 break;
-            case 1: //derecha
+            case 1: //derecha-izquierda
+                System.out.println("1");
                 asteroid = new Asteroid("M 36,20 L 36,20 3,88 4,110 11,114 20,158 56,176 60,186 97,196 124,190 137,203 162,189 166,170 181,144 187,144 194,126 195,106 190,99 195,89 179,26 102,0 Z", 
-                        Main.getWINDOW_WIDTH() + 198, random.nextDouble() * -204 + Main.getWINDOW_HEIGHT() + 204, -1, 1 * randomDir());
+                        Main.getWINDOW_WIDTH() - 1, random.nextDouble() * (204 + Main.getWINDOW_HEIGHT()) - 204, -1, 1 * randomDir());
                 break;
-            case 2: //abajo
+            case 2: //abajo-arriba
+                System.out.println("2");
                 asteroid = new Asteroid("M 36,20 L 36,20 3,88 4,110 11,114 20,158 56,176 60,186 97,196 124,190 137,203 162,189 166,170 181,144 187,144 194,126 195,106 190,99 195,89 179,26 102,0 Z", 
-                        random.nextDouble() * -199 + Main.getWINDOW_WIDTH() + 198, Main.getWINDOW_HEIGHT() + 204, 1 * randomDir(), -1);
+                        random.nextDouble() * (198 + Main.getWINDOW_WIDTH()) - 198, Main.getWINDOW_HEIGHT() - 1, 1 * randomDir(), -1);
                 break;
-            case 3: //izquierda
+            case 3: //izquierda-derecha
+                System.out.println("3");
                 asteroid = new Asteroid("M 36,20 L 36,20 3,88 4,110 11,114 20,158 56,176 60,186 97,196 124,190 137,203 162,189 166,170 181,144 187,144 194,126 195,106 190,99 195,89 179,26 102,0 Z", 
-                        0 - 198, random.nextDouble() * -204 + Main.getWINDOW_HEIGHT() + 204, 1, 1 * randomDir());
+                        0 - 198, random.nextDouble() * (204 + Main.getWINDOW_HEIGHT()) - 204, 1, 1 * randomDir());
                 break;
         }
 		
         Main.getRoot().getChildren().add(asteroid.getSpriteFrame());
-        SPRITE_MANAGER.addToNORMAL_TO_ADD(asteroid);
+        spriteManager.addToNormalToAdd(asteroid);
     }
 	private byte randomDir(){
             if(random.nextBoolean()){

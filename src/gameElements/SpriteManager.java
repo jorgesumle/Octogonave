@@ -28,75 +28,75 @@ import java.util.Arrays;
  * @author Jorge Maldonado Ventura 
  */
 class SpriteManager {
-    private final ArrayList<ArrayList<Sprite>> CURRENT_SPRITES;
-    private final ArrayList<Sprite> CURRENT_NORMAL, NORMAL_TO_ADD, CURRENT_BULLETS,
-            BULLETS_TO_ADD, REMOVED_NORMAL, NORMAL_TO_REMOVE, REMOVED_BULLETS,
-            BULLETS_TO_REMOVE;
-    private final ArrayList<ArrayList<Sprite>> REMOVED_SPRITES;
+    private final ArrayList<ArrayList<Sprite>> currentSprites;
+    private final ArrayList<Sprite> currentNormal, normalToAdd, currentBullets,
+            bulletsToAdd, removedNormal, normalToRemove, removedBullets,
+            bulletsToRemove;
+    private final ArrayList<ArrayList<Sprite>> removedSprites;
     
     /**
      * Construye un SpriteManage vacío.
      */
     SpriteManager(){
-        CURRENT_SPRITES = new ArrayList<>();
-        CURRENT_NORMAL = new ArrayList<>();
-        NORMAL_TO_ADD = new ArrayList<>();
-        CURRENT_BULLETS = new ArrayList<>();
-        BULLETS_TO_ADD = new ArrayList<>();
-        CURRENT_SPRITES.add(CURRENT_NORMAL);
-        CURRENT_SPRITES.add(CURRENT_BULLETS);
+        currentSprites = new ArrayList<>();
+        currentNormal = new ArrayList<>();
+        normalToAdd = new ArrayList<>();
+        currentBullets = new ArrayList<>();
+        bulletsToAdd = new ArrayList<>();
+        currentSprites.add(currentNormal);
+        currentSprites.add(currentBullets);
         
-        REMOVED_SPRITES = new ArrayList<>();
-        REMOVED_NORMAL = new ArrayList<>();
-        NORMAL_TO_REMOVE = new ArrayList<>();
-        REMOVED_BULLETS = new ArrayList<>();
-        BULLETS_TO_REMOVE = new ArrayList<>();
-        REMOVED_SPRITES.add(REMOVED_NORMAL);
-        REMOVED_SPRITES.add(REMOVED_BULLETS);
+        removedSprites = new ArrayList<>();
+        removedNormal = new ArrayList<>();
+        normalToRemove = new ArrayList<>();
+        removedBullets = new ArrayList<>();
+        bulletsToRemove = new ArrayList<>();
+        removedSprites.add(removedNormal);
+        removedSprites.add(removedBullets);
     }
     
     /**
      * @return las balas que se actualizan en el bucle del videojuego.
      */
-    ArrayList<Sprite> getCURRENT_BULLETS() {
-        return CURRENT_BULLETS;
+    ArrayList<Sprite> getCurrentBullets() {
+        return currentBullets;
     }
     
     /**
      * @return la balas que se actualizarán de la próxima ejecución del bucle del juego en adelante.
      */
-    ArrayList<Sprite> getBULLETS_TO_ADD() {
-        return BULLETS_TO_ADD;
+    ArrayList<Sprite> getBulletsToAdd() {
+        return bulletsToAdd;
     }
     
      /**
      * @return Las balas que se borrarán antes de la próxima ejecución del bucle del juego.
      */
-    ArrayList<Sprite> getBULLETS_TO_REMOVE() {
-        return BULLETS_TO_REMOVE;
+    ArrayList<Sprite> getBulletsToRemove() {
+        return bulletsToRemove;
     }
     
     /**
      * @return los <i>sprites</i> que se actualizan en el bucle del videojuego.
      */
-    ArrayList<Sprite> getCURRENT_NORMAL(){
-        return CURRENT_NORMAL;
+    ArrayList<Sprite> getCurrentNormal(){
+        return currentNormal;
     }
     
     /**
      * @return los <i>sprites</i> normales (todos menos las balas) que se
      * actualizarán de la próxima ejecución del bucle del juego en adelante.
      */
-    ArrayList<Sprite> getNORMAL_TO_ADD() {
-        return NORMAL_TO_ADD;
+    ArrayList<Sprite> getNormalToAdd() {
+        return normalToAdd;
     }
     
     /**
      * @return los <i>sprites</i> normales (todos menos las balas) que se
      * borrarán antes de la próxima ejecución del bucle del juego.
      */
-    ArrayList<Sprite> getNORMAL_TO_REMOVE() {
-        return NORMAL_TO_REMOVE;
+    ArrayList<Sprite> getNormalToRemove() {
+        return normalToRemove;
     }
     
     /**
@@ -104,8 +104,8 @@ class SpriteManager {
      * se añadirám antes de la próxima ejecución del bucle del juego.
      * @param sprites las balas.
      */
-    void addToBULLETS_TO_ADD(Sprite... sprites){
-        BULLETS_TO_ADD.addAll(Arrays.asList(sprites));
+    void addToBulletsToAdd(Sprite... sprites){
+        bulletsToAdd.addAll(Arrays.asList(sprites));
     }
     
     /**
@@ -113,16 +113,16 @@ class SpriteManager {
      * se eliminarán antes de la próxima ejecución del bucle del juego.
      * @param sprites las balas.
      */
-    void addToBULLETS_TO_REMOVE(Sprite... sprites){
-        BULLETS_TO_REMOVE.addAll(Arrays.asList(sprites));
+    void addToBulletsToRemove(Sprite... sprites){
+        bulletsToRemove.addAll(Arrays.asList(sprites));
     }
     
     /**
      * Añade un número variable de balas al ArrayList de balas que se están actualizando.
      * @param sprites las balas a añadir.
      */
-    void addToCURRENT_BULLETS(Sprite... sprites){
-        CURRENT_BULLETS.addAll(Arrays.asList(sprites));
+    void addToCurrentBullets(Sprite... sprites){
+        currentBullets.addAll(Arrays.asList(sprites));
     }
     
     /**
@@ -130,8 +130,8 @@ class SpriteManager {
      * al ArrayList de <i>sprites</i> que se están actualizando.
      * @param sprites los <i>sprites</i> a añadir.
      */
-    void addToCURRENT_NORMAL(Sprite... sprites){
-        CURRENT_NORMAL.addAll(Arrays.asList(sprites));
+    void addToCurrentNormal(Sprite... sprites){
+        currentNormal.addAll(Arrays.asList(sprites));
     }
     
     /**
@@ -139,8 +139,8 @@ class SpriteManager {
      * normales que se quire actualizar de la próxima ejecución del bucle del juego en adelante.
      * @param sprites los <i>sprites</i> a añadir.
      */
-    void addToNORMAL_TO_ADD(Sprite... sprites){
-        NORMAL_TO_ADD.addAll(Arrays.asList(sprites));
+    void addToNormalToAdd(Sprite... sprites){
+        normalToAdd.addAll(Arrays.asList(sprites));
     }
     
     /**
@@ -148,8 +148,8 @@ class SpriteManager {
      * que se quire eliminar antes de la próxima ejecución del bucle del juego.
      * @param sprites los <i>sprites</i> a eliminar.
      */
-    void addToNORMAL_TO_REMOVE(Sprite... sprites){
-        NORMAL_TO_REMOVE.addAll(Arrays.asList(sprites));
+    void addToNormalToRemove(Sprite... sprites){
+        normalToRemove.addAll(Arrays.asList(sprites));
     }
     
     /**
@@ -157,16 +157,16 @@ class SpriteManager {
      * adelante vacío. Esto se debería hacer cuando esos <i>sprites</i> ya están
      * en el ArrayList de los que se están actualizando.
      */
-    void clearBULLETS_TO_ADD(){
-        BULLETS_TO_ADD.clear();
+    void clearBulletsToAdd(){
+        bulletsToAdd.clear();
     }
     
     /**
      * Deja el ArrayList de balas que se eliminarán antes de la próxima ejecución
      * vacío. Esto se debería hacer cuando esas balas ya se han añadido al ArrayList de las eliminadas.
      */
-    void clearBULLETS_TO_REMOVE(){
-        BULLETS_TO_REMOVE.clear();
+    void clearBulletsToRemove(){
+        bulletsToRemove.clear();
     }
     
     /**
@@ -174,8 +174,8 @@ class SpriteManager {
      * se actualizarán de la próxima ejecución en adelante vacío. Esto se debería hacer cuando
      * esos <i>sprites</i> ya están en el ArrayList de los que se están actualizando.
      */
-    void clearNORMAL_TO_ADD(){
-        NORMAL_TO_ADD.clear();
+    void clearNormalToAdd(){
+        normalToAdd.clear();
     }
     
     /**
@@ -183,8 +183,8 @@ class SpriteManager {
      * se eliminarán antes de la próxima ejecución vacío. Esto se debería hacer cuando
      * esos <i>sprites</i> ya se han añadido al ArrayList de los eliminados.
      */
-    void clearNORMAL_TO_REMOVE(){
-        NORMAL_TO_REMOVE.clear();
+    void clearNormalToRemove(){
+        normalToRemove.clear();
     }
     
     /**
@@ -192,9 +192,9 @@ class SpriteManager {
      * del ArrayList de balas que se están actualizando en el bucle del videojuego.
      * @param sprites los <i>sprites</i> a eliminar.
      */
-    void removeFromCURRENT_BULLETS(Sprite... sprites){
-        CURRENT_BULLETS.removeAll(Arrays.asList(sprites));
-        REMOVED_BULLETS.addAll(Arrays.asList(sprites));
+    void removeFromCurrentBullets(Sprite... sprites){
+        currentBullets.removeAll(Arrays.asList(sprites));
+        removedBullets.addAll(Arrays.asList(sprites));
     }    
     
     /**
@@ -202,9 +202,9 @@ class SpriteManager {
      * del ArrayList de los <i>sprites</i> normales que se están actualizando en el bucle del videojuego.
      * @param sprites los <i>sprites</i> a eliminar.
      */
-    void removeFromCURRENT_NORMAL(Sprite... sprites){
-        CURRENT_NORMAL.removeAll(Arrays.asList(sprites));
-        REMOVED_NORMAL.addAll(Arrays.asList(sprites));
+    void removeFromCurrentNormal(Sprite... sprites){
+        currentNormal.removeAll(Arrays.asList(sprites));
+        removedNormal.addAll(Arrays.asList(sprites));
     }    
     
 }

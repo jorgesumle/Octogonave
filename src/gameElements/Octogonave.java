@@ -266,9 +266,9 @@ class Octogonave extends Sprite{
         }
         
 
-        for(Sprite sprite: Main.getMainMenu().getGame().getSpriteManager().getCURRENT_NORMAL()){            
+        for(Sprite sprite: Main.getMainMenu().getGame().getSpriteManager().getCurrentNormal()){            
             if(collide(sprite)){
-                Main.getMainMenu().getGame().getSpriteManager().addToNORMAL_TO_REMOVE(sprite);
+                Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(sprite);
                 updateScore(sprite);
                 Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
             }
@@ -393,7 +393,7 @@ class Octogonave extends Sprite{
                     bullet.getSpriteFrame().setRotate(90);
                     bullet.getSpriteBound().setRotate(90);
                 } 
-                Main.getMainMenu().getGame().getSpriteManager().addToBULLETS_TO_ADD(bullet);
+                Main.getMainMenu().getGame().getSpriteManager().addToBulletsToAdd(bullet);
                 Main.getRoot().getChildren().add(bullet.getSpriteFrame());
             } else{
                 reloadCounter--; //Para que no se pueda desbordar nunca la variable.

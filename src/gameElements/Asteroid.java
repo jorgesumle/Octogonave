@@ -44,8 +44,8 @@ public class Asteroid extends Sprite{
     }
     
     private void setXAndYPosition(){
-        xPos += verticalVelocity;
-        yPos += horizontalVelocity;
+        xPos += horizontalVelocity;
+        yPos += verticalVelocity;
     }
     
     private void move(){
@@ -55,7 +55,8 @@ public class Asteroid extends Sprite{
     
     private void checkCollision(){
         if(boundsOutY() || boundsOutX()){
-            Main.getMainMenu().getGame().getSpriteManager().addToNORMAL_TO_REMOVE(this);
+            System.out.println(getSpriteFrame().getTranslateX() + " " + getSpriteFrame().getTranslateY());
+            Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(this);
             Main.getRoot().getChildren().remove(getSpriteFrame());
         }
     }
@@ -65,7 +66,7 @@ public class Asteroid extends Sprite{
      * @return <tt>true</tt> si el asteroide ha salido del eje X de la ventana; <tt>false</tt> en caso contrario.
      */
     private boolean boundsOutX(){
-        return getSpriteFrame().getTranslateX() <= 0 - getSpriteFrame().getFitWidth() || getSpriteFrame().getTranslateX() >= Main.getScene().getWidth();
+        return getSpriteFrame().getTranslateX() <= 0 - 199 || getSpriteFrame().getTranslateX() >= Main.getScene().getWidth();
     }
     
     /**
@@ -73,6 +74,6 @@ public class Asteroid extends Sprite{
      * @return <tt>true</tt> si el asteroide ha salido del eje Y de la ventana; <tt>false</tt> en caso contrario.
      */
     private boolean boundsOutY(){
-        return getSpriteFrame().getTranslateY() <= 0 - getSpriteFrame().getFitHeight() || getSpriteFrame().getTranslateY() >= Main.getScene().getHeight();
+        return getSpriteFrame().getTranslateY() <= 0 - 205 || getSpriteFrame().getTranslateY() >= Main.getScene().getHeight();
     }
 }
