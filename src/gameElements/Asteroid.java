@@ -55,7 +55,6 @@ public class Asteroid extends Sprite{
     
     private void checkCollision(){
         if(boundsOutY() || boundsOutX()){
-            System.out.println(getSpriteFrame().getTranslateX() + " " + getSpriteFrame().getTranslateY());
             Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(this);
             Main.getRoot().getChildren().remove(getSpriteFrame());
         }

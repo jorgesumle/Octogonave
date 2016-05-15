@@ -111,11 +111,14 @@ class GameLoop extends AnimationTimer{
      */
     private void playMusic(){
         gameMusicPlayer = new MediaPlayer(new Media(this.getClass().getResource(GAME_MUSIC_PATH).toExternalForm()));
-        gameMusicPlayer.setOnEndOfMedia(() -> {
-            gameMusicPlayer.seek(Duration.ZERO);
             gameMusicPlayer.play();
-        });
-        gameMusicPlayer.play();
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(217_731), (ActionEvent e) -> {
+            gameMusicPlayer = new MediaPlayer(new Media(this.getClass().getResource(GAME_MUSIC_PATH).toExternalForm()));
+            gameMusicPlayer.play();
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
     }
     
     private void createGem(){
@@ -139,22 +142,18 @@ class GameLoop extends AnimationTimer{
         Asteroid asteroid = null;
         switch(random.nextInt(4)){
             case 0: //arriba-abajo
-                System.out.println("0");
                 asteroid = new Asteroid("M 36,20 L 36,20 3,88 4,110 11,114 20,158 56,176 60,186 97,196 124,190 137,203 162,189 166,170 181,144 187,144 194,126 195,106 190,99 195,89 179,26 102,0 Z", 
                         random.nextDouble() * (198 + Main.getWINDOW_WIDTH()) - 198, 0 - 204, 1 * randomDir(), 1);
                 break;
             case 1: //derecha-izquierda
-                System.out.println("1");
                 asteroid = new Asteroid("M 36,20 L 36,20 3,88 4,110 11,114 20,158 56,176 60,186 97,196 124,190 137,203 162,189 166,170 181,144 187,144 194,126 195,106 190,99 195,89 179,26 102,0 Z", 
                         Main.getWINDOW_WIDTH() - 1, random.nextDouble() * (204 + Main.getWINDOW_HEIGHT()) - 204, -1, 1 * randomDir());
                 break;
             case 2: //abajo-arriba
-                System.out.println("2");
                 asteroid = new Asteroid("M 36,20 L 36,20 3,88 4,110 11,114 20,158 56,176 60,186 97,196 124,190 137,203 162,189 166,170 181,144 187,144 194,126 195,106 190,99 195,89 179,26 102,0 Z", 
                         random.nextDouble() * (198 + Main.getWINDOW_WIDTH()) - 198, Main.getWINDOW_HEIGHT() - 1, 1 * randomDir(), -1);
                 break;
             case 3: //izquierda-derecha
-                System.out.println("3");
                 asteroid = new Asteroid("M 36,20 L 36,20 3,88 4,110 11,114 20,158 56,176 60,186 97,196 124,190 137,203 162,189 166,170 181,144 187,144 194,126 195,106 190,99 195,89 179,26 102,0 Z", 
                         0 - 198, random.nextDouble() * (204 + Main.getWINDOW_HEIGHT()) - 204, 1, 1 * randomDir());
                 break;
