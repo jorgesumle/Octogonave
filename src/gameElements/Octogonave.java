@@ -76,6 +76,10 @@ class Octogonave extends Sprite{
         movingSpacecraft.setCycleCount(AudioClip.INDEFINITE);
     }
 
+    public AudioClip getBonusSound() {
+        return bonusSound;
+    }
+
     @Override
     void update() {
         determineKeyPressed();
@@ -271,12 +275,11 @@ class Octogonave extends Sprite{
                 Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(sprite);
                 if(sprite instanceof Diamond || sprite instanceof Ruby || sprite instanceof YellowSapphire){
                     Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
+                    Main.getMainMenu().getGame().getPlayScore().updateScore(sprite);
                 } else if(sprite instanceof Asteroid){
                     damage();
                     Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
                 }
-                updateScore(sprite);
-                
                 
             }
         }
@@ -314,28 +317,6 @@ class Octogonave extends Sprite{
             }
         }
         return false;
-    }
-    
-    /**
-     * Actualiza la puntuación del juego. Cada objeto que recoge la nave tiene
-     * una puntuación diferente.
-     * @param sprite el objeto que recoge la nave.
-     */
-    private void updateScore(Sprite sprite) {
-        Score playScore = Main.getMainMenu().getGame().getPlayScore();
-        if(Config.areSoundsOn()){
-            bonusSound.play();
-        }
-        if(sprite instanceof Diamond){
-            playScore.increaseScore(Diamond.getBONUS());
-        } else if(sprite instanceof Ruby){
-            playScore.increaseScore(Ruby.getBONUS());
-        } else if(sprite instanceof YellowSapphire){
-            playScore.increaseScore(YellowSapphire.getBONUS());
-        } else if(sprite instanceof Asteroid){
-            playScore.increaseScore(Asteroid.getBONUS());
-        }
-        playScore.updateScoreText();
     }
     
     /**

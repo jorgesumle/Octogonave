@@ -105,6 +105,7 @@ class Bullet extends Sprite{
                 Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
                 Main.getMainMenu().getGame().getSpriteManager().addToBulletsToRemove(this);
                 Main.getRoot().getChildren().remove(getSpriteFrame());
+                Main.getMainMenu().getGame().getPlayScore().updateScore(sprite);
             }
         }
     }
