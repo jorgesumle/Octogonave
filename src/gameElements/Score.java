@@ -22,6 +22,10 @@ class Score extends Text{
         getStyleClass().add("text");
         setFill(Color.BLACK);
     }
+
+    long getScore() {
+        return score;
+    }
     
     /**
      * Aumenta la puntuación de la partida.

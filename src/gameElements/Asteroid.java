@@ -23,17 +23,23 @@ import javafx.scene.image.Image;
  * @author Jorge Maldonado Ventura
  */
 public class Asteroid extends Sprite{
-    private static Image asteroidImage = new Image("/asteroid.png", 199, 205, true, false, true);
-    private double horizontalVelocity;
-    private double verticalVelocity;
+    private static final String SVG_PATH = "M 18,1 L 18,1 29,0 51,7 54,19 56,23 54,28 55,37 47,49 47,52 39,58 36,55 21,55 20,54 11,47 8,47 6,45 6,41 3,32 0,28 10,6 16,4 Z";
+    private static final byte BONUS = 6;
+    private static Image asteroidImg = new Image("/asteroid.png", 57, 59, true, false, true);
+    private double xVelocity;
+    private double yVelocity;
     double xPos;
     double yPos;
-    public Asteroid(String SVGData, double xLocation, double yLocation, double horizontalVelocity, double verticalVelocity) {
-        super(SVGData, xLocation, yLocation, asteroidImage);
-        this.horizontalVelocity = horizontalVelocity;
-        this.verticalVelocity = verticalVelocity;
+    public Asteroid(double xLocation, double yLocation, double horizontalVelocity, double verticalVelocity) {
+        super(SVG_PATH, xLocation, yLocation, asteroidImg);
+        this.xVelocity = horizontalVelocity;
+        this.yVelocity = verticalVelocity;
         xPos = xLocation;
         yPos = yLocation;
+    }
+
+    public static byte getBONUS() {
+        return BONUS;
     }
     
     @Override
@@ -44,13 +50,15 @@ public class Asteroid extends Sprite{
     }
     
     private void setXAndYPosition(){
-        xPos += horizontalVelocity;
-        yPos += verticalVelocity;
+        xPos += xVelocity;
+        yPos += yVelocity;
     }
     
     private void move(){
         spriteFrame.setTranslateX(xPos);
         spriteFrame.setTranslateY(yPos);
+        spriteBound.setTranslateX(xPos);
+        spriteBound.setTranslateY(yPos);
     }
     
     private void checkCollision(){
@@ -65,7 +73,7 @@ public class Asteroid extends Sprite{
      * @return <tt>true</tt> si el asteroide ha salido del eje X de la ventana; <tt>false</tt> en caso contrario.
      */
     private boolean boundsOutX(){
-        return getSpriteFrame().getTranslateX() <= 0 - 199 || getSpriteFrame().getTranslateX() >= Main.getScene().getWidth();
+        return getSpriteFrame().getTranslateX() <= 0 - 57 || getSpriteFrame().getTranslateX() >= Main.getScene().getWidth();
     }
     
     /**
@@ -73,6 +81,6 @@ public class Asteroid extends Sprite{
      * @return <tt>true</tt> si el asteroide ha salido del eje Y de la ventana; <tt>false</tt> en caso contrario.
      */
     private boolean boundsOutY(){
-        return getSpriteFrame().getTranslateY() <= 0 - 205 || getSpriteFrame().getTranslateY() >= Main.getScene().getHeight();
+        return getSpriteFrame().getTranslateY() <= 0 - 59 || getSpriteFrame().getTranslateY() >= Main.getScene().getHeight();
     }
 }

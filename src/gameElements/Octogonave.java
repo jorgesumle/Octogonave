@@ -32,22 +32,19 @@ import javafx.scene.shape.Shape;
  */
 class Octogonave extends Sprite{
     private static final String SVG_PATH = "M 53,30 L 53,30 64,30 65,31 65,38 67,39 72,34 74,34 81,42 81,44 76,49 78,51 85,51 86,52 86,63 85,64 78,64 77,65 77,66 76,67 81,72 81,74 74,81 72,81 65,76 66,77 64,77 64,85 63,86 52,86 51,85 51,78 49,76 44,81 42,81 35,74 35,72 40,67 39,66 39,64 31,64 30,63 30,52 31,51 38,51 40,49 35,44 35,42 42,34 44,34 49,40 50,39 52,39 52,31 Z";
-    private static final Image OCTO_NAVE_STILL = new Image("/octogonaveStill.png", 117, 117, true, false, true),
-            OCTO_NAVE_MOV_1 = new Image("/octogonaveMovingFire1.png", 117, 117, true, false, true),
-            OCTO_NAVE_MOV_2 = new Image("/octogonaveMovingFire2.png", 117, 117, true, false, true),
-            OCTO_NAVE_MOV_3 = new Image("/octogonaveMovingFire3.png", 117, 117, true, false, true),
-            OCTO_NAVE_HURT_STILL = new Image("/octogonaveHurtStill.png", 117, 117, true, false, true),
-            OCTO_NAVE_MOV_HURT_1 = new Image("/octogonaveMovingFireHurt1.png", 117, 117, true, false, true),
-            OCTO_NAVE_MOV_HURT_2 = new Image("octogonaveMovingFireHurt2.png", 117, 117, true, false, true),
-            OCTO_NAVE_MOV_HURT_3 = new Image("octogonaveMovingFireHurt3.png", 117, 117, true, false, true);
-    private static final float HALF_OF_IMAGE_WIDTH = 58.5f;
+    private static final Image octoNaveStill = new Image("/octogonaveStill.png", 117, 117, true, false, true),
+            octoNaveMov1 = new Image("/octogonaveMovingFire1.png", 117, 117, true, false, true),
+            octoNaveMov2 = new Image("/octogonaveMovingFire2.png", 117, 117, true, false, true),
+            octoNaveMov3 = new Image("/octogonaveMovingFire3.png", 117, 117, true, false, true),
+            octoNaveHurtStill = new Image("/octogonaveHurtStill.png", 117, 117, true, false, true),
+            octoNaveMovHurt1 = new Image("/octogonaveMovingFireHurt1.png", 117, 117, true, false, true),
+            octoNaveMovHurt2 = new Image("octogonaveMovingFireHurt2.png", 117, 117, true, false, true),
+            octoNaveMovHurt3 = new Image("octogonaveMovingFireHurt3.png", 117, 117, true, false, true);
     private boolean up, right, down, left, fireUp, fireRight, fireLeft, fireDown;
-    private final byte RELOAD_RATE = 3; //
+    private final byte RELOAD_RATE = 15; //
     private double velocity;
     private byte currentFrame, reloadCounter;
-    private AudioClip shootSound = new AudioClip(this.getClass().getResource("/shoot.wav").toExternalForm()),
-            bonusSound = new AudioClip(this.getClass().getResource("/bonusSound.wav").toExternalForm()),
-            movingSpacecraft = new AudioClip(this.getClass().getResource("/movingSpacecraft.wav").toExternalForm());
+    private AudioClip shootSound, bonusSound, movingSpacecraft;
     /**
      * Esta constante influye en la velocidad en la que se produce un cambio de fotograma de la nave, se le resta
      * posteriormente la velocidad para que a más velocidad mayor sea el cambio.
@@ -65,7 +62,7 @@ class Octogonave extends Sprite{
     private byte lives;
     
     Octogonave(double xLocation, double yLocation) {
-        super(SVG_PATH, xLocation, yLocation, OCTO_NAVE_STILL, OCTO_NAVE_MOV_1, OCTO_NAVE_MOV_2, OCTO_NAVE_MOV_3);
+        super(SVG_PATH, xLocation, yLocation, octoNaveStill, octoNaveMov1, octoNaveMov2, octoNaveMov3);
         currentFrame = 1;
         reloadCounter = 6;
         velocity = 5;
@@ -73,6 +70,9 @@ class Octogonave extends Sprite{
         xPos = xLocation;
         yPos = yLocation;
         lives = 2;
+        shootSound = new AudioClip(this.getClass().getResource("/shoot.wav").toExternalForm());
+        bonusSound = new AudioClip(this.getClass().getResource("/bonusSound.wav").toExternalForm());
+        movingSpacecraft = new AudioClip(this.getClass().getResource("/movingSpacecraft.wav").toExternalForm());
         movingSpacecraft.setCycleCount(AudioClip.INDEFINITE);
     }
 
@@ -230,7 +230,7 @@ class Octogonave extends Sprite{
     }
     
     private void increaseSpeed(double pixelsPerMove){
-        if(velocity <= 10){
+        if(velocity <= 9){
             velocity += pixelsPerMove;
             movingSpacecraft.setVolume(velocity / 10);
         }
@@ -269,8 +269,15 @@ class Octogonave extends Sprite{
         for(Sprite sprite: Main.getMainMenu().getGame().getSpriteManager().getCurrentNormal()){            
             if(collide(sprite)){
                 Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(sprite);
+                if(sprite instanceof Diamond || sprite instanceof Ruby || sprite instanceof YellowSapphire){
+                    Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
+                } else if(sprite instanceof Asteroid){
+                    damage();
+                    Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
+                }
                 updateScore(sprite);
-                Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
+                
+                
             }
         }
     }
@@ -283,10 +290,10 @@ class Octogonave extends Sprite{
         lives--;
         if(lives == 1){
             List<Image> hurtImages = new ArrayList<Image>(){{
-                add(OCTO_NAVE_HURT_STILL);
-                add(OCTO_NAVE_MOV_HURT_1);
-                add(OCTO_NAVE_MOV_HURT_2);
-                add(OCTO_NAVE_MOV_HURT_3);
+                add(octoNaveHurtStill);
+                add(octoNaveMovHurt1);
+                add(octoNaveMovHurt2);
+                add(octoNaveMovHurt3);
             }};
             this.setSpriteImages(hurtImages);
         } else if(lives == 0){
@@ -325,6 +332,8 @@ class Octogonave extends Sprite{
             playScore.increaseScore(Ruby.getBONUS());
         } else if(sprite instanceof YellowSapphire){
             playScore.increaseScore(YellowSapphire.getBONUS());
+        } else if(sprite instanceof Asteroid){
+            playScore.increaseScore(Asteroid.getBONUS());
         }
         playScore.updateScoreText();
     }
