@@ -21,7 +21,7 @@ class Score extends Text{
         setTranslateX(xLocation);
         setTranslateY(yLocation);
         getStyleClass().add("text");
-        setFill(Color.BLACK);
+        setFill(Color.WHITE);
     }
 
     long getScore() {

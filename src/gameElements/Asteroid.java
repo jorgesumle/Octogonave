@@ -36,6 +36,7 @@ public class Asteroid extends Sprite{
         this.yVelocity = verticalVelocity;
         xPos = xLocation;
         yPos = yLocation;
+        setRandomRotation();
     }
 
     public static byte getBONUS() {
@@ -47,6 +48,11 @@ public class Asteroid extends Sprite{
         setXAndYPosition();
         move();
         checkCollision();
+    }
+    
+    private void setRandomRotation(){
+        spriteFrame.setRotate(Math.random() * 360);
+        spriteBound.setRotate(Math.random() * 360);
     }
     
     private void setXAndYPosition(){

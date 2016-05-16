@@ -74,7 +74,7 @@ public class Game {
         Main.getRoot().setBackground(
                 new Background(
                         new BackgroundImage(
-                                new Image("/spaceBackgroundInvSmall.jpg", 640, 480, true, false, true), 
+                                new Image("/nebula.jpg", 640, 480, true, false, true), 
                                 BackgroundRepeat.NO_REPEAT, 
                                 BackgroundRepeat.NO_REPEAT, 
                                 BackgroundPosition.CENTER, 

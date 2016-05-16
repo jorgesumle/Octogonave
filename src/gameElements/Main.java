@@ -53,7 +53,7 @@ public class Main extends Application {
     public static Scene getScene() {
         return scene;
     }
-    
+   
     /**
      * Devuelve el Root principal.
      * @return el <tt>Root</tt> principal.

@@ -99,26 +99,32 @@ class GameLoop extends AnimationTimer{
     private void playTimeLine(){
         Timeline timeline = new Timeline();
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(333), (ActionEvent e) -> {
-            if(Main.getMainMenu().getGame().getPlayScore().getScore() < 100){
-                if(random.nextInt(2) == 0){
+            if(Main.getMainMenu().getGame().getPlayScore().getScore() < 200){
+                if(random.nextInt(5) == 0){
                     createGem();
                 }
                 createAsteroid();
-            } else if(Main.getMainMenu().getGame().getPlayScore().getScore() < 300){
+            } else if(Main.getMainMenu().getGame().getPlayScore().getScore() < 600){
                 createAsteroid();
                 createAsteroid();
-                createGem();
-            } else if(Main.getMainMenu().getGame().getPlayScore().getScore() < 500){
+                if(random.nextInt(8) == 0){
+                    createGem();
+                }
+            } else if(Main.getMainMenu().getGame().getPlayScore().getScore() < 1_000){
                 createAsteroid();
                 createAsteroid();
                 createAsteroid();
-                createGem();
+                if(random.nextInt(9) == 0){
+                    createGem();
+                }
             } else{
                 createAsteroid();
                 createAsteroid();
                 createAsteroid();
                 createAsteroid();
-                createGem();
+                if(random.nextInt(20) == 0){
+                    createGem();
+                }
             }
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
