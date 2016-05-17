@@ -89,7 +89,7 @@ public class Main extends Application {
         
         scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT); 
         scene.getStylesheets().add(MainMenu.class.getResource("menus.css").toExternalForm());
-        primaryStage.getIcons().add(new Image("octogonaveStillOriginal.png"));
+        primaryStage.getIcons().add(new Image("octogonaveIcon.png"));
         primaryStage.setTitle(Texts.getProgramTitle());
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
