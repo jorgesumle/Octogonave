@@ -28,7 +28,7 @@ class Diamond extends Sprite{
             diamondImg2 = new Image("/diamond2.png", 32, 24, true, false, true);
     private static final String SVG_PATH = "M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z";
     private static final byte FRAME_CHANGE_TIME = 20;
-    private static final byte BONUS = 5;
+    private static final byte BONUS = 15;
     private byte frameCounter, selectedFrame;
     private boolean changeFrame;
     
