@@ -3,10 +3,10 @@
 Puedes descargarte la última versión del videojuego a partir del último fuente disponible.
 Sin embargo, se recomienda descargar una versión estable. Para ver las últimas versiones estables
 ve a https://github.com/jorgesumle/Octogonave/releases y descarga el archivo comprimido.
-En el encontrarás además del .jar un archivo .xml y una carpeta que contiene archivos de idiomas .lang.
+En él encontrarás además del .jar un archivo .xml y una carpeta que contiene archivos de idiomas .lang.
 Para que el programa funcione todos los archivos deben estár en la misma carpeta. Ejecutar directamente
 el .jar debería funcionar en la mayoría de sistemas operativos si Java 8 o superior está instalado correctamente. Si no, ve a la ruta donde se encuentran los archivos y ejecuta el comando `java -jar Octogonave.jar`. En caso de 
-que no funcione, deberías comprobar tu versión de Java. Si estás usando OpenJDK deberás instalar lo necesario
+que no funcione, deberías comprobar cuál es tu versión de Java. Si estás usando OpenJDK deberás instalar lo necesario
 para que funcione JavaFX correctamente.
 
 ## Instrucciones
