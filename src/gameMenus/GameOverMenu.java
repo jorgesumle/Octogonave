@@ -12,5 +12,9 @@ import javafx.scene.layout.GridPane;
  * @author Jorge Maldonado Ventura
  */
 public class GameOverMenu extends GridPane{
+
+    public GameOverMenu() {
+        
+    }
     
 }

@@ -18,6 +18,7 @@
 package gameElements;
 
 import gameMenus.Config;
+import gameMenus.GameOverMenu;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.image.Image;
@@ -300,7 +301,11 @@ class Octogonave extends Sprite{
             }};
             this.setSpriteImages(hurtImages);
         } else if(lives == 0){
-            System.exit(0);
+            Main.getMainMenu().getGame().getGameLoop().stop();
+            Main.getMainMenu().getGame().getGameLoop().getTimeline().stop();
+            Main.getRoot().getChildren().clear();
+            GameOverMenu gameOverMenu = new GameOverMenu();
+            Main.getScene().setRoot(gameOverMenu);
         }
     }
     

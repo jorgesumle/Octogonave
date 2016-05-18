@@ -39,6 +39,7 @@ class GameLoop extends AnimationTimer{
     private final String GAME_MUSIC_PATH = "/Stealth Groover.aiff";
     private MediaPlayer gameMusicPlayer; //Si no esta declarado aquí el, recolector de basura de Java lo detiene en diez segundos.
     private Random random;
+    private Timeline timeline;
     GameLoop(Octogonave octogonave, SpriteManager spriteManager){
         this.octogonave = octogonave;
         this.spriteManager = spriteManager;
@@ -49,6 +50,10 @@ class GameLoop extends AnimationTimer{
         }
     }
 
+    public Timeline getTimeline() {
+        return timeline;
+    }
+    
     /**
      * Este código se ejecuta cada fotograma mientras el <tt>AnimationTimer</tt> este
      * activo. Actualiza todos los <i>sprites</i> del juego.
@@ -97,7 +102,7 @@ class GameLoop extends AnimationTimer{
      * Empieza el TimeLine, que añade nuevos sprites al juego cada 5 segundos.
      */
     private void playTimeLine(){
-        Timeline timeline = new Timeline();
+        timeline = new Timeline();
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(333), (ActionEvent e) -> {
             if(Main.getMainMenu().getGame().getPlayScore().getScore() < 400){
                 if(random.nextInt(5) == 0){
@@ -180,7 +185,7 @@ class GameLoop extends AnimationTimer{
                 break;
             case 3: //izquierda-derecha
                 asteroid = new Asteroid(0 - 56, random.nextDouble() * (58 + Main.getWINDOW_HEIGHT()) - 58, 
-                        (random.nextInt(4) + 1) * 1, (random.nextInt(4) + 1)* randomDir());
+                        (random.nextInt(4) + 1) * 1, (random.nextInt(4) + 1) * randomDir());
                 break;
         }
 		
