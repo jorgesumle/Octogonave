@@ -93,6 +93,13 @@ public class Texts{
         return texts.get(16);
     }
     
+    static String getGameOverText(){
+        return texts.get(17);
+    }
+    static String getToMainMenuButton(){
+        return texts.get(18);
+    }
+    
     public ArrayList<String> getTexts() {
         return texts;
     }

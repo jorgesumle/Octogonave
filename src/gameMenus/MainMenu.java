@@ -47,8 +47,7 @@ public class MainMenu extends StackPane{
         menuVBox.setAlignment(Pos.CENTER);
         title = new Text();
         title.setId("title");
-        playButton = new Button();
-        playButton.getStyleClass().add("button");    
+        playButton = new Button(); 
         instructionsButton = new Button();
         scoreButton = new Button();
         configButton = new Button();
@@ -89,6 +88,10 @@ public class MainMenu extends StackPane{
 
     Button getExitButton() {
         return exitButton;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
     
     /**

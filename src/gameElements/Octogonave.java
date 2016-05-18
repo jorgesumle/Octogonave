@@ -301,12 +301,20 @@ class Octogonave extends Sprite{
             }};
             this.setSpriteImages(hurtImages);
         } else if(lives == 0){
-            Main.getMainMenu().getGame().getGameLoop().stop();
-            Main.getMainMenu().getGame().getGameLoop().getTimeline().stop();
-            Main.getRoot().getChildren().clear();
-            GameOverMenu gameOverMenu = new GameOverMenu();
-            Main.getScene().setRoot(gameOverMenu);
+            endGame();
         }
+    }
+    
+    /**
+     * Finaliza la partida llevando al menú de fin de la partida.
+     */
+    private void endGame(){
+        Main.getMainMenu().getGame().getGameLoop().stop();
+        Main.getMainMenu().getGame().getGameLoop().getTimeline().stop();
+        Main.getRoot().getChildren().clear();
+        GameOverMenu gameOverMenu = new GameOverMenu();
+        gameOverMenu.setTexts();
+        Main.getScene().setRoot(gameOverMenu);
     }
     
     /**
