@@ -24,6 +24,7 @@ public class GameOverMenu extends GridPane{
         playButton = new Button();
         playButton.setOnAction(e ->
             {
+                Main.getScene().setRoot(Main.getRoot());
                 Main.getMainMenu().setGame(new Game());
             }
         );
