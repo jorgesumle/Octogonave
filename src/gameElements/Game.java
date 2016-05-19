@@ -16,6 +16,7 @@
  */
 package gameElements;
 
+import gameMenus.GameOverMenu;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -88,6 +89,18 @@ public class Game {
     private void startGameLoop() {
         gameLoop = new GameLoop(octogonave, spriteManager);
         gameLoop.start();
+    }
+    
+    /**
+     * Finaliza la partida llevando al menú de fin de la partida.
+     */
+    void endGame(){
+        gameLoop.stop();
+        gameLoop.getTimeline().stop();
+        Main.getRoot().getChildren().clear();
+        GameOverMenu gameOverMenu = new GameOverMenu();
+        gameOverMenu.setTexts();
+        Main.getScene().setRoot(gameOverMenu);
     }
     
 }

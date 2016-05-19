@@ -25,11 +25,18 @@ import javafx.scene.image.Image;
 public class Asteroid extends Sprite{
     private static final String SVG_PATH = "M 18,1 L 18,1 29,0 51,7 54,19 56,23 54,28 55,37 47,49 47,52 39,58 36,55 21,55 20,54 11,47 8,47 6,45 6,41 3,32 0,28 10,6 16,4 Z";
     private static final byte BONUS = 5;
-    private static Image asteroidImg = new Image("/asteroid.png", 57, 59, true, false, true);
-    private double xVelocity;
-    private double yVelocity;
-    double xPos;
-    double yPos;
+    private static Image asteroidImg = new Image("/asteroid.png", 57, 59, true, false, true),
+            asteroidDestroyedImg1 = new Image("/asteroidDestroyed1.png", 70, 72, true, false, true),
+            asteroidDestroyedImg2 = new Image("/asteroidDestroyed2.png", 70, 72, true, false, true),
+            asteroidDestroyedImg3 = new Image("/asteroidDestroyed3.png", 70, 72, true, false, true);
+    private double xVelocity, yVelocity, xPos, yPos, rotationStage;
+    private byte destructionFrame;
+    private boolean destroy;
+
+    public void setDestroy(boolean destroy) {
+        this.destroy = destroy;
+    }
+    
     public Asteroid(double xLocation, double yLocation, double horizontalVelocity, double verticalVelocity) {
         super(SVG_PATH, xLocation, yLocation, asteroidImg);
         this.xVelocity = horizontalVelocity;
@@ -37,6 +44,9 @@ public class Asteroid extends Sprite{
         xPos = xLocation;
         yPos = yLocation;
         setRandomRotation();
+        rotationStage = spriteFrame.getRotate();
+        destructionFrame = 0;
+        destroy = false;
     }
 
     public static byte getBONUS() {
@@ -45,14 +55,19 @@ public class Asteroid extends Sprite{
     
     @Override
     void update() {
+        if(destroy){
+            destroy();
+        }
         setXAndYPosition();
         move();
+        rotate();
         checkCollision();
     }
     
     private void setRandomRotation(){
-        spriteFrame.setRotate(Math.random() * 360);
-        spriteBound.setRotate(Math.random() * 360);
+        double randomRotation = (Math.random() * 360 + 1);
+        spriteFrame.setRotate(randomRotation);
+        spriteBound.setRotate(randomRotation);
     }
     
     private void setXAndYPosition(){
@@ -67,10 +82,49 @@ public class Asteroid extends Sprite{
         spriteBound.setTranslateY(yPos);
     }
     
+    private void rotate(){
+        rotationStage++;
+        if(rotationStage == 360){
+            rotationStage = 0;
+        }
+        spriteFrame.setRotate(rotationStage);
+        spriteBound.setRotate(rotationStage);
+    }
+    
     private void checkCollision(){
         if(boundsOutY() || boundsOutX()){
             Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(this);
             Main.getRoot().getChildren().remove(getSpriteFrame());
+        }
+    }
+    
+    /**
+     * Destruye el asteroide. La destrucción consiste en la eliminación del detector
+     * de colisiones, una animación y la eliminación del objeto del bucle del juego y 
+     * de la pantalla.
+     */
+    void destroy(){
+        spriteBound.setContent("");
+        switch(destructionFrame){
+            case 0:
+                spriteFrame.setImage(asteroidDestroyedImg1);
+                destructionFrame++;
+                break;
+            case 3:
+                spriteFrame.setImage(asteroidDestroyedImg2);
+                destructionFrame++;
+                break;
+            case 6: 
+                spriteFrame.setImage(asteroidDestroyedImg3);
+                destructionFrame++;
+                break;
+            case 9: 
+                Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(this);
+                Main.getRoot().getChildren().remove(this.getSpriteFrame());
+                break;
+            default:
+                destructionFrame++;
+                break;
         }
     }
     

@@ -101,8 +101,12 @@ class Bullet extends Sprite{
         }
         for(Sprite sprite: Main.getMainMenu().getGame().getSpriteManager().getCurrentNormal()){
             if(collide(sprite)){
-                Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(sprite);
-                Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
+                if(sprite instanceof Asteroid){
+                    ((Asteroid)sprite).setDestroy(true);
+                } else{
+                    Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(sprite);
+                    Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
+                }
                 Main.getMainMenu().getGame().getSpriteManager().addToBulletsToRemove(this);
                 Main.getRoot().getChildren().remove(getSpriteFrame());
                 Main.getMainMenu().getGame().getPlayScore().updateScore(sprite);

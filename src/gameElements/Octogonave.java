@@ -273,15 +273,14 @@ class Octogonave extends Sprite{
 
         for(Sprite sprite: Main.getMainMenu().getGame().getSpriteManager().getCurrentNormal()){            
             if(collide(sprite)){
-                Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(sprite);
                 if(sprite instanceof Diamond || sprite instanceof Ruby || sprite instanceof YellowSapphire){
+                    Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(sprite);
                     Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
                     Main.getMainMenu().getGame().getPlayScore().updateScore(sprite);
                 } else if(sprite instanceof Asteroid){
                     damage();
-                    Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
+                    ((Asteroid) sprite).setDestroy(true);
                 }
-                
             }
         }
     }
@@ -301,20 +300,8 @@ class Octogonave extends Sprite{
             }};
             this.setSpriteImages(hurtImages);
         } else if(lives == 0){
-            endGame();
+            Main.getMainMenu().getGame().endGame();
         }
-    }
-    
-    /**
-     * Finaliza la partida llevando al menú de fin de la partida.
-     */
-    private void endGame(){
-        Main.getMainMenu().getGame().getGameLoop().stop();
-        Main.getMainMenu().getGame().getGameLoop().getTimeline().stop();
-        Main.getRoot().getChildren().clear();
-        GameOverMenu gameOverMenu = new GameOverMenu();
-        gameOverMenu.setTexts();
-        Main.getScene().setRoot(gameOverMenu);
     }
     
     /**
