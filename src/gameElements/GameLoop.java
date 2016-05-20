@@ -104,29 +104,34 @@ class GameLoop extends AnimationTimer{
     private void playTimeLine(){
         timeline = new Timeline();
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(333), (ActionEvent e) -> {
-            if(Main.getMainMenu().getGame().getPlayScore().getScore() < 400){
+            if(Main.getMainMenu().getGame().getScore().getScore() < 400){
                 if(random.nextInt(5) == 0){
                     createGem();
                 }
-                createAsteroid();
-            } else if(Main.getMainMenu().getGame().getPlayScore().getScore() < 1200){
-                createAsteroid();
-                createAsteroid();
+                createAsteroid((byte)4);
+            } else if(Main.getMainMenu().getGame().getScore().getScore() < 800){
+                createAsteroid((byte)4);
+                createAsteroid((byte)3);
+                if(random.nextInt(6) == 0){
+                    createGem();
+                }
+            } else if(Main.getMainMenu().getGame().getScore().getScore() < 1_200){
+                createAsteroid((byte)4);
+                createAsteroid((byte)4);
                 if(random.nextInt(8) == 0){
                     createGem();
                 }
-            } else if(Main.getMainMenu().getGame().getPlayScore().getScore() < 2_000){
-                createAsteroid();
-                createAsteroid();
-                createAsteroid();
+            } else if(Main.getMainMenu().getGame().getScore().getScore() < 2_000){
+                createAsteroid((byte)4);
+                createAsteroid((byte)4);
+                createAsteroid((byte)4);
                 if(random.nextInt(9) == 0){
                     createGem();
                 }
             } else{
-                createAsteroid();
-                createAsteroid();
-                createAsteroid();
-                createAsteroid();
+                createAsteroid((byte)5);
+                createAsteroid((byte)5);
+                createAsteroid((byte)5);
                 if(random.nextInt(20) == 0){
                     createGem();
                 }
@@ -168,24 +173,29 @@ class GameLoop extends AnimationTimer{
         spriteManager.addToNormalToAdd(sprite);
     }
     
-    private void createAsteroid(){
+    /**
+     * Crea un asteroide con una velocidad aleatoria limitada por el número que se
+     * pasa como parámetro.
+     * @param maxSpeed la velocidad máxima que puede tener el asteroide.
+     */
+    private void createAsteroid(byte maxSpeed){
         Asteroid asteroid = null;
-        switch(random.nextInt(4)){
+        switch(random.nextInt(maxSpeed)){
             case 0: //arriba-abajo
                 asteroid = new Asteroid(random.nextDouble() * (56 + Main.getWINDOW_WIDTH()) - 56, 0 - 58, 
-                        (random.nextInt(4) + 1) * randomDir(), 1 * random.nextInt(4) + 1);
+                        (random.nextDouble() * maxSpeed + 1) * randomDir(), random.nextDouble() * maxSpeed + 1);
                 break;
             case 1: //derecha-izquierda
                 asteroid = new Asteroid(Main.getWINDOW_WIDTH() - 1, random.nextDouble() * (58 + Main.getWINDOW_HEIGHT()) - 58, 
-                        (random.nextInt(4) + 1) * -1, (random.nextInt(4) + 1) * randomDir());
+                        (random.nextDouble() * maxSpeed + 1) * -1, (random.nextDouble() * maxSpeed + 1) * randomDir());
                 break;
             case 2: //abajo-arriba
                 asteroid = new Asteroid(random.nextDouble() * (56 + Main.getWINDOW_WIDTH()) - 56, Main.getWINDOW_HEIGHT() - 1, 
-                        (random.nextInt(4) + 1) * randomDir(), (random.nextInt(4) + 1) * -1);
+                        (random.nextDouble() * maxSpeed + 1) * randomDir(), (random.nextDouble() * maxSpeed + 1) * -1);
                 break;
             case 3: //izquierda-derecha
                 asteroid = new Asteroid(0 - 56, random.nextDouble() * (58 + Main.getWINDOW_HEIGHT()) - 58, 
-                        (random.nextInt(4) + 1) * 1, (random.nextInt(4) + 1) * randomDir());
+                        random.nextDouble() * maxSpeed + 1, (random.nextDouble() * maxSpeed + 1) * randomDir());
                 break;
         }
 		

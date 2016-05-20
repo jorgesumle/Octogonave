@@ -33,7 +33,7 @@ public class Game {
     
     private Octogonave octogonave;
     private SpriteManager spriteManager;
-    private Score playScore;
+    private Score score;
     private GameLoop gameLoop;
     
     public Game(){
@@ -51,8 +51,8 @@ public class Game {
         return octogonave;
     }
     
-    Score getPlayScore() {
-        return playScore;
+    public Score getScore() {
+        return score;
     }
     
     SpriteManager getSpriteManager() {
@@ -64,14 +64,14 @@ public class Game {
      */
     private void createNodes() {
         octogonave = new Octogonave(320, 240);
-        playScore = new Score(550, 30);
+        score = new Score(550, 30);
     }
     
     /**
      * Añade las instancias de <tt>Node</tt> al Pane principal.
      */
     private void addNodes() {
-        Main.getRoot().getChildren().addAll(playScore, octogonave.getSpriteFrame());
+        Main.getRoot().getChildren().addAll(score, octogonave.getSpriteFrame());
         Main.getRoot().setBackground(
                 new Background(
                         new BackgroundImage(

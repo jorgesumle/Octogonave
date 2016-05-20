@@ -109,7 +109,7 @@ class Bullet extends Sprite{
                 }
                 Main.getMainMenu().getGame().getSpriteManager().addToBulletsToRemove(this);
                 Main.getRoot().getChildren().remove(getSpriteFrame());
-                Main.getMainMenu().getGame().getPlayScore().updateScore(sprite);
+                Main.getMainMenu().getGame().getScore().updateScore(sprite);
             }
         }
     }

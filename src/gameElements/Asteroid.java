@@ -16,7 +16,12 @@
  */
 package gameElements;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
+import javafx.util.Duration;
 
 /**
  *
@@ -29,9 +34,11 @@ public class Asteroid extends Sprite{
             asteroidDestroyedImg1 = new Image("/asteroidDestroyed1.png", 70, 72, true, false, true),
             asteroidDestroyedImg2 = new Image("/asteroidDestroyed2.png", 70, 72, true, false, true),
             asteroidDestroyedImg3 = new Image("/asteroidDestroyed3.png", 70, 72, true, false, true);
+    private final double ROTATION_VELOCITY;
     private double xVelocity, yVelocity, xPos, yPos, rotationStage;
     private byte destructionFrame;
     private boolean destroy;
+    private Timeline asteroidTimeline;
 
     public void setDestroy(boolean destroy) {
         this.destroy = destroy;
@@ -47,6 +54,14 @@ public class Asteroid extends Sprite{
         rotationStage = spriteFrame.getRotate();
         destructionFrame = 0;
         destroy = false;
+        ROTATION_VELOCITY = horizontalVelocity + verticalVelocity;
+        asteroidTimeline = new Timeline();
+        asteroidTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(70), (ActionEvent e) -> {
+            rotate();
+            checkCollision();
+        }));
+        asteroidTimeline.setCycleCount(Animation.INDEFINITE);
+        asteroidTimeline.play();
     }
 
     public static byte getBONUS() {
@@ -60,8 +75,7 @@ public class Asteroid extends Sprite{
         }
         setXAndYPosition();
         move();
-        rotate();
-        checkCollision();
+        //checkCollision();
     }
     
     private void setRandomRotation(){
@@ -83,7 +97,7 @@ public class Asteroid extends Sprite{
     }
     
     private void rotate(){
-        rotationStage++;
+        rotationStage += ROTATION_VELOCITY;
         if(rotationStage == 360){
             rotationStage = 0;
         }
@@ -118,9 +132,11 @@ public class Asteroid extends Sprite{
                 spriteFrame.setImage(asteroidDestroyedImg3);
                 destructionFrame++;
                 break;
-            case 9: 
+            case 9:
                 Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(this);
                 Main.getRoot().getChildren().remove(this.getSpriteFrame());
+                asteroidTimeline.stop();
+                asteroidTimeline = null;
                 break;
             default:
                 destructionFrame++;

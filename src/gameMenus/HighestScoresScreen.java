@@ -16,6 +16,7 @@
  */
 package gameMenus;
 
+import java.util.ArrayList;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
@@ -25,18 +26,28 @@ import javafx.scene.text.Text;
  */
 class HighestScoresScreen extends GridPane{
     HighestScoresScreen(){
+        ScoreXML.loadScores();
+        ArrayList<String> scores = ScoreXML.getScores();
+        
         Text title = new Text();
         
-        Text score1 = new Text();
-        Text score2 = new Text();
-        Text score3 = new Text();
-        Text score4 = new Text();
-        Text score5 = new Text();
+        Text score1 = new Text(scores.get(0));
+        Text score2 = new Text(scores.get(1));
+        Text score3 = new Text(scores.get(2));
+        Text score4 = new Text(scores.get(3));
+        Text score5 = new Text(scores.get(4));
         
         setTexts();
+        
+        add(title, 0, 0, 2, 1);
+        add(score1, 0, 1, 2, 1);
+        add(score2, 0, 2, 2, 1);
+        add(score3, 0, 3, 2, 1);
+        add(score4, 0, 4, 2, 1);
+        add(score5, 0, 5, 2, 1);
     }
     
     private void setTexts(){
-        
+        Texts.getHighestScoresButton();
     }
 }

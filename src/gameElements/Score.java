@@ -13,7 +13,7 @@ import javafx.scene.text.Text;
  *
  * @author Jorge Maldonado Ventura
  */
-class Score extends Text{
+public class Score extends Text{
     private long score;
     
     Score(double xLocation, double yLocation){
@@ -24,7 +24,7 @@ class Score extends Text{
         setFill(Color.WHITE);
     }
 
-    long getScore() {
+    public long getScore() {
         return score;
     }
     

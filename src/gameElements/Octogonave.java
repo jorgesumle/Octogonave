@@ -276,7 +276,7 @@ class Octogonave extends Sprite{
                 if(sprite instanceof Diamond || sprite instanceof Ruby || sprite instanceof YellowSapphire){
                     Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(sprite);
                     Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
-                    Main.getMainMenu().getGame().getPlayScore().updateScore(sprite);
+                    Main.getMainMenu().getGame().getScore().updateScore(sprite);
                 } else if(sprite instanceof Asteroid){
                     damage();
                     ((Asteroid) sprite).setDestroy(true);
