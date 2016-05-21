@@ -32,12 +32,11 @@ import gameElements.Main;
 public class MainMenu extends StackPane{
     
     private final byte PADDING;
-    private final Button playButton, instructionsButton, scoreButton, configButton, creditsButton, exitButton;
+    private final Button playButton, instructionsButton, scoreButton, configButton, exitButton;
     private Game game;
     private ConfigMenu configMenu;
-    private InstructionsScreen instructionsMenu;
+    private InstructionsScreen instructionsScreen;
     private HighestScoresScreen highestScoresScreen;
-    private CreditsScreen creditsScreen;
     private Text title;
     
     public MainMenu(){
@@ -51,10 +50,9 @@ public class MainMenu extends StackPane{
         instructionsButton = new Button();
         scoreButton = new Button();
         configButton = new Button();
-        creditsButton = new Button();
         exitButton = new Button();
         setTexts();
-        menuVBox.getChildren().addAll(title, playButton, instructionsButton, scoreButton, configButton, creditsButton, exitButton);
+        menuVBox.getChildren().addAll(title, playButton, instructionsButton, scoreButton, configButton, exitButton);
         getChildren().add(menuVBox);
     }
 
@@ -66,8 +64,8 @@ public class MainMenu extends StackPane{
         return PADDING;
     }
 
-    public InstructionsScreen getInstructionsMenu() {
-        return instructionsMenu;
+    public InstructionsScreen getInstructionsScreen() {
+        return instructionsScreen;
     }
 
     Button getPlayButton() {
@@ -80,10 +78,6 @@ public class MainMenu extends StackPane{
 
     Button getConfigButton() {
         return configButton;
-    }
-
-    Button getCreditsButton() {
-        return creditsButton;
     }
 
     Button getExitButton() {
@@ -106,11 +100,12 @@ public class MainMenu extends StackPane{
         );
         instructionsButton.setOnAction(e -> 
             {
-                if(instructionsMenu == null){
-                    instructionsMenu = new InstructionsScreen();
+                if(instructionsScreen == null){
+                    instructionsScreen = new InstructionsScreen();
                 }
                 Main.getRoot().getChildren().clear();
-                Main.getScene().setRoot(instructionsMenu);
+                instructionsScreen.setTexts();
+                Main.getScene().setRoot(instructionsScreen);
             }
         );
         scoreButton.setOnAction(e ->
@@ -119,6 +114,7 @@ public class MainMenu extends StackPane{
                     highestScoresScreen = new HighestScoresScreen();
                 }
                 Main.getRoot().getChildren().clear();
+                highestScoresScreen.setTexts();
                 Main.getScene().setRoot(highestScoresScreen);
             }
         );
@@ -129,15 +125,6 @@ public class MainMenu extends StackPane{
                 }
                 Main.getRoot().getChildren().clear();
                 Main.getScene().setRoot(configMenu);
-            }
-        );
-        creditsButton.setOnAction(e -> 
-            {
-                if(creditsScreen == null){
-                    creditsScreen = new CreditsScreen();
-                }
-                Main.getRoot().getChildren().clear();
-                Main.getScene().setRoot(creditsScreen);
             }
         );
         exitButton.setOnAction(e -> 
@@ -156,7 +143,6 @@ public class MainMenu extends StackPane{
         instructionsButton.setText(Texts.getInstructionsButton());
         scoreButton.setText(Texts.getHighestScoresButton());
         configButton.setText(Texts.getConfigButton());
-        creditsButton.setText(Texts.getCreditsButton());
         exitButton.setText(Texts.getExitButton());
     }
     

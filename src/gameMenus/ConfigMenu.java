@@ -37,9 +37,7 @@ public class ConfigMenu extends GridPane{
     private ChoiceBox languageChoiceBox;
     
     ConfigMenu(){
-        setVgap(Main.getMainMenu().getPADDING());
-        setHgap(Main.getMainMenu().getPADDING());
-        setAlignment(Pos.CENTER);
+        applyLayoutStyle();
         createTitleText();
         createLanguageConfigNodes();  
         createMusicConfigNodes();
@@ -49,42 +47,10 @@ public class ConfigMenu extends GridPane{
         addNodes();
     }
     
-    /**
-     * Asigna el texto de las instancias de <tt>Node</tt> que contienen texto.
-     */
-    private void setTexts() {
-        title.setText(Texts.getConfigButton());
-        languageLabel.setText(Texts.getLanguageLabel());
-        musicLabel.setText(Texts.getMusicLabel());
-        if(Config.isMusicOn()){
-            musicButton.setText(Texts.getOnMusicButton());
-        } else{
-            musicButton.setText(Texts.getOffMusicButton());
-        }
-        soundsLabel.setText(Texts.getSoundsLabel());
-        if(Config.areSoundsOn()){
-            soundsButton.setText(Texts.getOnSoundsButton());
-        } else{
-            soundsButton.setText(Texts.getOffSoundsButton());
-        }
-        backButton.setText(Texts.getBackButton());
-    }
-    
-    /**
-     * Elige la opción activa del <tt>ChoiceBox</tt>, según la configuración.
-     */
-    private void setLanguageChoiceBoxText() {
-        switch(Config.getSelectedLanguage()){
-            case "castellano":
-                languageChoiceBox.getSelectionModel().select(0);
-                break;
-            case "deutsch":
-                languageChoiceBox.getSelectionModel().select(1);
-                break;
-            case "english":
-                languageChoiceBox.getSelectionModel().select(2);
-                break;
-        }
+    private void applyLayoutStyle(){
+        setVgap(Main.getMainMenu().getPADDING());
+        setHgap(Main.getMainMenu().getPADDING());
+        setAlignment(Pos.CENTER);
     }
     
     /**
@@ -121,6 +87,23 @@ public class ConfigMenu extends GridPane{
             Config.saveConfig();
             setTexts();
         });
+    }
+    
+    /**
+     * Elige la opción activa del <tt>ChoiceBox</tt>, según la configuración.
+     */
+    private void setLanguageChoiceBoxText() {
+        switch(Config.getSelectedLanguage()){
+            case "castellano":
+                languageChoiceBox.getSelectionModel().select(0);
+                break;
+            case "deutsch":
+                languageChoiceBox.getSelectionModel().select(1);
+                break;
+            case "english":
+                languageChoiceBox.getSelectionModel().select(2);
+                break;
+        }
     }
     
     /**
@@ -186,6 +169,27 @@ public class ConfigMenu extends GridPane{
                 Config.saveConfig(); 
             }
         );
+    }
+    
+    /**
+     * Asigna el texto de las instancias de <tt>Node</tt> que contienen texto.
+     */
+    private void setTexts() {
+        title.setText(Texts.getConfigButton());
+        languageLabel.setText(Texts.getLanguageLabel());
+        musicLabel.setText(Texts.getMusicLabel());
+        if(Config.isMusicOn()){
+            musicButton.setText(Texts.getOnMusicButton());
+        } else{
+            musicButton.setText(Texts.getOffMusicButton());
+        }
+        soundsLabel.setText(Texts.getSoundsLabel());
+        if(Config.areSoundsOn()){
+            soundsButton.setText(Texts.getOnSoundsButton());
+        } else{
+            soundsButton.setText(Texts.getOffSoundsButton());
+        }
+        backButton.setText(Texts.getBackButton());
     }
     
     /**

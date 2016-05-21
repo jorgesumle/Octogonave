@@ -17,6 +17,7 @@
 package gameMenus;
 
 import gameElements.Main;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -24,8 +25,13 @@ import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -40,7 +46,10 @@ public class ScoreXML {
     public static ArrayList<String> getScores() {
         return scores;
     }
-            
+    
+    /**
+     * Carga las mejores puntuaciones del archivo XML de mejores puntuaciones.
+     */
     public static void loadScores() {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = null;
@@ -58,8 +67,28 @@ public class ScoreXML {
             scores.add(i, highestsScores.item(i).getTextContent());
         }
     }
-
-    static void update(ArrayList String) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    /**
+     * Guarda las mejores puntuaciones en el archivo XML de mejores puntuaciones.
+     * @param scores las mejores puntuaciones.
+     */
+    static void saveScores(ArrayList<String> scores) {
+        try {
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document document = documentBuilder.parse(HIGHESTS_SCORES_FILE);
+            for(byte i = 0; i < scores.size(); i++){
+                document.getElementsByTagName("points").item(i).setTextContent(scores.get(i));
+            }
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(document);
+            StreamResult result = new StreamResult(new File(HIGHESTS_SCORES_FILE));
+            transformer.transform(source, result);
+        } catch (SAXException | ParserConfigurationException | IOException | TransformerConfigurationException ex) {
+            Logger.getLogger(ScoreXML.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TransformerException ex) {
+            Logger.getLogger(ScoreXML.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

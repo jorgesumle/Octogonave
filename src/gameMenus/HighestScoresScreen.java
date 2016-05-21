@@ -16,7 +16,10 @@
  */
 package gameMenus;
 
+import gameElements.Main;
 import java.util.ArrayList;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
@@ -25,29 +28,57 @@ import javafx.scene.text.Text;
  * @author Jorge Maldonado Ventura
  */
 class HighestScoresScreen extends GridPane{
+    
+    Text title, score1, score2, score3, score4, score5;
+    Button backButton;
+    
     HighestScoresScreen(){
+        applyLayoutStyle();
+        createNodes();
+        addNodes();
+    }
+    
+    void setTexts(){
+        title.setText(Texts.getHighestScoresButton());
+        System.out.println(Texts.getHighestScoresButton());
+        backButton.setText(Texts.getBackButton());
+    }
+    
+    private void applyLayoutStyle(){
+        setVgap(Main.getMainMenu().getPADDING());
+        setHgap(Main.getMainMenu().getPADDING());
+        setAlignment(Pos.CENTER);
+    }
+    
+    private void createNodes(){
         ScoreXML.loadScores();
         ArrayList<String> scores = ScoreXML.getScores();
         
-        Text title = new Text();
+        title = new Text();
+        title.getStyleClass().add("smallTitle");
         
-        Text score1 = new Text(scores.get(0));
-        Text score2 = new Text(scores.get(1));
-        Text score3 = new Text(scores.get(2));
-        Text score4 = new Text(scores.get(3));
-        Text score5 = new Text(scores.get(4));
+        score1 = new Text(scores.get(0));
+        score2 = new Text(scores.get(1));
+        score3 = new Text(scores.get(2));
+        score4 = new Text(scores.get(3));
+        score5 = new Text(scores.get(4));
         
-        setTexts();
-        
+        backButton = new Button();
+        backButton.setOnAction(e ->
+            {
+                Main.getScene().setRoot(Main.getMainMenu());
+            }
+        );
+    }
+    
+    private void addNodes(){
         add(title, 0, 0, 2, 1);
         add(score1, 0, 1, 2, 1);
         add(score2, 0, 2, 2, 1);
         add(score3, 0, 3, 2, 1);
         add(score4, 0, 4, 2, 1);
         add(score5, 0, 5, 2, 1);
-    }
-    
-    private void setTexts(){
-        Texts.getHighestScoresButton();
+        
+        add(backButton, 0, 6, 2, 1);
     }
 }
