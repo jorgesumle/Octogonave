@@ -7,11 +7,14 @@ package gameMenus;
 
 import gameElements.Game;
 import gameElements.Main;
-import java.util.ArrayList;
 import javafx.animation.FadeTransition;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -25,18 +28,26 @@ public class GameOverMenu extends GridPane{
     private Text gameOverText, scoreText;
     private Button playButton, toMainMenuButton;
     private TextFlow scoreTexts;
+    TextField playerNameTextField;
      
     public GameOverMenu() {
-        setVgap(Main.getMainMenu().getPADDING());
-        setHgap(Main.getMainMenu().getPADDING());
-        setAlignment(Pos.CENTER);
+        applyLayoutStyle();
         createTitleText();
         createScoreText();
         createPlayButton();
         createToMainButton();
         setTexts();
         addNodes();
-        //checkHighestsScores();
+    }
+
+    public TextField getPlayerNameTextField() {
+        return playerNameTextField;
+    }
+    
+    private void applyLayoutStyle(){
+        setVgap(Main.getMainMenu().getPADDING());
+        setHgap(Main.getMainMenu().getPADDING());
+        setAlignment(Pos.CENTER);
     }
     
     private void createTitleText(){
@@ -56,6 +67,8 @@ public class GameOverMenu extends GridPane{
             {
                 Main.getScene().setRoot(Main.getRoot());
                 Main.getMainMenu().setGame(new Game());
+                Main.getMainMenu().getGame().getScore().updateHighestsScoreXMLValues();
+                ScoreXML.save();
             }
         );
     }
@@ -65,6 +78,8 @@ public class GameOverMenu extends GridPane{
         toMainMenuButton.setOnAction(e ->
             {
                 Main.getScene().setRoot(Main.getMainMenu());
+                Main.getMainMenu().getGame().getScore().updateHighestsScoreXMLValues();
+                ScoreXML.save();
             }
         );
     }
@@ -87,30 +102,11 @@ public class GameOverMenu extends GridPane{
     /**
      * Comprueba si la puntuación obtenida es una de las cinco mejores.
      */
-    /*
-    private void checkHighestsScores(){
-        ScoreXML.loadScores();
-        ArrayList<String> highestsScores = ScoreXML.getScores();
-        Long gameScore = Main.getMainMenu().getGame().getScore().getScore();
-        boolean writtenHighScore = false;
-        for(int i = 0; i < highestsScores.size(); i++){
-            if(gameScore > Long.parseLong(highestsScores.get(i))){
-                if(i + 1 < highestsScores.size()){
-                    //showHighScoresAnimatedMessage();
-                    highestsScores.set(i+1, highestsScores.get(i));
-                    ScoreXML.saveScores(highestsScores);
-                } else{
-                    break;
-                }
-                if(!writtenHighScore){
-                    highestsScores.set(i, Long.toString(gameScore));
-                    writtenHighScore = true;
-                }
-            }
-        }
-    }
     
-    private void showHighScoresAnimatedMessage(){
+    
+    
+    public void showHighScoresAnimatedMessage(){
+        HBox hBox = new HBox();
         String recordMessage = Texts.getRecordText();            
         for(int i = 0; i < recordMessage.length(); i++){
             char letter = recordMessage.charAt(i);
@@ -119,15 +115,31 @@ public class GameOverMenu extends GridPane{
             text.setFont(Font.font(48));
             text.setOpacity(0);
 
-            add(text, 0, 1);
+            hBox.getChildren().add(text);
             
             FadeTransition ft = new FadeTransition(Duration.seconds(0.5), text);
             ft.setToValue(1);
             ft.setDelay(Duration.seconds(i * 0.15));
             ft.play();
-        }   
+        }
+        add(hBox, 0, 1);
     }
-
-    */
     
+    /**
+     * Crea los nodos para guardar el nombre del usuario que ha conseguido batir un récord.
+     */
+    public void createSavingArea(){
+        HBox hBox = new HBox();
+        playerNameTextField = new TextField(System.getProperty("user.name"));
+        playerNameTextField.textProperty().addListener((observable, oldValue, newValue) -> 
+            {
+                if(newValue.length() > 30){
+                    playerNameTextField.setText(playerNameTextField.getText().substring(0, 30));    
+                    new Alert(AlertType.INFORMATION, "No puedes guardar un nombre con más de 30 letras").showAndWait();  
+                }
+            }
+        );
+        hBox.getChildren().addAll(new Text(Texts.getSavingText()), playerNameTextField);
+        add(hBox, 0, 3);
+    }
 }

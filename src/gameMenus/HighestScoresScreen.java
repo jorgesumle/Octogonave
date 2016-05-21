@@ -40,7 +40,6 @@ class HighestScoresScreen extends GridPane{
     
     void setTexts(){
         title.setText(Texts.getHighestScoresButton());
-        System.out.println(Texts.getHighestScoresButton());
         backButton.setText(Texts.getBackButton());
     }
     
@@ -51,7 +50,7 @@ class HighestScoresScreen extends GridPane{
     }
     
     private void createNodes(){
-        ScoreXML.loadScores();
+        ScoreXML.load();
         ArrayList<String> scores = ScoreXML.getScores();
         
         title = new Text();

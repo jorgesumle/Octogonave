@@ -32,7 +32,7 @@ import gameElements.Main;
 public class MainMenu extends StackPane{
     
     private final byte PADDING;
-    private final Button playButton, instructionsButton, scoreButton, configButton, exitButton;
+    private Button playButton, instructionsButton, scoreButton, configButton, exitButton;
     private Game game;
     private ConfigMenu configMenu;
     private InstructionsScreen instructionsScreen;
@@ -44,13 +44,9 @@ public class MainMenu extends StackPane{
         PADDING = 10;
         menuVBox.setSpacing(PADDING);
         menuVBox.setAlignment(Pos.CENTER);
-        title = new Text();
-        title.setId("title");
-        playButton = new Button(); 
-        instructionsButton = new Button();
-        scoreButton = new Button();
-        configButton = new Button();
-        exitButton = new Button();
+        createTitleText();
+        createButtons();
+        makeButtonsInteract();
         setTexts();
         menuVBox.getChildren().addAll(title, playButton, instructionsButton, scoreButton, configButton, exitButton);
         getChildren().add(menuVBox);
@@ -86,6 +82,19 @@ public class MainMenu extends StackPane{
 
     public void setGame(Game game) {
         this.game = game;
+    }
+    
+    private void createTitleText(){
+        title = new Text();
+        title.setId("title");
+    }
+    
+    private void createButtons(){
+        playButton = new Button(); 
+        instructionsButton = new Button();
+        scoreButton = new Button();
+        configButton = new Button();
+        exitButton = new Button();
     }
     
     /**

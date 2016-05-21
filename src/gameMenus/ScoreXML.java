@@ -42,15 +42,28 @@ import org.xml.sax.SAXException;
 public class ScoreXML {
     private static final String HIGHESTS_SCORES_FILE = "highestsScores.xml";
     public static ArrayList<String> scores;
+    public static ArrayList<String> recordHolders;
 
     public static ArrayList<String> getScores() {
         return scores;
+    }
+
+    public static ArrayList<String> getRecordHolders() {
+        return recordHolders;
+    }
+
+    public static void setRecordHolders(ArrayList<String> recordHolders) {
+        ScoreXML.recordHolders = recordHolders;
+    }
+
+    public static void setScores(ArrayList<String> scores) {
+        ScoreXML.scores = scores;
     }
     
     /**
      * Carga las mejores puntuaciones del archivo XML de mejores puntuaciones.
      */
-    public static void loadScores() {
+    public static void load() {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = null;
         Document configXML = null;
@@ -61,24 +74,27 @@ public class ScoreXML {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
         NodeList highestsScores = configXML.getElementsByTagName("points");
+        NodeList recordHoldersNodeList = configXML.getElementsByTagName("player");
         
         scores = new ArrayList<>();
+        recordHolders = new ArrayList<>();
         for(byte i = 0; i < highestsScores.getLength(); i++){
             scores.add(i, highestsScores.item(i).getTextContent());
+            recordHolders.add(i, recordHoldersNodeList.item(i).getTextContent());
         }
     }
     
     /**
      * Guarda las mejores puntuaciones en el archivo XML de mejores puntuaciones.
-     * @param scores las mejores puntuaciones.
      */
-    static void saveScores(ArrayList<String> scores) {
+    public static void save() {
         try {
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
             Document document = documentBuilder.parse(HIGHESTS_SCORES_FILE);
             for(byte i = 0; i < scores.size(); i++){
                 document.getElementsByTagName("points").item(i).setTextContent(scores.get(i));
+                document.getElementsByTagName("player").item(i).setTextContent(recordHolders.get(i));
             }
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();

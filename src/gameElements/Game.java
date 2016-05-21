@@ -17,6 +17,7 @@
 package gameElements;
 
 import gameMenus.GameOverMenu;
+import gameMenus.ScoreXML;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -35,12 +36,17 @@ public class Game {
     private SpriteManager spriteManager;
     private Score score;
     private GameLoop gameLoop;
+    private GameOverMenu gameOverMenu;
     
     public Game(){
         createNodes();
         addNodes();
         spriteManager = new SpriteManager();
         startGameLoop();
+    }
+
+    public GameOverMenu getGameOverMenu() {
+        return gameOverMenu;
     }
 
     GameLoop getGameLoop() {
@@ -98,9 +104,15 @@ public class Game {
         gameLoop.stop();
         gameLoop.getTimeline().stop();
         Main.getRoot().getChildren().clear();
-        GameOverMenu gameOverMenu = new GameOverMenu();
+        gameOverMenu = new GameOverMenu();
         gameOverMenu.setTexts();
         Main.getScene().setRoot(gameOverMenu);
+        if(score.isRecord()){
+            gameOverMenu.showHighScoresAnimatedMessage();
+            gameOverMenu.createSavingArea();
+        }
     }
+    
+    
     
 }

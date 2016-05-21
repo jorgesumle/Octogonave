@@ -109,6 +109,10 @@ public class Texts{
         return texts.get(20);
     }
     
+    static String getSavingText(){
+        return texts.get(21);
+    }
+    
     public ArrayList<String> getTexts() {
         return texts;
     }

@@ -97,7 +97,6 @@ public class Main extends Application {
         
         mainMenu = new gameMenus.MainMenu();   
         scene.setRoot(mainMenu);
-        mainMenu.makeButtonsInteract();
     }
     
 }
