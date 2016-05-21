@@ -25,6 +25,7 @@ import javafx.scene.shape.Shape;
  * @author Jorge Maldonado Ventura
  */
 class Bullet extends Sprite{
+    
     private static final Image BULLET_IMG = new Image("/bullet.png", 10, 13, true, false, true);
     private static final String SVG_PATH = "M 4,0 L 4,0 5,0 6,1 6,8 9,11 9,12 0,12 0,11 3,8 3,1 Z";
     private double verticalVelocity;

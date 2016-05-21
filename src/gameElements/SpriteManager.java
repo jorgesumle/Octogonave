@@ -28,6 +28,7 @@ import java.util.Arrays;
  * @author Jorge Maldonado Ventura 
  */
 class SpriteManager {
+    
     private final ArrayList<ArrayList<Sprite>> currentSprites;
     private final ArrayList<Sprite> currentNormal, normalToAdd, currentBullets,
             bulletsToAdd, removedNormal, normalToRemove, removedBullets,

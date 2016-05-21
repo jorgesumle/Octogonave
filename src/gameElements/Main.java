@@ -33,6 +33,7 @@ import gameMenus.Texts;
  * @author Jorge Maldonado Ventura
  */
 public class Main extends Application {
+    
     private static final short WINDOW_HEIGHT = 480, WINDOW_WIDTH = 640;
     private static Pane root;
     private static Scene scene;

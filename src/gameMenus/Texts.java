@@ -23,6 +23,7 @@ import java.util.ArrayList;
  * @author Jorge Maldonado Ventura
  */
 public class Texts{
+    
     private static ArrayList<String> texts;
     
     static String getLanguage(){

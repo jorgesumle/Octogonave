@@ -34,12 +34,14 @@ import javafx.util.Duration;
  * @author Jorge Maldonado Ventura 
  */
 class GameLoop extends AnimationTimer{
+    
     private final Octogonave octogonave;
     private final SpriteManager spriteManager;
     private final String GAME_MUSIC_PATH = "/Stealth Groover.aiff";
     private MediaPlayer gameMusicPlayer; //Si no esta declarado aquí el, recolector de basura de Java lo detiene en diez segundos.
     private Random random;
     private Timeline timeline;
+    
     GameLoop(Octogonave octogonave, SpriteManager spriteManager){
         this.octogonave = octogonave;
         this.spriteManager = spriteManager;
@@ -81,6 +83,7 @@ class GameLoop extends AnimationTimer{
         spriteManager.addToCurrentBullets(spriteManager.getBulletsToAdd().stream().toArray(Sprite[]::new));
         spriteManager.clearBulletsToAdd();
     }
+    
     /**
      * Empieza el AnimationTimer. Una vez empezado, el método handle(long) de 
      * este AnimationTimer seré llamado en cada fotograma. El AnimationTimer 
@@ -90,6 +93,7 @@ class GameLoop extends AnimationTimer{
     public void start() {
         super.start();
     }
+    
     /**
      * Para el AnimationTimer. Puede ser activado de nuevo llamando a {@link #start()}.
      */
@@ -205,12 +209,13 @@ class GameLoop extends AnimationTimer{
         Main.getRoot().getChildren().add(asteroid.getSpriteFrame());
         spriteManager.addToNormalToAdd(asteroid);
     }
-	private byte randomDir(){
-            if(random.nextBoolean()){
-                    return 1;
-            } else{
-                    return -1;
-            }
-	}
+    
+    private byte randomDir(){
+        if(random.nextBoolean()){
+                return 1;
+        } else{
+                return -1;
+        }
+    }
 	
 }

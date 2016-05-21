@@ -31,6 +31,7 @@ import javafx.scene.shape.SVGPath;
  * @author Jorge Maldonado Ventura 
  */
 public abstract class Sprite {
+    
     /**
      * Las imágenes que utiliza el <i>sprite</i>.
      */

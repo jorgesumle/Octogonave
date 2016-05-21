@@ -25,6 +25,7 @@ import javafx.util.Duration;
  * @author Jorge Maldonado Ventura
  */
 public class GameOverMenu extends GridPane{
+    
     private Text gameOverText, scoreText;
     private Button playButton, toMainMenuButton;
     private TextFlow scoreTexts;
@@ -65,10 +66,10 @@ public class GameOverMenu extends GridPane{
         playButton = new Button();
         playButton.setOnAction(e ->
             {
-                Main.getScene().setRoot(Main.getRoot());
-                Main.getMainMenu().setGame(new Game());
                 Main.getMainMenu().getGame().getScore().updateHighestsScoreXMLValues();
                 ScoreXML.save();
+                Main.getScene().setRoot(Main.getRoot());
+                Main.getMainMenu().setGame(new Game());
             }
         );
     }

@@ -29,8 +29,10 @@ import javafx.scene.text.TextFlow;
  * @author Jorge Maldonado Ventura
  */
 class InstructionsScreen extends VBox{
+    
     private Text titleText, gameTitleText, instructionsText;
     private Button backButton;
+    
     InstructionsScreen(){
         setAlignment(Pos.CENTER);
         setSpacing(Main.getMainMenu().getPADDING());

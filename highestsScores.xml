@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><highestsScores>
 	<score>
+		<player>jorge</player>
+		<points>1295</points>
+	</score>
+	<score>
 		<player>jorgesumle</player>
 		<points>1255</points>
 	</score>
@@ -8,15 +12,11 @@
 		<points>1085</points>
 	</score>
 	<score>
-		<player>jorge</player>
-		<points>370</points>
+		<player>Dikr</player>
+		<points>1010</points>
 	</score>
 	<score>
-		<player>jorge</player>
-		<points>80</points>
-	</score>
-	<score>
-		<player>jorge</player>
-		<points>75</points>
+		<player> </player>
+		<points>740</points>
 	</score>
 </highestsScores>

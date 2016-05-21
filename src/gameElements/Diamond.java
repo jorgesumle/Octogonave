@@ -24,6 +24,7 @@ import javafx.scene.image.Image;
  * @author Jorge Maldonado Ventura 
  */
 class Diamond extends Sprite{
+    
     private static final Image diamondImg1 = new Image("/diamond.png", 32, 24, true, false, true),
             diamondImg2 = new Image("/diamond2.png", 32, 24, true, false, true);
     private static final String SVG_PATH = "M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z";

@@ -40,6 +40,7 @@ import org.xml.sax.SAXException;
  * @author Jorge Maldonado Ventura
  */
 public class ScoreXML {
+    
     private static final String HIGHESTS_SCORES_FILE = "highestsScores.xml";
     public static ArrayList<String> scores;
     public static ArrayList<String> recordHolders;

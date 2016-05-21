@@ -29,7 +29,8 @@ import javafx.scene.text.Text;
  */
 class HighestScoresScreen extends GridPane{
     
-    Text title, score1, score2, score3, score4, score5;
+    Text title, score1, score2, score3, score4, score5, player1, player2, player3,
+            player4, player5;
     Button backButton;
     
     HighestScoresScreen(){
@@ -52,9 +53,16 @@ class HighestScoresScreen extends GridPane{
     private void createNodes(){
         ScoreXML.load();
         ArrayList<String> scores = ScoreXML.getScores();
+        ArrayList<String> bestPlayers = ScoreXML.getRecordHolders();
         
         title = new Text();
         title.getStyleClass().add("smallTitle");
+        
+        player1 = new Text(bestPlayers.get(0));
+        player2 = new Text(bestPlayers.get(1));
+        player3 = new Text(bestPlayers.get(2));
+        player4 = new Text(bestPlayers.get(3));
+        player5 = new Text(bestPlayers.get(4));
         
         score1 = new Text(scores.get(0));
         score2 = new Text(scores.get(1));
@@ -72,11 +80,16 @@ class HighestScoresScreen extends GridPane{
     
     private void addNodes(){
         add(title, 0, 0, 2, 1);
-        add(score1, 0, 1, 2, 1);
-        add(score2, 0, 2, 2, 1);
-        add(score3, 0, 3, 2, 1);
-        add(score4, 0, 4, 2, 1);
-        add(score5, 0, 5, 2, 1);
+        add(player1, 0, 1);
+        add(score1, 1, 1);
+        add(player2, 0, 2);
+        add(score2, 1, 2);
+        add(player3, 0, 3);
+        add(score3, 1, 3);
+        add(player4, 0, 4);
+        add(score4, 1, 4);
+        add(player5, 0, 5);
+        add(score5, 1, 5);
         
         add(backButton, 0, 6, 2, 1);
     }

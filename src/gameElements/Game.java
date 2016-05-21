@@ -17,7 +17,6 @@
 package gameElements;
 
 import gameMenus.GameOverMenu;
-import gameMenus.ScoreXML;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;

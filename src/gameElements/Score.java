@@ -16,6 +16,7 @@ import javafx.scene.text.Text;
  * @author Jorge Maldonado Ventura
  */
 public class Score extends Text{
+    
     private long score;
     private static ArrayList<String> highestsScores;
     private static ArrayList<String> recordHolders;
@@ -106,34 +107,33 @@ public class Score extends Text{
      * Actualiza la lista de las mejores puntuaciones y de los mejores jugadores, pero no la guarda en el XML.
      */
     public void updateHighestsScoreXMLValues(){
-        byte beatenPlayers = playerPosition();
-        System.out.println(beatenPlayers);
-        if(beatenPlayers > 0){
-            addHighestsScore(beatenPlayers);
-            addRecordHolder(beatenPlayers);
+        byte recordPos = playerPosition();
+        if(recordPos != 0){
+            addHighestsScore(recordPos);
+            addRecordHolder(recordPos);
         }
     }
     
     /**
      * Actualiza la lista de las mejores puntuaciones, pero no la guarda en el XML.
-     * @param beatenScores el número de puntuaciones de la lista de récords que se han superado.
+     * @param scorePos el número de puntuaciones de la lista de récords que se han superado.
      */
-    private void addHighestsScore(int beatenScores){
-        for(int j = highestsScores.size() - 1; j > beatenScores - 1; j--){
+    private void addHighestsScore(int scorePos){
+        for(int j = highestsScores.size() - 1; j > scorePos - 1; j--){
             highestsScores.set(j, highestsScores.get(j - 1));                        
         }
-        highestsScores.set(beatenScores - 1, Long.toString(score));
+        highestsScores.set(scorePos - 1, Long.toString(score));
     }
     
     /**
      * Actualiza la lista de los mejores jugadores, pero no la guarda en el XML.
-     * @param beatenScores el número de jugadores de la lista de récords que se han superado.
+     * @param playerPos el número de jugadores de la lista de récords que se han superado.
      */
-    private void addRecordHolder(int beatenPlayers){
+    private void addRecordHolder(int playerPos){
         recordHolders = ScoreXML.getRecordHolders();
-        for(int j = recordHolders.size() - 1; j > beatenPlayers - 1; j--){
+        for(int j = recordHolders.size() - 1; j > playerPos - 1; j--){
             recordHolders.set(j, recordHolders.get(j - 1));                        
         }
-        recordHolders.set(beatenPlayers - 1, Main.getMainMenu().getGame().getGameOverMenu().getPlayerNameTextField().getText());
+        recordHolders.set(playerPos - 1, Main.getMainMenu().getGame().getGameOverMenu().getPlayerNameTextField().getText());
     }
 }
