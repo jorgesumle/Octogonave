@@ -32,30 +32,42 @@ class InstructionsScreen extends VBox{
     
     private Text titleText, gameTitleText, instructionsText;
     private Button backButton;
+    private TextFlow instructions;
     
     InstructionsScreen(){
+        applyLayoutStyle();
+        createTitleText();
+        createInstructionsTextFlow();
+        createBackButton();
+        setTexts();
+        getChildren().addAll(titleText, instructions, backButton);
+    }
+    
+    private void applyLayoutStyle(){
         setAlignment(Pos.CENTER);
         setSpacing(Main.getMainMenu().getPADDING());
-        
+    }
+    
+    private void createTitleText(){
         titleText = new Text();
         titleText.getStyleClass().add("smallTitle");
-        
+    }
+    
+    private void createInstructionsTextFlow(){
         gameTitleText = new Text();
         gameTitleText.setStyle("-fx-font-style: italic;");
         instructionsText = new Text();
-        
-        TextFlow instructions = new TextFlow(gameTitleText, instructionsText);
+        instructions = new TextFlow(gameTitleText, instructionsText);
         setMargin(instructions, new Insets(6));
-        
+    }
+    
+    private void createBackButton(){
         backButton = new Button();
         backButton.setOnAction(e ->
             {
                 Main.getScene().setRoot(Main.getMainMenu());
             }
         );
-        
-        setTexts();
-        getChildren().addAll(titleText, instructions, backButton);
     }
     
     /**

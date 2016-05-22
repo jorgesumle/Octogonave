@@ -78,6 +78,9 @@ public class Score extends Text{
         updateScoreText();
     }
     
+    /**
+     * Comprueba si la puntuación obtenida es una de las cinco mejores.
+     */
     boolean isRecord(){
         ScoreXML.load();
         highestsScores = ScoreXML.getScores();

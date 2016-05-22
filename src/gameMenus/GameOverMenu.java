@@ -30,7 +30,7 @@ public class GameOverMenu extends GridPane{
     private Button playButton, toMainMenuButton;
     private TextFlow scoreTexts;
     TextField playerNameTextField;
-     
+
     public GameOverMenu() {
         applyLayoutStyle();
         createTitleText();
@@ -98,14 +98,7 @@ public class GameOverMenu extends GridPane{
         add(playButton, 1, 3);
         add(toMainMenuButton, 1, 4);
     }
-    
-    
-    /**
-     * Comprueba si la puntuación obtenida es una de las cinco mejores.
-     */
-    
-    
-    
+
     public void showHighScoresAnimatedMessage(){
         HBox hBox = new HBox();
         String recordMessage = Texts.getRecordText();            

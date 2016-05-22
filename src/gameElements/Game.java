@@ -104,7 +104,6 @@ public class Game {
         gameLoop.getTimeline().stop();
         Main.getRoot().getChildren().clear();
         gameOverMenu = new GameOverMenu();
-        gameOverMenu.setTexts();
         Main.getScene().setRoot(gameOverMenu);
         if(score.isRecord()){
             gameOverMenu.showHighScoresAnimatedMessage();

@@ -35,7 +35,11 @@ class HighestScoresScreen extends GridPane{
     
     HighestScoresScreen(){
         applyLayoutStyle();
-        createNodes();
+        createTitleText();
+        ScoreXML.load();
+        createPlayerNamesTexts();
+        createPlayerScoresTexts();
+        createBackButton();
         addNodes();
     }
     
@@ -50,26 +54,30 @@ class HighestScoresScreen extends GridPane{
         setAlignment(Pos.CENTER);
     }
     
-    private void createNodes(){
-        ScoreXML.load();
-        ArrayList<String> scores = ScoreXML.getScores();
-        ArrayList<String> bestPlayers = ScoreXML.getRecordHolders();
-        
+    private void createTitleText(){
         title = new Text();
         title.getStyleClass().add("smallTitle");
-        
+    }
+    
+    private void createPlayerNamesTexts(){
+        ArrayList<String> bestPlayers = ScoreXML.getRecordHolders();
         player1 = new Text(bestPlayers.get(0));
         player2 = new Text(bestPlayers.get(1));
         player3 = new Text(bestPlayers.get(2));
         player4 = new Text(bestPlayers.get(3));
         player5 = new Text(bestPlayers.get(4));
-        
+    }
+    
+    private void createPlayerScoresTexts(){
+        ArrayList<String> scores = ScoreXML.getScores();
         score1 = new Text(scores.get(0));
         score2 = new Text(scores.get(1));
         score3 = new Text(scores.get(2));
         score4 = new Text(scores.get(3));
         score5 = new Text(scores.get(4));
-        
+    }
+    
+    private void createBackButton(){
         backButton = new Button();
         backButton.setOnAction(e ->
             {
@@ -90,7 +98,6 @@ class HighestScoresScreen extends GridPane{
         add(score4, 1, 4);
         add(player5, 0, 5);
         add(score5, 1, 5);
-        
         add(backButton, 0, 6, 2, 1);
     }
 }
