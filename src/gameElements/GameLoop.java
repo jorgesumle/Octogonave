@@ -39,6 +39,7 @@ class GameLoop extends AnimationTimer{
     private final SpriteManager spriteManager;
     private final String GAME_MUSIC_PATH = "/Stealth Groover.aiff";
     private MediaPlayer gameMusicPlayer; //Si no esta declarado aquí el, recolector de basura de Java lo detiene en diez segundos.
+    Timeline mediaPlayerTimeline;
     private Random random;
     private Timeline timeline;
     
@@ -50,6 +51,14 @@ class GameLoop extends AnimationTimer{
         if(gameMenus.Config.isMusicOn()){
             playMusic();
         }
+    }
+
+    public MediaPlayer getGameMusicPlayer() {
+        return gameMusicPlayer;
+    }
+
+    public Timeline getMediaPlayerTimeline() {
+        return mediaPlayerTimeline;
     }
 
     public Timeline getTimeline() {
@@ -154,7 +163,7 @@ class GameLoop extends AnimationTimer{
     private void playMusic(){
         gameMusicPlayer = new MediaPlayer(new Media(this.getClass().getResource(GAME_MUSIC_PATH).toExternalForm()));
             gameMusicPlayer.play();
-        Timeline timeline = new Timeline();
+        mediaPlayerTimeline = new Timeline();
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(217_731), (ActionEvent e) -> {
             gameMusicPlayer = new MediaPlayer(new Media(this.getClass().getResource(GAME_MUSIC_PATH).toExternalForm()));
             gameMusicPlayer.play();

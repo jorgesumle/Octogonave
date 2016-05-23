@@ -102,6 +102,8 @@ public class Game {
     void endGame(){
         gameLoop.stop();
         gameLoop.getTimeline().stop();
+        gameLoop.getGameMusicPlayer().stop();
+        gameLoop.getMediaPlayerTimeline().stop();
         Main.getRoot().getChildren().clear();
         gameOverMenu = new GameOverMenu();
         Main.getScene().setRoot(gameOverMenu);

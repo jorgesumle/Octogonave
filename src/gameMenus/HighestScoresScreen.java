@@ -62,19 +62,29 @@ class HighestScoresScreen extends GridPane{
     private void createPlayerNamesTexts(){
         ArrayList<String> bestPlayers = ScoreXML.getRecordHolders();
         player1 = new Text(bestPlayers.get(0));
+        player1.getStyleClass().add("smallText");
         player2 = new Text(bestPlayers.get(1));
+        player2.getStyleClass().add("smallText");
         player3 = new Text(bestPlayers.get(2));
+        player3.getStyleClass().add("smallText");
         player4 = new Text(bestPlayers.get(3));
+        player4.getStyleClass().add("smallText");
         player5 = new Text(bestPlayers.get(4));
+        player5.getStyleClass().add("smallText");
     }
     
     private void createPlayerScoresTexts(){
         ArrayList<String> scores = ScoreXML.getScores();
         score1 = new Text(scores.get(0));
+        score1.getStyleClass().add("smallText");
         score2 = new Text(scores.get(1));
+        score2.getStyleClass().add("smallText");
         score3 = new Text(scores.get(2));
+        score3.getStyleClass().add("smallText");
         score4 = new Text(scores.get(3));
+        score4.getStyleClass().add("smallText");
         score5 = new Text(scores.get(4));
+        score5.getStyleClass().add("smallText");
     }
     
     private void createBackButton(){

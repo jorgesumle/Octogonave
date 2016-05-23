@@ -18,7 +18,6 @@
 package gameElements;
 
 import gameMenus.Config;
-import gameMenus.GameOverMenu;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.image.Image;
@@ -46,7 +45,7 @@ class Octogonave extends Sprite{
     private final byte RELOAD_RATE = 15; //
     private double velocity;
     private byte currentFrame, reloadCounter;
-    private AudioClip shootSound, bonusSound, movingSpacecraft;
+    private AudioClip shootSound, bonusSound;
     
     /**
      * Esta constante influye en la velocidad en la que se produce un cambio de fotograma de la nave, se le resta
@@ -75,8 +74,6 @@ class Octogonave extends Sprite{
         lives = 2;
         shootSound = new AudioClip(this.getClass().getResource("/shoot.wav").toExternalForm());
         bonusSound = new AudioClip(this.getClass().getResource("/bonusSound.wav").toExternalForm());
-        movingSpacecraft = new AudioClip(this.getClass().getResource("/movingSpacecraft.wav").toExternalForm());
-        movingSpacecraft.setCycleCount(AudioClip.INDEFINITE);
     }
 
     public AudioClip getBonusSound() {
@@ -97,9 +94,6 @@ class Octogonave extends Sprite{
     private void determineKeyPressed(){
         scene.setOnKeyPressed((KeyEvent event) -> 
             {
-                if(Config.areSoundsOn() && !movingSpacecraft.isPlaying()){
-                    movingSpacecraft.play();
-                }
                 switch(event.getCode()){
                     case UP:
                         up = true;
@@ -208,9 +202,6 @@ class Octogonave extends Sprite{
             spriteFrame.setRotate(180);
         } else{
             spriteFrame.setImage(spriteImages.get(0));
-            if(Config.areSoundsOn() && movingSpacecraft.isPlaying()){
-                movingSpacecraft.stop();
-            }
         }
     }
     
@@ -239,13 +230,12 @@ class Octogonave extends Sprite{
     private void increaseSpeed(double pixelsPerMove){
         if(velocity <= 9){
             velocity += pixelsPerMove;
-            movingSpacecraft.setVolume(velocity / 10);
+            /*movingSpacecraft.setVolume(velocity / 10);*/
         }
     }
     private void decreaseSpeed(double pixelsPerMove){
         if(velocity > 1){
             velocity -= pixelsPerMove;
-            movingSpacecraft.setVolume(velocity / 10);
         }
     }
     

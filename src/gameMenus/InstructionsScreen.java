@@ -22,6 +22,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 
 /**
@@ -58,7 +59,9 @@ class InstructionsScreen extends VBox{
         gameTitleText.setStyle("-fx-font-style: italic;");
         instructionsText = new Text();
         instructions = new TextFlow(gameTitleText, instructionsText);
-        setMargin(instructions, new Insets(6));
+        instructions.getStyleClass().add("smallText");
+        instructions.setTextAlignment(TextAlignment.JUSTIFY);
+        setMargin(instructions, new Insets(7));
     }
     
     private void createBackButton(){

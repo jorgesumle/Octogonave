@@ -76,7 +76,6 @@ public class Asteroid extends Sprite{
         }
         setXAndYPosition();
         move();
-        //checkCollision();
     }
     
     private void setRandomRotation(){
