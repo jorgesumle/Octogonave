@@ -21,7 +21,6 @@ package gameElements;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.SVGPath;
@@ -45,10 +44,6 @@ public abstract class Sprite {
      * La ruta SVG del <i>sprite</i>.
      */
     protected SVGPath spriteBound;
-    /**
-     * La ventana en la que se ubican los <i>sprites</i>.
-     */
-    protected Scene scene;
     
     /**
      * Crea un <i>sprite</i> con ruta SVG, coordenadas X y Y y con las imágenes que
@@ -69,7 +64,6 @@ public abstract class Sprite {
         spriteFrame.setTranslateY(yLocation);
         
         this.spriteImages.addAll(Arrays.asList(spriteImages));
-        scene = Main.getScene();
     }
     
     /**

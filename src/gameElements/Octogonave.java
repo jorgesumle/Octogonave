@@ -92,7 +92,7 @@ class Octogonave extends Sprite{
     }
     
     private void determineKeyPressed(){
-        scene.setOnKeyPressed((KeyEvent event) -> 
+        Main.getScene().setOnKeyPressed((KeyEvent event) -> 
             {
                 switch(event.getCode()){
                     case UP:
@@ -130,7 +130,7 @@ class Octogonave extends Sprite{
         );
     }
     private void determineKeyReleased(){
-        scene.setOnKeyReleased((KeyEvent event) ->
+        Main.getScene().setOnKeyReleased((KeyEvent event) ->
             {
                 switch(event.getCode()){
                     case UP:

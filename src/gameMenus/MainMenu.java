@@ -24,26 +24,37 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import gameElements.Main;
+import java.util.ArrayList;
+import java.util.Random;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 /**
  * El menú que aparece al arrancar el programa.
  * @author Jorge Maldonado Ventura
  */
 public class MainMenu extends StackPane{
-    
-    private final byte PADDING;
+    private Timeline starTimeline;
+    private byte PADDING;
     private Button playButton, instructionsButton, scoreButton, configButton, exitButton;
     private Game game;
     private ConfigMenu configMenu;
     private InstructionsScreen instructionsScreen;
     private HighestScoresScreen highestScoresScreen;
     private Text title;
+    private VBox menuVBox;
     
     public MainMenu(){
-        VBox menuVBox = new VBox();
-        PADDING = 10;
-        menuVBox.setSpacing(PADDING);
-        menuVBox.setAlignment(Pos.CENTER);
+        applyLayoutStyle();
+        animateBackground();
         createTitleText();
         createButtons();
         makeButtonsInteract();
@@ -72,6 +83,10 @@ public class MainMenu extends StackPane{
         return instructionsButton;
     }
 
+    public Timeline getStarTimeline() {
+        return starTimeline;
+    }
+
     Button getConfigButton() {
         return configButton;
     }
@@ -82,6 +97,30 @@ public class MainMenu extends StackPane{
 
     public void setGame(Game game) {
         this.game = game;
+    }
+    
+    private void applyLayoutStyle(){
+        setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        menuVBox = new VBox();
+        menuVBox.setStyle("-fx-background-color: transparent;");
+        PADDING = 10;
+        menuVBox.setSpacing(PADDING);
+        menuVBox.setAlignment(Pos.CENTER);
+    }
+    
+    private void animateBackground(){
+        ArrayList<Star> stars = new ArrayList<>();
+        StarAnimTimer starAnimTimer = new StarAnimTimer(stars);
+        Random random = new Random();
+        starTimeline = new Timeline();
+        starTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(9), (ActionEvent e) -> {
+            Star star = new Star(0, 0, random.nextDouble() * 9 - 5, random.nextDouble() * 9 - 5);
+            getChildren().add(star);
+            stars.add(star);
+        }));
+        starTimeline.setCycleCount(Animation.INDEFINITE);
+        starTimeline.play();
+        starAnimTimer.start();
     }
     
     private void createTitleText(){
@@ -104,6 +143,7 @@ public class MainMenu extends StackPane{
         playButton.setOnAction(e -> 
             {
                 Main.getScene().setRoot(Main.getRoot());
+                starTimeline.stop();
                 game = new Game();
             }
         );
@@ -112,6 +152,7 @@ public class MainMenu extends StackPane{
                 if(instructionsScreen == null){
                     instructionsScreen = new InstructionsScreen();
                 }
+                starTimeline.stop();
                 Main.getRoot().getChildren().clear();
                 instructionsScreen.setTexts();
                 Main.getScene().setRoot(instructionsScreen);
@@ -122,6 +163,7 @@ public class MainMenu extends StackPane{
                 if(highestScoresScreen == null){
                     highestScoresScreen = new HighestScoresScreen();
                 }
+                starTimeline.stop();
                 Main.getRoot().getChildren().clear();
                 highestScoresScreen.setTexts();
                 Main.getScene().setRoot(highestScoresScreen);
@@ -132,6 +174,7 @@ public class MainMenu extends StackPane{
                 if(configMenu == null){
                     configMenu = new ConfigMenu();
                 }
+                starTimeline.stop();
                 Main.getRoot().getChildren().clear();
                 Main.getScene().setRoot(configMenu);
             }

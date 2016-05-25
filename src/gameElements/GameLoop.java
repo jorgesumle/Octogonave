@@ -118,14 +118,14 @@ class GameLoop extends AnimationTimer{
         timeline = new Timeline();
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(333), (ActionEvent e) -> {
             if(Main.getMainMenu().getGame().getScore().getScore() < 400){
-                if(random.nextInt(313) == 0){
+                if(random.nextInt(200) == 0){
                     createGem();
                 }
                 createAsteroid((byte)4);
             } else if(Main.getMainMenu().getGame().getScore().getScore() < 800){
                 createAsteroid((byte)4);
                 createAsteroid((byte)3);
-                if(random.nextInt(250) == 0){
+                if(random.nextInt(174) == 0){
                     createGem();
                 }
             } else if(Main.getMainMenu().getGame().getScore().getScore() < 1_200){

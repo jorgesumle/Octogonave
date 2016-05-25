@@ -68,6 +68,7 @@ class InstructionsScreen extends VBox{
         backButton = new Button();
         backButton.setOnAction(e ->
             {
+                Main.getMainMenu().getStarTimeline().play();
                 Main.getScene().setRoot(Main.getMainMenu());
             }
         );

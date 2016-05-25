@@ -55,7 +55,7 @@
 #title{
    -fx-font-size: 34px;
    -fx-font-family: "Arial Black";
-   -fx-fill: #818181;
+   -fx-fill: #ff3300;
    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
    -fx-font-weight: bold;
 }
