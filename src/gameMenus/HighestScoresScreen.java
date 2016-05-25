@@ -77,38 +77,38 @@ class HighestScoresScreen extends GridPane{
     private void createPlayerNamesTexts(){
         ArrayList<String> bestPlayers = ScoreXML.getRecordHolders();
         player1 = new Text(bestPlayers.get(0));
-        player1.getStyleClass().add("smallTextStrong");
+        player1.getStyleClass().add("smallTextOnlyWhiteStrong");
         setHalignment(player1, HPos.CENTER);
         player2 = new Text(bestPlayers.get(1));
-        player2.getStyleClass().add("smallTextStrong");
+        player2.getStyleClass().add("smallTextOnlyWhiteStrong");
         setHalignment(player2, HPos.CENTER);
         player3 = new Text(bestPlayers.get(2));
-        player3.getStyleClass().add("smallTextStrong");
+        player3.getStyleClass().add("smallTextOnlyWhiteStrong");
         setHalignment(player3, HPos.CENTER);
         player4 = new Text(bestPlayers.get(3));
-        player4.getStyleClass().add("smallTextStrong");
+        player4.getStyleClass().add("smallTextOnlyWhiteStrong");
         setHalignment(player4, HPos.CENTER);
         player5 = new Text(bestPlayers.get(4));
-        player5.getStyleClass().add("smallTextStrong");
+        player5.getStyleClass().add("smallTextOnlyWhiteStrong");
         setHalignment(player5, HPos.CENTER);
     }
     
     private void createPlayerScoresTexts(){
         ArrayList<String> scores = ScoreXML.getScores();
         score1 = new Text(scores.get(0));
-        score1.getStyleClass().add("smallTextStrong");
+        score1.getStyleClass().add("smallTextOnlyWhiteStrong");
         setHalignment(score1, HPos.CENTER);
         score2 = new Text(scores.get(1));
-        score2.getStyleClass().add("smallTextStrong");
+        score2.getStyleClass().add("smallTextOnlyWhiteStrong");
         setHalignment(score2, HPos.CENTER);
         score3 = new Text(scores.get(2));
-        score3.getStyleClass().add("smallTextStrong");
+        score3.getStyleClass().add("smallTextOnlyWhiteStrong");
         setHalignment(score3, HPos.CENTER);
         score4 = new Text(scores.get(3));
-        score4.getStyleClass().add("smallTextStrong");
+        score4.getStyleClass().add("smallTextOnlyWhiteStrong");
         setHalignment(score4, HPos.CENTER);
         score5 = new Text(scores.get(4));
-        score5.getStyleClass().add("smallTextStrong");
+        score5.getStyleClass().add("smallTextOnlyWhiteStrong");
         setHalignment(score5, HPos.CENTER);
     }
     
