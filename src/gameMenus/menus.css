@@ -41,6 +41,14 @@
    -fx-font-weight: bold;
 }
 
+.smallTitleWhite{
+   -fx-font-size: 30px;
+   -fx-font-family: "Verdana";
+   -fx-fill: #ffffff;
+   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+   -fx-font-weight: bold;
+}
+
 .text{
     -fx-font-size: 16px;
     -fx-font-family: "Arial";
@@ -50,6 +58,27 @@
 .smallText{
     -fx-font-size: 16px;
     -fx-font-family: "Courier";
+}
+
+.smallTextStrong{
+    -fx-font-size: 16px;
+    -fx-font-family: "Courier";
+    -fx-font-weight: bold;
+    -fx-stroke: white;
+}
+
+.smallTextWhite{
+    -fx-font-size: 16px;
+    -fx-font-family: "Courier";
+    -fx-fill: #ddddff;
+}
+
+.smallTextWhiteStrong{
+    -fx-font-size: 16px;
+    -fx-font-family: "Courier";
+    -fx-font-weight: bold;
+    -fx-stroke: black;
+    -fx-fill: #ddddff; 
 }
 
 #title{

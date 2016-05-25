@@ -230,7 +230,6 @@ class Octogonave extends Sprite{
     private void increaseSpeed(double pixelsPerMove){
         if(velocity <= 9){
             velocity += pixelsPerMove;
-            /*movingSpacecraft.setVolume(velocity / 10);*/
         }
     }
     private void decreaseSpeed(double pixelsPerMove){

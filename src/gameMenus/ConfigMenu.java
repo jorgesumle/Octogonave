@@ -22,6 +22,12 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
@@ -51,6 +57,13 @@ public class ConfigMenu extends GridPane{
         setVgap(Main.getMainMenu().getPADDING());
         setHgap(Main.getMainMenu().getPADDING());
         setAlignment(Pos.CENTER);
+        setBackground(new Background(
+                        new BackgroundImage(
+                                new Image("configMenuBackground.jpg", 640, 480, true, false, true),
+                                BackgroundRepeat.NO_REPEAT,
+                                BackgroundRepeat.NO_REPEAT,
+                                BackgroundPosition.CENTER,
+                                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, false, true))));
     }
     
     /**

@@ -19,13 +19,21 @@ package gameMenus;
 import gameElements.Game;
 import gameElements.Main;
 import javafx.animation.FadeTransition;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -60,16 +68,26 @@ public class GameOverMenu extends GridPane{
         setVgap(Main.getMainMenu().getPADDING());
         setHgap(Main.getMainMenu().getPADDING());
         setAlignment(Pos.CENTER);
+        setBackground(new Background(
+                        new BackgroundImage(
+                                new Image("explosion.jpg", 640, 480, true, false, true),
+                                BackgroundRepeat.NO_REPEAT,
+                                BackgroundRepeat.NO_REPEAT,
+                                BackgroundPosition.CENTER,
+                                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, false, true))));
     }
     
     private void createTitleText(){
         gameOverText = new Text();
-        gameOverText.getStyleClass().add("smallTitle");
+        gameOverText.getStyleClass().add("smallTitleWhite");
+        setHalignment(gameOverText, HPos.CENTER);
     }
     
     private void createScoreText(){
         scoreText = new Text();
+        scoreText.getStyleClass().add("smallTextWhiteStrong");
         Text scoreNumber = new Text(Long.toString(Main.getMainMenu().getGame().getScore().getScore()));
+        scoreNumber.getStyleClass().add("smallTextWhiteStrong");
         scoreTexts = new TextFlow(scoreText, new Text(" "), scoreNumber);
     }
     
@@ -119,6 +137,7 @@ public class GameOverMenu extends GridPane{
             
             Text text = new Text(String.valueOf(letter));
             text.setFont(Font.font(48));
+            text.setFill(Color.AQUAMARINE);
             text.setOpacity(0);
 
             hBox.getChildren().add(text);
@@ -136,6 +155,8 @@ public class GameOverMenu extends GridPane{
      */
     public void createSavingArea(){
         HBox hBox = new HBox();
+        Text savingText = new Text(Texts.getSavingText());
+        savingText.getStyleClass().add("smallTextWhiteStrong");
         playerNameTextField = new TextField(System.getProperty("user.name"));
         playerNameTextField.textProperty().addListener((observable, oldValue, newValue) -> 
             {
@@ -145,7 +166,7 @@ public class GameOverMenu extends GridPane{
                 }
             }
         );
-        hBox.getChildren().addAll(new Text(Texts.getSavingText()), playerNameTextField);
+        hBox.getChildren().addAll(savingText, playerNameTextField);
         add(hBox, 0, 3);
     }
 }
