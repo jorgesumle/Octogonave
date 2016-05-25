@@ -28,7 +28,6 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 /**
@@ -40,6 +39,7 @@ class HighestScoresScreen extends GridPane{
     Text title, score1, score2, score3, score4, score5, player1, player2, player3,
             player4, player5;
     Button backButton;
+    ArrayList<String> bestPlayers, scores; 
     
     HighestScoresScreen(){
         applyLayoutStyle();
@@ -54,6 +54,18 @@ class HighestScoresScreen extends GridPane{
     void setTexts(){
         title.setText(Texts.getHighestScoresButton());
         backButton.setText(Texts.getBackButton());
+        bestPlayers = ScoreXML.getRecordHolders();
+        player1.setText(bestPlayers.get(0));
+        player2.setText(bestPlayers.get(1));
+        player3.setText(bestPlayers.get(2));
+        player4.setText(bestPlayers.get(3));
+        player5.setText(bestPlayers.get(4));
+        scores = ScoreXML.getScores();
+        score1.setText(scores.get(0));
+        score2.setText(scores.get(1));
+        score3.setText(scores.get(2));
+        score4.setText(scores.get(3));
+        score5.setText(scores.get(4));
     }
     
     private void applyLayoutStyle(){
@@ -75,39 +87,37 @@ class HighestScoresScreen extends GridPane{
     }
     
     private void createPlayerNamesTexts(){
-        ArrayList<String> bestPlayers = ScoreXML.getRecordHolders();
-        player1 = new Text(bestPlayers.get(0));
+        player1 = new Text();
         player1.getStyleClass().add("smallTextOnlyWhiteStrong");
         setHalignment(player1, HPos.CENTER);
-        player2 = new Text(bestPlayers.get(1));
+        player2 = new Text();
         player2.getStyleClass().add("smallTextOnlyWhiteStrong");
         setHalignment(player2, HPos.CENTER);
-        player3 = new Text(bestPlayers.get(2));
+        player3 = new Text();
         player3.getStyleClass().add("smallTextOnlyWhiteStrong");
         setHalignment(player3, HPos.CENTER);
-        player4 = new Text(bestPlayers.get(3));
+        player4 = new Text();
         player4.getStyleClass().add("smallTextOnlyWhiteStrong");
         setHalignment(player4, HPos.CENTER);
-        player5 = new Text(bestPlayers.get(4));
+        player5 = new Text();
         player5.getStyleClass().add("smallTextOnlyWhiteStrong");
         setHalignment(player5, HPos.CENTER);
     }
     
     private void createPlayerScoresTexts(){
-        ArrayList<String> scores = ScoreXML.getScores();
-        score1 = new Text(scores.get(0));
+        score1 = new Text();
         score1.getStyleClass().add("smallTextOnlyWhiteStrong");
         setHalignment(score1, HPos.CENTER);
-        score2 = new Text(scores.get(1));
+        score2 = new Text();
         score2.getStyleClass().add("smallTextOnlyWhiteStrong");
         setHalignment(score2, HPos.CENTER);
-        score3 = new Text(scores.get(2));
+        score3 = new Text();
         score3.getStyleClass().add("smallTextOnlyWhiteStrong");
         setHalignment(score3, HPos.CENTER);
-        score4 = new Text(scores.get(3));
+        score4 = new Text();
         score4.getStyleClass().add("smallTextOnlyWhiteStrong");
         setHalignment(score4, HPos.CENTER);
-        score5 = new Text(scores.get(4));
+        score5 = new Text();
         score5.getStyleClass().add("smallTextOnlyWhiteStrong");
         setHalignment(score5, HPos.CENTER);
     }
