@@ -41,7 +41,7 @@ class Octogonave extends Sprite{
             octoNaveMovHurt1 = new Image("/octogonaveMovingFireHurt1.png", 117, 117, true, false, true),
             octoNaveMovHurt2 = new Image("octogonaveMovingFireHurt2.png", 117, 117, true, false, true),
             octoNaveMovHurt3 = new Image("octogonaveMovingFireHurt3.png", 117, 117, true, false, true);
-    private boolean up, right, down, left, fireUp, fireRight, fireLeft, fireDown;
+    private boolean up, right, down, left, fireUp, fireRight, fireLeft, fireDown, moving;
     private final byte RELOAD_RATE = 15; //
     private double velocity;
     private byte currentFrame, reloadCounter;
@@ -68,6 +68,7 @@ class Octogonave extends Sprite{
         currentFrame = 1;
         reloadCounter = 6;
         velocity = 5;
+        moving = false;
         frameChangeRate = 10;
         xPos = xLocation;
         yPos = yLocation;
@@ -83,12 +84,14 @@ class Octogonave extends Sprite{
     @Override
     void update() {
         determineKeyPressed();
-        determineKeyReleased();
-        shoot();
-        determineFrame();
-        setXAndYPosition();
-        move();
-        checkCollision();
+        if(!Main.getMainMenu().getGame().isPaused()){
+            determineKeyReleased();
+            shoot();
+            setXAndYPosition();
+            move();
+            determineFrame();
+            checkCollision();
+        }
     }
     
     private void determineKeyPressed(){
@@ -125,10 +128,41 @@ class Octogonave extends Sprite{
                     case X:
                         increaseSpeed(1);
                         break;
+                    case P:
+                        if(Main.getMainMenu().getGame().isPaused()){
+                            Main.getMainMenu().getGame().getSpriteManager().getCurrentNormal().stream().forEach((sprite) -> {
+                                if(sprite instanceof Asteroid){
+                                    ((Asteroid)sprite).getAsteroidTimeline().play();
+                                }
+                            });
+                            Main.getMainMenu().getGame().setPaused(false);
+                            Main.getMainMenu().getGame().getGameLoop().getTimeline().play();
+                        } else{
+                            Main.getMainMenu().getGame().getSpriteManager().getCurrentNormal().stream().forEach((sprite) -> {
+                                if(sprite instanceof Asteroid){
+                                    ((Asteroid)sprite).getAsteroidTimeline().pause();
+                                }
+                            });
+                            Main.getMainMenu().getGame().setPaused(true);
+                            Main.getMainMenu().getGame().getGameLoop().getTimeline().pause();
+                        }
+                        break;
                 }
             }
         );
     }
+    
+    private void increaseSpeed(double pixelsPerMove){
+        if(velocity <= 9){
+            velocity += pixelsPerMove;
+        }
+    }
+    private void decreaseSpeed(double pixelsPerMove){
+        if(velocity > 1){
+            velocity -= pixelsPerMove;
+        }
+    }
+    
     private void determineKeyReleased(){
         Main.getScene().setOnKeyReleased((KeyEvent event) ->
             {
@@ -162,166 +196,6 @@ class Octogonave extends Sprite{
         );
     }
     
-    /**
-     * Determina el fotograma que se mostrará según las teclas pulsadas. Por ejemplo, si se pulsa la tecla
-     * de arriba, se mostrará el fotograma de la nave moviéndose en esa dirección.
-     */
-    private void determineFrame(){
-        frameCounter++;
-        if(frameCounter >= (frameChangeRate - velocity)){
-            frameCounter = 0;
-            currentFrame++;
-            if(currentFrame > 3){
-                currentFrame = 1;
-            }
-        }
-        
-        if(left && up){
-            spriteFrame.setImage(spriteImages.get(currentFrame));
-            spriteFrame.setRotate(-45);
-        } else if(up && right){
-            spriteFrame.setImage(spriteImages.get(currentFrame));
-            spriteFrame.setRotate(45);
-        } else if(right && down){
-            spriteFrame.setImage(spriteImages.get(currentFrame));
-            spriteFrame.setRotate(135);
-        } else if(down && left){
-            spriteFrame.setImage(spriteImages.get(currentFrame));
-            spriteFrame.setRotate(-135);
-        } else if(left){
-            spriteFrame.setImage(spriteImages.get(currentFrame));
-            spriteFrame.setRotate(-90);
-        } else if(up){
-            spriteFrame.setImage(spriteImages.get(currentFrame));
-            spriteFrame.setRotate(0);
-        } else if(right){
-            spriteFrame.setImage(spriteImages.get(currentFrame));
-            spriteFrame.setRotate(90);
-        } else if(down){
-            spriteFrame.setImage(spriteImages.get(currentFrame));
-            spriteFrame.setRotate(180);
-        } else{
-            spriteFrame.setImage(spriteImages.get(0));
-        }
-    }
-    
-    private void setXAndYPosition(){
-        if(up){
-            yPos -= velocity;
-        } if(right){
-            xPos += velocity;
-        } if(left){
-            xPos -= velocity;
-        } if(down){
-            yPos += velocity;
-        }
-    }
-    
-    /**
-     * Mueve la nave, es decir, su spriteFrame y spriteBound.
-     */
-    private void move() {
-        spriteFrame.setTranslateX(xPos);
-        spriteFrame.setTranslateY(yPos);
-        spriteBound.setTranslateX(xPos);
-        spriteBound.setTranslateY(yPos);
-    }
-    
-    private void increaseSpeed(double pixelsPerMove){
-        if(velocity <= 9){
-            velocity += pixelsPerMove;
-        }
-    }
-    private void decreaseSpeed(double pixelsPerMove){
-        if(velocity > 1){
-            velocity -= pixelsPerMove;
-        }
-    }
-    
-    /**
-     * Comprueba si ha colisionado con alguno de los <i>sprites</i> presentes
-     * en el ArrayList CURRENT_NORMAL de SpriteManager y realiza las acciones oportunas.
-     */
-    private void checkCollision() {
-        if(boundsLimitOrOutY()){
-            damage();
-            if(yPos <= 0 - 30){
-                yPos = -28;
-            } else{
-                yPos = Main.getScene().getHeight() - 89; 
-            }
-            velocity = 0.01;
-        } else if(boundsLimitOrOutX()){
-           damage();
-            if(xPos <= 0 - 30){
-                xPos = -28;
-            } else{
-                xPos = Main.getScene().getWidth() - 89; 
-            }
-            velocity = 0.01;
-        }
-        
-
-        for(Sprite sprite: Main.getMainMenu().getGame().getSpriteManager().getCurrentNormal()){            
-            if(collide(sprite)){
-                if(sprite instanceof Diamond || sprite instanceof Ruby || sprite instanceof YellowSapphire){
-                    Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(sprite);
-                    Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
-                    Main.getMainMenu().getGame().getScore().updateScore(sprite);
-                } else if(sprite instanceof Asteroid){
-                    damage();
-                    ((Asteroid) sprite).setDestroy(true);
-                }
-            }
-        }
-    }
-    
-    /**
-     * Le quita una vida a la nave. A medida que la nave pierde vidas, su aspecto
-     * cambia. Si la nave se queda sin vidas acaba la partida.
-     */
-    private void damage(){
-        lives--;
-        if(lives == 1){
-            List<Image> hurtImages = new ArrayList<Image>(){{
-                add(octoNaveHurtStill);
-                add(octoNaveMovHurt1);
-                add(octoNaveMovHurt2);
-                add(octoNaveMovHurt3);
-            }};
-            this.setSpriteImages(hurtImages);
-        } else if(lives == 0){
-            Main.getMainMenu().getGame().endGame();
-        }
-    }
-    
-    /**
-     * Comprueba si la nave ha colisionado con un <i>sprite</i> determinado.
-     * @param sprite el <i>sprite</i> con el que desea comprobar si se ha colisionado
-     * @return <tt>true</tt> si se ha producido una colisión; <tt>false</tt> en caso contrario.
-     */
-    private boolean collide(Sprite sprite){
-        if(spriteFrame.getBoundsInParent().intersects(sprite.spriteFrame.getBoundsInParent())){
-            Shape intersection = SVGPath.intersect(spriteBound, sprite.spriteBound);
-            if(!intersection.getBoundsInLocal().isEmpty()){
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    /**
-     * Informa de si la nave está tocando el límite de la ventana o ha salido de ella.
-     * @return <tt>true</tt> si ha contactado con el límite o está fuera; <tt>false</tt> si se encuentra dentro de
-     * la ventana.
-     */
-    private boolean boundsLimitOrOutX(){
-        return xPos <= 0 - 30 || xPos >= Main.getScene().getWidth() - 87;
-    }
-    private boolean boundsLimitOrOutY(){
-        return yPos <= 0 - 30 || yPos >= Main.getScene().getHeight() - 87;
-    }
-
     private void shoot() {
         reloadCounter++;
         if(reloadCounter >= RELOAD_RATE){
@@ -380,6 +254,164 @@ class Octogonave extends Sprite{
                 reloadCounter--; //Para que no se pueda desbordar nunca la variable.
             }
         }
+    }
+    
+    private void setXAndYPosition(){
+        double formerYPos = yPos;
+        double formerXPos = xPos;
+        if(up){
+            yPos -= velocity;
+        } 
+        if(right){
+            xPos += velocity;
+        } 
+        if(left){
+            xPos -= velocity;
+        } 
+        if(down){
+            yPos += velocity;
+        }
+        if(formerXPos != xPos || yPos != formerYPos){
+            moving = true;
+        }
+    }
+    
+    /**
+     * Mueve la nave, es decir, su spriteFrame y spriteBound.
+     */
+    private void move() {        
+        spriteFrame.setTranslateX(xPos);
+        spriteFrame.setTranslateY(yPos);
+        spriteBound.setTranslateX(xPos);
+        spriteBound.setTranslateY(yPos);
+    }
+    
+    /**
+     * Determina el fotograma que se mostrará según las teclas pulsadas. Por ejemplo, si se pulsa la tecla
+     * de arriba, se mostrará el fotograma de la nave moviéndose en esa dirección.
+     */
+    private void determineFrame(){
+        frameCounter++;
+        if(frameCounter >= (frameChangeRate - velocity)){
+            frameCounter = 0;
+            currentFrame++;
+            if(currentFrame > 3){
+                currentFrame = 1;
+            }
+        }
+        if(moving){
+            if(left && up){
+                spriteFrame.setImage(spriteImages.get(currentFrame));
+                spriteFrame.setRotate(-45);
+            } else if(up && right){
+                spriteFrame.setImage(spriteImages.get(currentFrame));
+                spriteFrame.setRotate(45);
+            } else if(right && down){
+                spriteFrame.setImage(spriteImages.get(currentFrame));
+                spriteFrame.setRotate(135);
+            } else if(down && left){
+                spriteFrame.setImage(spriteImages.get(currentFrame));
+                spriteFrame.setRotate(-135);
+            } else if(left){
+                spriteFrame.setImage(spriteImages.get(currentFrame));
+                spriteFrame.setRotate(-90);
+            } else if(up){
+                spriteFrame.setImage(spriteImages.get(currentFrame));
+                spriteFrame.setRotate(0);
+            } else if(right){
+                spriteFrame.setImage(spriteImages.get(currentFrame));
+                spriteFrame.setRotate(90);
+            } else if(down){
+                spriteFrame.setImage(spriteImages.get(currentFrame));
+                spriteFrame.setRotate(180);
+            }
+        } else{
+            spriteFrame.setImage(spriteImages.get(0));
+        }
+        moving = false;
+    }
+    
+    /**
+     * Comprueba si ha colisionado con alguno de los <i>sprites</i> presentes
+     * en el ArrayList CURRENT_NORMAL de SpriteManager y realiza las acciones oportunas.
+     */
+    private void checkCollision() {
+        if(boundsLimitOrOutY()){
+            damage();
+            if(yPos <= 0 - 30){
+                yPos = -28;
+            } else{
+                yPos = Main.getScene().getHeight() - 89; 
+            }
+            velocity = 0.01;
+        } else if(boundsLimitOrOutX()){
+           damage();
+            if(xPos <= 0 - 30){
+                xPos = -28;
+            } else{
+                xPos = Main.getScene().getWidth() - 89; 
+            }
+            velocity = 0.01;
+        }
+        
+        for(Sprite sprite: Main.getMainMenu().getGame().getSpriteManager().getCurrentNormal()){            
+            if(collide(sprite)){
+                if(sprite instanceof Diamond || sprite instanceof Ruby || sprite instanceof YellowSapphire){
+                    Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(sprite);
+                    Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
+                    Main.getMainMenu().getGame().getScore().updateScore(sprite);
+                } else if(sprite instanceof Asteroid){
+                    damage();
+                    ((Asteroid) sprite).setDestroy(true);
+                }
+            }
+        }
+    }
+    
+    /**
+     * Le quita una vida a la nave. A medida que la nave pierde vidas, su aspecto
+     * cambia. Si la nave se queda sin vidas acaba la partida.
+     */
+    private void damage(){
+        lives--;
+        if(lives == 1){
+            List<Image> hurtImages = new ArrayList<Image>(){{
+                add(octoNaveHurtStill);
+                add(octoNaveMovHurt1);
+                add(octoNaveMovHurt2);
+                add(octoNaveMovHurt3);
+            }};
+            this.setSpriteImages(hurtImages);
+        } else if(lives == 0){
+            Main.getMainMenu().getGame().endGame();
+        }
+    }
+    
+    /**
+     * Comprueba si la nave ha colisionado con un <i>sprite</i> determinado.
+     * @param sprite el <i>sprite</i> con el que desea comprobar si se ha colisionado
+     * @return <tt>true</tt> si se ha producido una colisión; <tt>false</tt> en caso contrario.
+     */
+    private boolean collide(Sprite sprite){
+        if(spriteFrame.getBoundsInParent().intersects(sprite.spriteFrame.getBoundsInParent())){
+            Shape intersection = SVGPath.intersect(spriteBound, sprite.spriteBound);
+            if(!intersection.getBoundsInLocal().isEmpty()){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Informa de si la nave está tocando el límite de la ventana o ha salido de ella.
+     * @return <tt>true</tt> si ha contactado con el límite o está fuera; <tt>false</tt> si se encuentra dentro de
+     * la ventana.
+     */
+    private boolean boundsLimitOrOutX(){
+        return xPos <= 0 - 30 || xPos >= Main.getScene().getWidth() - 87;
+    }
+    private boolean boundsLimitOrOutY(){
+        return yPos <= 0 - 30 || yPos >= Main.getScene().getHeight() - 87;
     }
 
 }

@@ -31,6 +31,7 @@ import javafx.scene.layout.BackgroundSize;
  */
 public class Game {
     
+    private boolean paused;
     private Octogonave octogonave;
     private SpriteManager spriteManager;
     private Score score;
@@ -38,10 +39,19 @@ public class Game {
     private GameOverMenu gameOverMenu;
     
     public Game(){
+        paused = false;
         createNodes();
         addNodes();
         spriteManager = new SpriteManager();
         startGameLoop();
+    }
+
+    boolean isPaused() {
+        return paused;
+    }
+
+    public void setPaused(boolean paused) {
+        this.paused = paused;
     }
 
     public GameOverMenu getGameOverMenu() {

@@ -41,6 +41,10 @@ public class Asteroid extends Sprite{
     private boolean destroy;
     private Timeline asteroidTimeline;
 
+    public Timeline getAsteroidTimeline() {
+        return asteroidTimeline;
+    }
+    
     public void setDestroy(boolean destroy) {
         this.destroy = destroy;
     }
@@ -59,7 +63,7 @@ public class Asteroid extends Sprite{
         asteroidTimeline = new Timeline();
         asteroidTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(70), (ActionEvent e) -> {
             rotate();
-            checkCollision();
+            checkCollision();  
         }));
         asteroidTimeline.setCycleCount(Animation.INDEFINITE);
         asteroidTimeline.play();

@@ -143,7 +143,7 @@ public class MainMenu extends StackPane{
         playButton.setOnAction(e -> 
             {
                 Main.getScene().setRoot(Main.getRoot());
-                starTimeline.stop();
+                starTimeline.pause();
                 game = new Game();
             }
         );
@@ -152,7 +152,7 @@ public class MainMenu extends StackPane{
                 if(instructionsScreen == null){
                     instructionsScreen = new InstructionsScreen();
                 }
-                starTimeline.stop();
+                starTimeline.pause();
                 Main.getRoot().getChildren().clear();
                 instructionsScreen.setTexts();
                 Main.getScene().setRoot(instructionsScreen);
@@ -163,7 +163,7 @@ public class MainMenu extends StackPane{
                 if(highestScoresScreen == null){
                     highestScoresScreen = new HighestScoresScreen();
                 }
-                starTimeline.stop();
+                starTimeline.pause();
                 Main.getRoot().getChildren().clear();
                 highestScoresScreen.setTexts();
                 Main.getScene().setRoot(highestScoresScreen);
@@ -174,7 +174,7 @@ public class MainMenu extends StackPane{
                 if(configMenu == null){
                     configMenu = new ConfigMenu();
                 }
-                starTimeline.stop();
+                starTimeline.pause();
                 Main.getRoot().getChildren().clear();
                 Main.getScene().setRoot(configMenu);
             }

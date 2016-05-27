@@ -52,7 +52,7 @@ class GameLoop extends AnimationTimer{
             playMusic();
         }
     }
-
+    
     public MediaPlayer getGameMusicPlayer() {
         return gameMusicPlayer;
     }
@@ -74,23 +74,23 @@ class GameLoop extends AnimationTimer{
      */
     @Override
     public void handle(long now) {
-        octogonave.update(); 
-        
-        spriteManager.getCurrentNormal().stream().forEach((sprite) -> {
-            sprite.update();
-        });
-        spriteManager.removeFromCurrentNormal(spriteManager.getNormalToRemove().stream().toArray(Sprite[]::new));
-        spriteManager.clearNormalToRemove();
-        spriteManager.addToCurrentNormal(spriteManager.getNormalToAdd().stream().toArray(Sprite[]::new));
-        spriteManager.clearNormalToAdd();
-        
-        spriteManager.getCurrentBullets().stream().forEach((sprite) -> {
-            sprite.update();
-        });
-        spriteManager.removeFromCurrentBullets(spriteManager.getBulletsToRemove().stream().toArray(Sprite[]::new));
-        spriteManager.clearBulletsToRemove();
-        spriteManager.addToCurrentBullets(spriteManager.getBulletsToAdd().stream().toArray(Sprite[]::new));
-        spriteManager.clearBulletsToAdd();
+        octogonave.update();
+        if(!Main.getMainMenu().getGame().isPaused()){
+            spriteManager.getCurrentNormal().stream().forEach((sprite) -> {
+                sprite.update();
+            });
+            spriteManager.removeFromCurrentNormal(spriteManager.getNormalToRemove().stream().toArray(Sprite[]::new));
+            spriteManager.clearNormalToRemove();
+            spriteManager.addToCurrentNormal(spriteManager.getNormalToAdd().stream().toArray(Sprite[]::new));
+            spriteManager.clearNormalToAdd();
+            spriteManager.getCurrentBullets().stream().forEach((sprite) -> {
+                sprite.update();
+            });
+            spriteManager.removeFromCurrentBullets(spriteManager.getBulletsToRemove().stream().toArray(Sprite[]::new));
+            spriteManager.clearBulletsToRemove();
+            spriteManager.addToCurrentBullets(spriteManager.getBulletsToAdd().stream().toArray(Sprite[]::new));
+            spriteManager.clearBulletsToAdd();
+        }
     }
     
     /**
@@ -118,27 +118,27 @@ class GameLoop extends AnimationTimer{
         timeline = new Timeline();
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(333), (ActionEvent e) -> {
             if(Main.getMainMenu().getGame().getScore().getScore() < 400){
-                if(random.nextInt(200) == 0){
+                if(random.nextInt(150) == 0){
                     createGem();
                 }
                 createAsteroid((byte)4);
             } else if(Main.getMainMenu().getGame().getScore().getScore() < 800){
                 createAsteroid((byte)4);
                 createAsteroid((byte)3);
-                if(random.nextInt(174) == 0){
+                if(random.nextInt(134) == 0){
                     createGem();
                 }
             } else if(Main.getMainMenu().getGame().getScore().getScore() < 1_200){
                 createAsteroid((byte)4);
                 createAsteroid((byte)4);
-                if(random.nextInt(63) == 0){
+                if(random.nextInt(62) == 0){
                     createGem();
                 }
             } else if(Main.getMainMenu().getGame().getScore().getScore() < 2_000){
                 createAsteroid((byte)4);
                 createAsteroid((byte)4);
                 createAsteroid((byte)4);
-                if(random.nextInt(50) == 0){
+                if(random.nextInt(49) == 0){
                     createGem();
                 }
             } else if(Main.getMainMenu().getGame().getScore().getScore() < 2_100){
@@ -148,7 +148,7 @@ class GameLoop extends AnimationTimer{
                 createAsteroid((byte)5);
                 createAsteroid((byte)5);
                 createAsteroid((byte)5);
-                if(random.nextInt(44) == 0){
+                if(random.nextInt(43) == 0){
                     createGem();
                 }
             }
@@ -162,7 +162,7 @@ class GameLoop extends AnimationTimer{
      */
     private void playMusic(){
         gameMusicPlayer = new MediaPlayer(new Media(this.getClass().getResource(GAME_MUSIC_PATH).toExternalForm()));
-            gameMusicPlayer.play();
+        gameMusicPlayer.play();
         mediaPlayerTimeline = new Timeline();
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(217_731), (ActionEvent e) -> {
             gameMusicPlayer = new MediaPlayer(new Media(this.getClass().getResource(GAME_MUSIC_PATH).toExternalForm()));
