@@ -17,12 +17,14 @@
 package gameElements;
 
 import gameMenus.GameOverMenu;
+import gameMenus.Texts;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.text.Text;
 
 /**
  * Representa una partida, lleva asociado el controlador de los <i>sprites</i>, la Octogonave y la
@@ -37,6 +39,7 @@ public class Game {
     private Score score;
     private GameLoop gameLoop;
     private GameOverMenu gameOverMenu;
+    private Text pauseText;
     
     public Game(){
         paused = false;
@@ -44,14 +47,12 @@ public class Game {
         addNodes();
         spriteManager = new SpriteManager();
         startGameLoop();
+        
+        pauseText = new Text(Texts.getPausedText());
     }
 
     boolean isPaused() {
         return paused;
-    }
-
-    public void setPaused(boolean paused) {
-        this.paused = paused;
     }
 
     public GameOverMenu getGameOverMenu() {
@@ -129,5 +130,29 @@ public class Game {
         gameLoop.getMediaPlayerTimeline().stop();
     }
     
+    void pause(){
+        spriteManager.getCurrentNormal().stream().forEach((sprite) -> {
+            if(sprite instanceof Asteroid){
+                ((Asteroid)sprite).getAsteroidTimeline().pause();
+            }
+        });
+        paused = true;
+        gameLoop.getTimeline().pause();
+        pauseText.setX(14);
+        pauseText.setY(45);
+        pauseText.setId("pauseText");
+        Main.getRoot().getChildren().add(pauseText);
+    }
+    
+    void resume(){
+        spriteManager.getCurrentNormal().stream().forEach((sprite) -> {
+            if(sprite instanceof Asteroid){
+                ((Asteroid)sprite).getAsteroidTimeline().play();
+            }
+        });
+        paused = false;
+        Main.getRoot().getChildren().remove(pauseText);
+        gameLoop.getTimeline().play();
+    }
     
 }

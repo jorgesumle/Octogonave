@@ -82,6 +82,19 @@
     -fx-fill: #ddddff; 
 }
 
+.transparent{
+    -fx-background-color: transparent;
+}
+
+#pauseText{
+   -fx-font-size: 50px;
+   -fx-fill: #ff3300;
+   -fx-effect: innershadow( three-pass-box , rgba(30,30,30,0.7) , 6, 0.0 , 0 , 2 );
+   -fx-font-weight: bold;
+   -fx-font-family: "Arial Black";
+   -fx-stroke: white;
+}
+
 #title{
    -fx-font-size: 34px;
    -fx-font-family: "Arial Black";

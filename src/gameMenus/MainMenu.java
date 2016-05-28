@@ -102,7 +102,7 @@ public class MainMenu extends StackPane{
     private void applyLayoutStyle(){
         setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         menuVBox = new VBox();
-        menuVBox.setStyle("-fx-background-color: transparent;");
+        menuVBox.getStyleClass().add("transparent");
         PADDING = 10;
         menuVBox.setSpacing(PADDING);
         menuVBox.setAlignment(Pos.CENTER);

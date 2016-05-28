@@ -114,6 +114,10 @@ public class Texts{
         return texts.get(21);
     }
     
+    public static String getPausedText(){
+        return texts.get(22);
+    }
+    
     public ArrayList<String> getTexts() {
         return texts;
     }

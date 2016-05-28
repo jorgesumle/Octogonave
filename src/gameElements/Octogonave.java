@@ -130,21 +130,9 @@ class Octogonave extends Sprite{
                         break;
                     case P:
                         if(Main.getMainMenu().getGame().isPaused()){
-                            Main.getMainMenu().getGame().getSpriteManager().getCurrentNormal().stream().forEach((sprite) -> {
-                                if(sprite instanceof Asteroid){
-                                    ((Asteroid)sprite).getAsteroidTimeline().play();
-                                }
-                            });
-                            Main.getMainMenu().getGame().setPaused(false);
-                            Main.getMainMenu().getGame().getGameLoop().getTimeline().play();
+                            Main.getMainMenu().getGame().resume();
                         } else{
-                            Main.getMainMenu().getGame().getSpriteManager().getCurrentNormal().stream().forEach((sprite) -> {
-                                if(sprite instanceof Asteroid){
-                                    ((Asteroid)sprite).getAsteroidTimeline().pause();
-                                }
-                            });
-                            Main.getMainMenu().getGame().setPaused(true);
-                            Main.getMainMenu().getGame().getGameLoop().getTimeline().pause();
+                            Main.getMainMenu().getGame().pause();
                         }
                         break;
                 }
