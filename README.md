@@ -40,3 +40,4 @@ S | Dispara abajo
 S + A | Dispara abajo a la izquierda
 A | Dispara a la izquierda
 A + W | Dispara arriba a la izquierda
+P | Pausa la partida
