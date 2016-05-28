@@ -79,6 +79,7 @@ public class Main extends Application {
             } else if(parameter.contains("license") || parameter.equals("-l")){
                 System.out.println("GNU General Public License (http://www.gnu.org/licenses/)");
             }
+            System.exit(0);
         } else{
             launch(args);
         }
