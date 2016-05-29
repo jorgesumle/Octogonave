@@ -23,7 +23,7 @@ import javafx.animation.AnimationTimer;
  * Actualiza las estrellas que forman parte del <tt>ArrayList stars</tt>.
  * @author jorge
  */
-public class StarAnimTimer extends AnimationTimer{
+class StarAnimTimer extends AnimationTimer{
     private ArrayList<Star> stars;
     public StarAnimTimer(ArrayList<Star> stars) {
         this.stars = stars;

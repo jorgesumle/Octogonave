@@ -36,7 +36,9 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
- *
+ * Se encarga de guardar y cargar la puntuación en el XML de máximas puntuaciones.
+ * Las puntuaciones se cargan y se guardan en dos instancias de <tt>ArrayList</tt>:
+ * una para las puntuaciones y otra para los jugadores que han obtenido dichas puntuaciones.
  * @author Jorge Maldonado Ventura
  */
 public class ScoreXML {

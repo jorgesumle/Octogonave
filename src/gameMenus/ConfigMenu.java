@@ -35,7 +35,7 @@ import javafx.scene.text.Text;
  * El menú que permite modificar las configuración del juego.
  * @author Jorge Maldonado Ventura
  */
-public class ConfigMenu extends GridPane{
+class ConfigMenu extends GridPane{
 
     private Label languageLabel, musicLabel, soundsLabel;
     private Button musicButton, soundsButton, backButton;

@@ -24,7 +24,7 @@ import javafx.scene.shape.Rectangle;
  * y anchura.
  * @author jorge
  */
-public class Star extends Rectangle{
+class Star extends Rectangle{
     private double xPos;
     private double yPos;
     private double xVeloc;

@@ -27,7 +27,7 @@ import javafx.util.Duration;
  *
  * @author Jorge Maldonado Ventura
  */
-public class Asteroid extends Sprite{
+class Asteroid extends Sprite{
     
     private static final String SVG_PATH = "M 18,1 L 18,1 29,0 51,7 54,19 56,23 54,28 55,37 47,49 47,52 39,58 36,55 21,55 20,54 11,47 8,47 6,45 6,41 3,32 0,28 10,6 16,4 Z";
     private static final byte BONUS = 5;
