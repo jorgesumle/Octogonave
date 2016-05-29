@@ -64,9 +64,7 @@ class LanguageFileReader {
      */
     private static ArrayList<String> storeFileContentIntoList(BufferedReader br){
         String line;
-        
         ArrayList<String> lines = new ArrayList<>();
-        int index = 0;
         try {
             while((line = br.readLine()) != null){
                 lines.add(line);

@@ -36,7 +36,7 @@ class InstructionsScreen extends VBox{
     private TextFlow instructions;
     
     InstructionsScreen(){
-        applyLayoutStyle();
+        applyStyle();
         createTitleText();
         createInstructionsTextFlow();
         createBackButton();
@@ -44,7 +44,7 @@ class InstructionsScreen extends VBox{
         getChildren().addAll(titleText, instructions, backButton);
     }
     
-    private void applyLayoutStyle(){
+    private void applyStyle(){
         setAlignment(Pos.CENTER);
         setSpacing(Main.getMainMenu().getPADDING());
     }

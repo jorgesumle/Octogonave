@@ -43,9 +43,9 @@ public class ConfigMenu extends GridPane{
     private ChoiceBox languageChoiceBox;
     
     ConfigMenu(){
-        applyLayoutStyle();
+        applyStyle();
         createTitleText();
-        createLanguageConfigNodes();  
+        createLanguageConfigNodes();
         createMusicConfigNodes();
         createSoundConfigNodes();
         createBackButton();
@@ -53,7 +53,10 @@ public class ConfigMenu extends GridPane{
         addNodes();
     }
     
-    private void applyLayoutStyle(){
+    /**
+     * Aplica estilos al menú de configuración, como el fondo de pantalla, el <i>padding</i>.
+     */
+    private void applyStyle(){
         setVgap(Main.getMainMenu().getPADDING());
         setHgap(Main.getMainMenu().getPADDING());
         setAlignment(Pos.CENTER);

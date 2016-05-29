@@ -125,11 +125,20 @@ public class Game {
         }
     }
     
+    /**
+     * Detiene la música del juego.
+     */
     private void stopGameMusic(){
         gameLoop.getGameMusicPlayer().stop();
         gameLoop.getMediaPlayerTimeline().stop();
     }
     
+    /**
+     * Pausa el juego. Cuando el juego está pausado todos los <i>sprites</i> se detienen.
+     * Solo permanece activo el método de <i>Octogonave</i> que comprueba las teclas 
+     * pulsadas para ejecutar el método {@link #resume()} cuando se pulse la tecla de
+     * pausa para reanudar el juego.
+     */
     void pause(){
         spriteManager.getCurrentNormal().stream().forEach((sprite) -> {
             if(sprite instanceof Asteroid){
@@ -144,6 +153,9 @@ public class Game {
         Main.getRoot().getChildren().add(pauseText);
     }
     
+    /**
+     * Reanuda el juego si está pausado.
+     */
     void resume(){
         spriteManager.getCurrentNormal().stream().forEach((sprite) -> {
             if(sprite instanceof Asteroid){

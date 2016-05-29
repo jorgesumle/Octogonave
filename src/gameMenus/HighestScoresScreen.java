@@ -31,7 +31,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
 /**
- *
+ * 
  * @author Jorge Maldonado Ventura
  */
 class HighestScoresScreen extends GridPane{
@@ -42,7 +42,7 @@ class HighestScoresScreen extends GridPane{
     ArrayList<String> bestPlayers, scores; 
     
     HighestScoresScreen(){
-        applyLayoutStyle();
+        applyStyle();
         createTitleText();
         ScoreXML.load();
         createPlayerNamesTexts();
@@ -68,7 +68,7 @@ class HighestScoresScreen extends GridPane{
         score5.setText(scores.get(4));
     }
     
-    private void applyLayoutStyle(){
+    private void applyStyle(){
         setVgap(Main.getMainMenu().getPADDING());
         setHgap(Main.getMainMenu().getPADDING());
         setAlignment(Pos.CENTER);

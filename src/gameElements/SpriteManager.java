@@ -22,7 +22,7 @@ import java.util.Arrays;
 
 /**
  * Clase formada por un conjunto de objetos ArrayList que son utilizados para
- * la administración de todos los <i>sprites</i> del juego. Básicamente permite
+ * la administración de todos los <i>sprites</i> del juego. Básicamente, permite
  * añadir y eliminar <i>sprites</i> del bucle del juego evitando problemas de
  * concurrencia.
  * @author Jorge Maldonado Ventura 

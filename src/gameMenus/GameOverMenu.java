@@ -51,7 +51,7 @@ public class GameOverMenu extends GridPane{
     TextField playerNameTextField;
 
     public GameOverMenu() {
-        applyLayoutStyle();
+        applyStyle();
         createTitleText();
         createScoreText();
         createPlayButton();
@@ -64,7 +64,7 @@ public class GameOverMenu extends GridPane{
         return playerNameTextField;
     }
     
-    private void applyLayoutStyle(){
+    private void applyStyle(){
         setVgap(Main.getMainMenu().getPADDING());
         setHgap(Main.getMainMenu().getPADDING());
         setAlignment(Pos.CENTER);

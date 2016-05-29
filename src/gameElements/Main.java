@@ -48,7 +48,7 @@ public class Main extends Application {
     }
     
     /**
-     * Devuelve el Scene principal.
+     * Devuelve el <tt>Scene</tt> principal.
      * @return el <tt>Scene</tt> principal.
      */
     public static Scene getScene() {
@@ -56,8 +56,8 @@ public class Main extends Application {
     }
    
     /**
-     * Devuelve el Root principal.
-     * @return el <tt>Root</tt> principal.
+     * Devuelve el <tt>Pane</tt> principal.
+     * @return el <tt>Pane</tt> principal.
      */
     public static Pane getRoot() {
         return root;

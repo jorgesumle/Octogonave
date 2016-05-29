@@ -70,6 +70,10 @@ public class Config {
         Config.soundsOn = soundsOn;
     }
     
+    /**
+     * Carga la configuración del XML de configuración. Le asigna el valor de las
+     * opciones de configuración a los atributos de la clase.
+     */
     public static void loadConfig() {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = null;
@@ -99,7 +103,11 @@ public class Config {
         Node soundsValue = soundsTag.item(0);
         soundsOn = soundsValue.getTextContent().equals("on");
     }
-
+    
+    /**
+     * Guarda las opciones de configuración en el XML de configuración. Sobreescribe completamente
+     * el XML con los nuevos valores o con los mismos valores si no se han modificado.
+     */
     static void saveConfig() {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = null;

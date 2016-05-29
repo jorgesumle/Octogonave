@@ -15,7 +15,7 @@
  * junto a este programa.  Si no es así, vea <http://www.gnu.org/licenses/>.
  */
 /**
- * Contiene las claes necesarias para crear la interfaz gráfica del programa
+ * Contiene las clases necesarias para crear la interfaz gráfica del programa
  * fuera del videojuego en sí, es decir, los menús del programa. Estos
  * permiten cambiar la configuración del programa, mostrar las instrucciones,
  * créditos, etc.

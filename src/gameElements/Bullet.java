@@ -21,7 +21,7 @@ import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
 
 /**
- *
+ * Una bala que destruye otros <tt>sprites</tt>, salvo Octogonave.
  * @author Jorge Maldonado Ventura
  */
 class Bullet extends Sprite{

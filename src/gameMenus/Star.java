@@ -20,7 +20,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 /**
- *
+ * Estrella en movimiento que se representa con un punto blanco de 1px de altura
+ * y anchura.
  * @author jorge
  */
 public class Star extends Rectangle{

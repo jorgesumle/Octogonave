@@ -20,6 +20,6 @@ package gameElements;
  *
  * @author Jorge Maldonado Ventura
  */
-public class Levels {
+class Levels {
     
 }

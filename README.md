@@ -13,7 +13,7 @@ para que funcione JavaFX correctamente.
 
 Tu personaje es una nave espacial un poco extraña: se trata de una nave en
 forma de octógono llamada Octogonave. Tu objetivo es conseguir el mayor número de
-puntos en el menor tiempo posible; para ello debes sobrevivir esquivando y destruyendo asteroides.
+puntos que puedas; para ello debes sobrevivir esquivando y destruyendo asteroides.
 Si chocas con los bordes de la ventana (la del sistema operativo) o con algún asteroide,
 la nave sufre daños. Si la nave ya está dañada y vuelve a chocar
 se destruye y acaba la partida.

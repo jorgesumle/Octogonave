@@ -112,7 +112,7 @@ class GameLoop extends AnimationTimer{
     }
     
     /**
-     * Empieza el TimeLine, que añade nuevos sprites al juego cada 5 segundos.
+     * Empieza el TimeLine, que añade nuevos sprites al juego cada cierto tiempo.
      */
     private void playTimeLine(){
         timeline = new Timeline();
@@ -172,6 +172,9 @@ class GameLoop extends AnimationTimer{
         timeline.play();
     }
     
+    /**
+     * Crea una gema en una posición aleatoria.
+     */
     private void createGem(){
         Sprite sprite;
         switch (random.nextInt(3)) {
@@ -191,7 +194,8 @@ class GameLoop extends AnimationTimer{
     
     /**
      * Crea un asteroide con una velocidad aleatoria limitada por el número que se
-     * pasa como parámetro.
+     * pasa como parámetro. El se crea fuera de la visión del juego y la dirección
+     * que sigue es hacia alguna posición aleatoria en la ventana.
      * @param maxSpeed la velocidad máxima que puede tener el asteroide.
      */
     private void createAsteroid(byte maxSpeed){
@@ -219,6 +223,10 @@ class GameLoop extends AnimationTimer{
         spriteManager.addToNormalToAdd(asteroid);
     }
     
+    /**
+     * 
+     * @return 1 o -1.
+     */
     private byte randomDir(){
         if(random.nextBoolean()){
                 return 1;
