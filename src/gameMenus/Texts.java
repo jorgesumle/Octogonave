@@ -19,7 +19,9 @@ package gameMenus;
 import java.util.ArrayList;
 
 /**
- *
+ * Contiene el <tt>ArrayList</tt> con los textos del idioma seleccionado y métodos
+ * para acceder a las distintas posiciones. Cada método tiene un nombre que indica
+ * a que texto se refiere.
  * @author Jorge Maldonado Ventura
  */
 public class Texts{

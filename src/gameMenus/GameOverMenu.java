@@ -40,7 +40,7 @@ import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
 
 /**
- *
+ * La pantalla que aparece cuando finaliza la partida.
  * @author Jorge Maldonado Ventura
  */
 public class GameOverMenu extends GridPane{
