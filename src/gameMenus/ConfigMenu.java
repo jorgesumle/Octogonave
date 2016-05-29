@@ -89,14 +89,15 @@ class ConfigMenu extends GridPane{
         languageChoiceBox.getItems().add("deutsch");
         languageChoiceBox.getItems().add("english");
         setLanguageChoiceBoxText();
-        languageChoiceBox.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> observableValue, Number number, Number number2) -> {
-            if(languageChoiceBox.getItems().get((Integer) number2) == "castellano"){
+        languageChoiceBox.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> observableValue, Number previousOption, Number selectedOption) -> {
+            String selectedlanguage = languageChoiceBox.getItems().get((Integer) selectedOption).toString();
+            if(selectedlanguage.equals("castellano")){
                 Config.setSelectedLanguage("castellano");
                 Texts.setTexts(LanguageFileReader.readLanguageFile("lang/castellano.lang"));
-            } else if(languageChoiceBox.getItems().get((Integer) number2) == "deutsch"){
+            } else if(selectedlanguage.equals("deutsch")){
                 Config.setSelectedLanguage("deutsch");
                 Texts.setTexts(LanguageFileReader.readLanguageFile("lang/deutsch.lang"));
-            } else if(languageChoiceBox.getItems().get((Integer) number2) == "english"){
+            } else if(selectedlanguage.equals("english")){
                 Config.setSelectedLanguage("english");
                 Texts.setTexts(LanguageFileReader.readLanguageFile("lang/english.lang"));
             }

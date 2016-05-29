@@ -72,7 +72,8 @@ public class Config {
     
     /**
      * Carga la configuración del XML de configuración. Le asigna el valor de las
-     * opciones de configuración a los atributos de la clase.
+     * opciones de configuración a los atributos de la clase. Si el documento XML está
+     * dañado crea otro con valores predeterminados.
      */
     public static void loadConfig() {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -82,7 +83,10 @@ public class Config {
             documentBuilder = documentBuilderFactory.newDocumentBuilder();
             configXML = documentBuilder.parse(settingsFile);
         } catch (ParserConfigurationException | SAXException | IOException ex) {
+            saveDefaultConfig();
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("El archivo XML de configuración se ha dañado por causas desconocidas."
+                    + "Se ha creado un nuevo archivo de configuración.");
         }
         NodeList languageTag = configXML.getElementsByTagName("language");
         Node languageValue = languageTag.item(0);
@@ -105,10 +109,39 @@ public class Config {
     }
     
     /**
-     * Guarda las opciones de configuración en el XML de configuración. Sobreescribe completamente
-     * el XML con los nuevos valores o con los mismos valores si no se han modificado.
+     * Guarda las opciones de configuración en el XML de configuración.
      */
     static void saveConfig() {
+        try {
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document document = documentBuilder.parse(settingsFile.toString());
+            document.getElementsByTagName("language").item(0).setTextContent(Texts.getLanguage());
+            if(musicOn){
+                document.getElementsByTagName("music").item(0).setTextContent("on");
+            } else{
+                document.getElementsByTagName("music").item(0).setTextContent("off");
+            }
+            if(soundsOn){
+                document.getElementsByTagName("sounds").item(0).setTextContent("on");
+            } else{
+                document.getElementsByTagName("sounds").item(0).setTextContent("off");
+            }
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(document);
+            StreamResult result = new StreamResult(settingsFile);
+            transformer.transform(source, result);
+        } catch (TransformerException | SAXException | ParserConfigurationException | IOException ex) {
+            Logger.getLogger(ScoreXML.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+     /**
+     * Guarda las opciones de configuración por defecto en el XML de configuración para
+     * reponerse del posible error que supone un archivo de configuración dañado.
+     */
+    static void saveDefaultConfig() {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = null;
         try {
@@ -119,29 +152,11 @@ public class Config {
         Document configXML = documentBuilder.newDocument();
         Element root = (Element) configXML.createElement("settings");
         Element language = (Element) configXML.createElement("language");
-        switch (Texts.getLanguage()) {
-            case "castellano":
-                language.appendChild(configXML.createTextNode("castellano"));
-                break;
-            case "english":
-                language.appendChild(configXML.createTextNode("english"));
-                break;
-            case "deutsch":
-                language.appendChild(configXML.createTextNode("deutsch"));
-                break;
-        }
+        language.appendChild(configXML.createTextNode("castellano"));
         Element music = (Element) configXML.createElement("music");
-        if (isMusicOn()) {
-            music.appendChild(configXML.createTextNode("on"));
-        } else {
-            music.appendChild(configXML.createTextNode("off"));
-        }
+        music.appendChild(configXML.createTextNode("on"));
         Element sounds = (Element) configXML.createElement("sounds");
-        if (areSoundsOn()) {
-            sounds.appendChild(configXML.createTextNode("on"));
-        } else {
-            sounds.appendChild(configXML.createTextNode("off"));
-        }
+        sounds.appendChild(configXML.createTextNode("on"));
         root.appendChild(language);
         root.appendChild(music);
         root.appendChild(sounds);
@@ -160,6 +175,7 @@ public class Config {
         } catch (TransformerException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
+        loadConfig();
     }
 
 }
