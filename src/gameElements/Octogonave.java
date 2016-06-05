@@ -20,11 +20,15 @@ package gameElements;
 import gameMenus.Config;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.AudioClip;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
+import javafx.util.Duration;
 
 /**
  * El héroe del juego.
@@ -42,7 +46,7 @@ class Octogonave extends Sprite{
             octoNaveMovHurt2 = new Image("octogonaveMovingFireHurt2.png", 117, 117, true, false, true),
             octoNaveMovHurt3 = new Image("octogonaveMovingFireHurt3.png", 117, 117, true, false, true);
     private boolean up, right, down, left, fireUp, fireRight, fireLeft, fireDown, moving;
-    private final byte RELOAD_RATE = 15; //
+    private byte reloadRate = 15; //
     private double velocity;
     private byte currentFrame, reloadCounter;
     private AudioClip shootSound, bonusSound;
@@ -186,7 +190,7 @@ class Octogonave extends Sprite{
     
     private void shoot() {
         reloadCounter++;
-        if(reloadCounter >= RELOAD_RATE){
+        if(reloadCounter >= reloadRate){
             if(fireUp || fireLeft || fireDown || fireRight){
                 if(Config.areSoundsOn()){
                     shootSound.play();
@@ -238,8 +242,6 @@ class Octogonave extends Sprite{
                 } 
                 Main.getMainMenu().getGame().getSpriteManager().addToBulletsToAdd(bullet);
                 Main.getRoot().getChildren().add(bullet.getSpriteFrame());
-            } else{
-                reloadCounter--; //Para que no se pueda desbordar nunca la variable.
             }
         }
     }
@@ -351,6 +353,16 @@ class Octogonave extends Sprite{
                 } else if(sprite instanceof Asteroid){
                     damage();
                     ((Asteroid) sprite).setDestroy(true);
+                } else if(sprite instanceof ReloadBonus){
+                    Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(sprite);
+                    Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
+                    Timeline bonusTimer = new Timeline();
+                    bonusTimer.getKeyFrames().add(new KeyFrame(Duration.seconds(20), (ActionEvent e) -> {
+                        reloadRate = 15;
+                    }));
+                    bonusTimer.setCycleCount(1);
+                    bonusTimer.play();
+                    reloadRate = 7;
                 }
             }
         }

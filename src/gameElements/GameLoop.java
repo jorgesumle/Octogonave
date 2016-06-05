@@ -118,31 +118,36 @@ class GameLoop extends AnimationTimer{
         timeline = new Timeline();
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(333), (ActionEvent e) -> {
             if(Main.getMainMenu().getGame().getScore().getScore() < 400){
-                if(random.nextInt(150) == 0){
+                if(random.nextInt(10) == 0){
                     createGem();
+                    createBonus();
                 }
                 createAsteroid((byte)4);
             } else if(Main.getMainMenu().getGame().getScore().getScore() < 800){
                 createAsteroid((byte)4);
                 createAsteroid((byte)3);
-                if(random.nextInt(134) == 0){
+                if(random.nextInt(114) == 0){
                     createGem();
+                    createBonus();
                 }
             } else if(Main.getMainMenu().getGame().getScore().getScore() < 1_200){
                 createAsteroid((byte)4);
                 createAsteroid((byte)4);
-                if(random.nextInt(62) == 0){
+                if(random.nextInt(60) == 0){
                     createGem();
+                    createBonus();
                 }
             } else if(Main.getMainMenu().getGame().getScore().getScore() < 2_000){
                 createAsteroid((byte)4);
                 createAsteroid((byte)4);
                 createAsteroid((byte)4);
-                if(random.nextInt(49) == 0){
+                if(random.nextInt(48) == 0){
                     createGem();
+                    createBonus();
                 }
             } else if(Main.getMainMenu().getGame().getScore().getScore() < 2_100){
                 createGem();
+                createBonus();
             }
             else{
                 createAsteroid((byte)5);
@@ -150,6 +155,7 @@ class GameLoop extends AnimationTimer{
                 createAsteroid((byte)5);
                 if(random.nextInt(43) == 0){
                     createGem();
+                    createBonus();
                 }
             }
         }));
@@ -188,6 +194,13 @@ class GameLoop extends AnimationTimer{
                 sprite = new YellowSapphire(random.nextInt(609), random.nextInt(458));
                 break;
         }
+        Main.getRoot().getChildren().add(sprite.getSpriteFrame());
+        spriteManager.addToNormalToAdd(sprite);
+    }
+    
+    private void createBonus(){
+        Sprite sprite;
+        sprite = new ReloadBonus(random.nextInt(609), random.nextInt(458));
         Main.getRoot().getChildren().add(sprite.getSpriteFrame());
         spriteManager.addToNormalToAdd(sprite);
     }
