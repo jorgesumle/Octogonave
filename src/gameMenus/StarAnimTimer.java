@@ -16,6 +16,7 @@
  */
 package gameMenus;
 
+import gameElements.Main;
 import java.util.ArrayList;
 import javafx.animation.AnimationTimer;
 
@@ -34,6 +35,11 @@ class StarAnimTimer extends AnimationTimer{
         stars.stream().forEach((star) -> {
             star.update();
         });
+    }
+    
+    void resume(){
+        start();
+        Main.getMainMenu().getStarTimeline().play();
     }
     
 }

@@ -159,6 +159,7 @@ public class MainMenu extends StackPane{
                     instructionsScreen = new InstructionsScreen();
                 }
                 starTimeline.pause();
+                starAnimTimer.stop();
                 Main.getRoot().getChildren().clear();
                 instructionsScreen.setTexts();
                 Main.getScene().setRoot(instructionsScreen);
@@ -170,6 +171,7 @@ public class MainMenu extends StackPane{
                     highestScoresScreen = new HighestScoresScreen();
                 }
                 starTimeline.pause();
+                starAnimTimer.stop();
                 Main.getRoot().getChildren().clear();
                 highestScoresScreen.setTexts();
                 Main.getScene().setRoot(highestScoresScreen);
@@ -181,6 +183,7 @@ public class MainMenu extends StackPane{
                     configMenu = new ConfigMenu();
                 }
                 starTimeline.pause();
+                starAnimTimer.stop();
                 Main.getRoot().getChildren().clear();
                 Main.getScene().setRoot(configMenu);
             }
