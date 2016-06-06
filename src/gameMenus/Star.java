@@ -16,6 +16,7 @@
  */
 package gameMenus;
 
+import gameElements.Main;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -50,6 +51,18 @@ class Star extends Rectangle{
         yPos += yVeloc;
         setTranslateX(xPos);
         setTranslateY(yPos);
+        if(isOutOfScreen()){
+            Main.getRoot().getChildren().remove(this);
+        }
+    }
+    
+    /**
+     * Comprueba si las estrella está fuera de la pantalla. La posición se calcula
+     * teniendo las coordenadas de un StackPane como referencia.
+     * @return 
+     */
+    private boolean isOutOfScreen(){
+        return xPos <= -1*(Main.getScene().getWidth() / 2) - getWidth() || xPos > Main.getScene().getWidth() / 2 || yPos <= -1*(Main.getScene().getHeight() / 2) || yPos > Main.getScene().getHeight() / 2;
     }
     
     

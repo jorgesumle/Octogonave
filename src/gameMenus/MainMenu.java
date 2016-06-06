@@ -51,6 +51,7 @@ public class MainMenu extends StackPane{
     private HighestScoresScreen highestScoresScreen;
     private Text title;
     private VBox menuVBox;
+    private StarAnimTimer starAnimTimer;
     
     public MainMenu(){
         applyLayoutStyle();
@@ -95,6 +96,10 @@ public class MainMenu extends StackPane{
         return exitButton;
     }
 
+    public StarAnimTimer getStarAnimTimer() {
+        return starAnimTimer;
+    }
+
     public void setGame(Game game) {
         this.game = game;
     }
@@ -110,7 +115,7 @@ public class MainMenu extends StackPane{
     
     private void animateBackground(){
         ArrayList<Star> stars = new ArrayList<>();
-        StarAnimTimer starAnimTimer = new StarAnimTimer(stars);
+        starAnimTimer = new StarAnimTimer(stars);
         Random random = new Random();
         starTimeline = new Timeline();
         starTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(9), (ActionEvent e) -> {
@@ -144,6 +149,7 @@ public class MainMenu extends StackPane{
             {
                 Main.getScene().setRoot(Main.getRoot());
                 starTimeline.pause();
+                starAnimTimer.stop();
                 game = new Game();
             }
         );

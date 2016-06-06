@@ -107,6 +107,7 @@ public class GameOverMenu extends GridPane{
         toMainMenuButton = new Button();
         toMainMenuButton.setOnAction(e ->
             {
+                Main.getMainMenu().getStarAnimTimer().start();
                 Main.getMainMenu().getStarTimeline().play();
                 Main.getScene().setRoot(Main.getMainMenu());
                 Main.getMainMenu().getGame().getScore().updateHighestsScoreXMLValues();
