@@ -32,7 +32,7 @@ import javafx.scene.text.Text;
  * @author Jorge Maldonado Ventura
  */
 public class Game {
-    
+    private boolean isArcadeMode;
     private boolean paused;
     private Octogonave octogonave;
     private SpriteManager spriteManager;
@@ -41,7 +41,8 @@ public class Game {
     private GameOverMenu gameOverMenu;
     private Text pauseText;
     
-    public Game(){
+    public Game(boolean isArcadeMode){
+        this.isArcadeMode = isArcadeMode; 
         paused = false;
         createNodes();
         addNodes();
@@ -112,7 +113,9 @@ public class Game {
      */
     void endGame(){
         gameLoop.stop();
-        gameLoop.getTimeline().stop();
+        if(isArcadeMode){
+            Levels.getArcadeModeTimeline().stop();
+        }
         if(gameMenus.Config.isMusicOn()){
             stopGameMusic();
         }

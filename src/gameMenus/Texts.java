@@ -36,7 +36,7 @@ public class Texts{
         return texts.get(1);
     }
     
-    static String getPlayButton() {
+    static String getAdventureModeButton() {
         return texts.get(2);
     }
 
@@ -118,6 +118,10 @@ public class Texts{
     
     public static String getPausedText(){
         return texts.get(22);
+    }
+    
+    static String getArcadeModeButton(){
+        return texts.get(23);
     }
     
     public ArrayList<String> getTexts() {

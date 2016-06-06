@@ -47,7 +47,6 @@ class GameLoop extends AnimationTimer{
         this.octogonave = octogonave;
         this.spriteManager = spriteManager;
         random = new Random();
-        playTimeLine();
         if(gameMenus.Config.isMusicOn()){
             playMusic();
         }
@@ -110,59 +109,7 @@ class GameLoop extends AnimationTimer{
     public void stop(){
         super.stop();
     }
-    
-    /**
-     * Empieza el TimeLine, que añade nuevos sprites al juego cada cierto tiempo.
-     */
-    private void playTimeLine(){
-        timeline = new Timeline();
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(333), (ActionEvent e) -> {
-            if(Main.getMainMenu().getGame().getScore().getScore() < 400){
-                if(random.nextInt(10) == 0){
-                    createGem();
-                    createBonus();
-                }
-                createAsteroid((byte)4);
-            } else if(Main.getMainMenu().getGame().getScore().getScore() < 800){
-                createAsteroid((byte)4);
-                createAsteroid((byte)3);
-                if(random.nextInt(114) == 0){
-                    createGem();
-                    createBonus();
-                }
-            } else if(Main.getMainMenu().getGame().getScore().getScore() < 1_200){
-                createAsteroid((byte)4);
-                createAsteroid((byte)4);
-                if(random.nextInt(60) == 0){
-                    createGem();
-                    createBonus();
-                }
-            } else if(Main.getMainMenu().getGame().getScore().getScore() < 2_000){
-                createAsteroid((byte)4);
-                createAsteroid((byte)4);
-                createAsteroid((byte)4);
-                if(random.nextInt(48) == 0){
-                    createGem();
-                    createBonus();
-                }
-            } else if(Main.getMainMenu().getGame().getScore().getScore() < 2_100){
-                createGem();
-                createBonus();
-            }
-            else{
-                createAsteroid((byte)5);
-                createAsteroid((byte)5);
-                createAsteroid((byte)5);
-                if(random.nextInt(43) == 0){
-                    createGem();
-                    createBonus();
-                }
-            }
-        }));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
-    }
-    
+           
     /**
      * Reproduce la música del juego una y otra vez.
      */
@@ -170,82 +117,12 @@ class GameLoop extends AnimationTimer{
         gameMusicPlayer = new MediaPlayer(new Media(this.getClass().getResource(GAME_MUSIC_PATH).toExternalForm()));
         gameMusicPlayer.play();
         mediaPlayerTimeline = new Timeline();
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(217_731), (ActionEvent e) -> {
+        mediaPlayerTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(217_731), (ActionEvent e) -> {
             gameMusicPlayer = new MediaPlayer(new Media(this.getClass().getResource(GAME_MUSIC_PATH).toExternalForm()));
             gameMusicPlayer.play();
         }));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
+        mediaPlayerTimeline.setCycleCount(Animation.INDEFINITE);
+        mediaPlayerTimeline.play();
     }
     
-    /**
-     * Crea una gema en una posición aleatoria.
-     */
-    private void createGem(){
-        Sprite sprite;
-        switch (random.nextInt(3)) {
-            case 0:                                //1+640-32(diamond width) //1+480-24
-                sprite = new Diamond(random.nextInt(609), random.nextInt(455));
-                break;
-            case 1:
-                sprite = new Ruby(random.nextInt(609), random.nextInt(447));
-                break;
-            default:
-                sprite = new YellowSapphire(random.nextInt(609), random.nextInt(458));
-                break;
-        }
-        Main.getRoot().getChildren().add(sprite.getSpriteFrame());
-        spriteManager.addToNormalToAdd(sprite);
-    }
-    
-    private void createBonus(){
-        Sprite sprite;
-        sprite = new ReloadBonus(random.nextInt(609), random.nextInt(458));
-        Main.getRoot().getChildren().add(sprite.getSpriteFrame());
-        spriteManager.addToNormalToAdd(sprite);
-    }
-    
-    /**
-     * Crea un asteroide con una velocidad aleatoria limitada por el número que se
-     * pasa como parámetro. El se crea fuera de la visión del juego y la dirección
-     * que sigue es hacia alguna posición aleatoria en la ventana.
-     * @param maxSpeed la velocidad máxima que puede tener el asteroide.
-     */
-    private void createAsteroid(byte maxSpeed){
-        Asteroid asteroid = null;
-        switch(random.nextInt(maxSpeed)){
-            case 0: //arriba-abajo
-                asteroid = new Asteroid(random.nextDouble() * (56 + Main.getWINDOW_WIDTH()) - 56, 0 - 58, 
-                        (random.nextDouble() * maxSpeed + 1) * randomDir(), random.nextDouble() * maxSpeed + 1);
-                break;
-            case 1: //derecha-izquierda
-                asteroid = new Asteroid(Main.getWINDOW_WIDTH() - 1, random.nextDouble() * (58 + Main.getWINDOW_HEIGHT()) - 58, 
-                        (random.nextDouble() * maxSpeed + 1) * -1, (random.nextDouble() * maxSpeed + 1) * randomDir());
-                break;
-            case 2: //abajo-arriba
-                asteroid = new Asteroid(random.nextDouble() * (56 + Main.getWINDOW_WIDTH()) - 56, Main.getWINDOW_HEIGHT() - 1, 
-                        (random.nextDouble() * maxSpeed + 1) * randomDir(), (random.nextDouble() * maxSpeed + 1) * -1);
-                break;
-            case 3: //izquierda-derecha
-                asteroid = new Asteroid(0 - 56, random.nextDouble() * (58 + Main.getWINDOW_HEIGHT()) - 58, 
-                        random.nextDouble() * maxSpeed + 1, (random.nextDouble() * maxSpeed + 1) * randomDir());
-                break;
-        }
-		
-        Main.getRoot().getChildren().add(asteroid.getSpriteFrame());
-        spriteManager.addToNormalToAdd(asteroid);
-    }
-    
-    /**
-     * 
-     * @return 1 o -1.
-     */
-    private byte randomDir(){
-        if(random.nextBoolean()){
-                return 1;
-        } else{
-                return -1;
-        }
-    }
-	
 }

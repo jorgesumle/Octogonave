@@ -18,6 +18,7 @@
 package gameMenus;
 
 import gameElements.Game;
+import gameElements.Levels;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
@@ -44,7 +45,7 @@ import javafx.util.Duration;
 public class MainMenu extends StackPane{
     private Timeline starTimeline;
     private byte PADDING;
-    private Button playButton, instructionsButton, scoreButton, configButton, exitButton;
+    private Button playAdventureModeButton, playArcadeModeButton, instructionsButton, scoreButton, configButton, exitButton;
     private Game game;
     private ConfigMenu configMenu;
     private InstructionsScreen instructionsScreen;
@@ -60,7 +61,7 @@ public class MainMenu extends StackPane{
         createButtons();
         makeButtonsInteract();
         setTexts();
-        menuVBox.getChildren().addAll(title, playButton, instructionsButton, scoreButton, configButton, exitButton);
+        menuVBox.getChildren().addAll(title, playAdventureModeButton, playArcadeModeButton, instructionsButton, scoreButton, configButton, exitButton);
         getChildren().add(menuVBox);
     }
 
@@ -76,8 +77,8 @@ public class MainMenu extends StackPane{
         return instructionsScreen;
     }
 
-    Button getPlayButton() {
-        return playButton;
+    Button getPlayArcadeModeButton() {
+        return playArcadeModeButton;
     }
 
     Button getInstructionsButton() {
@@ -134,7 +135,8 @@ public class MainMenu extends StackPane{
     }
     
     private void createButtons(){
-        playButton = new Button(); 
+        playAdventureModeButton = new Button();
+        playArcadeModeButton = new Button(); 
         instructionsButton = new Button();
         scoreButton = new Button();
         configButton = new Button();
@@ -145,11 +147,20 @@ public class MainMenu extends StackPane{
      * Aporta funcionalidad a los botones del menú principal.
      */
     public void makeButtonsInteract(){
-        playButton.setOnAction(e -> 
+        playAdventureModeButton.setOnAction(e ->
             {
                 Main.getScene().setRoot(Main.getRoot());
                 starAnimTimer.pause();
-                game = new Game();
+                game = new Game(false);
+                Levels.level1();
+            }
+        );
+        playArcadeModeButton.setOnAction(e -> 
+            {
+                Main.getScene().setRoot(Main.getRoot());
+                starAnimTimer.pause();
+                game = new Game(true);
+                Levels.arcadeMode();
             }
         );
         instructionsButton.setOnAction(e -> 
@@ -196,7 +207,8 @@ public class MainMenu extends StackPane{
      */
     void setTexts(){
         title.setText(Texts.getProgramTitle());
-        playButton.setText(Texts.getPlayButton());
+        playAdventureModeButton.setText(Texts.getAdventureModeButton());
+        playArcadeModeButton.setText(Texts.getArcadeModeButton());
         instructionsButton.setText(Texts.getInstructionsButton());
         scoreButton.setText(Texts.getHighestScoresButton());
         configButton.setText(Texts.getConfigButton());

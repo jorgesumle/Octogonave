@@ -98,7 +98,7 @@ public class GameOverMenu extends GridPane{
                 Main.getMainMenu().getGame().getScore().updateHighestsScoreXMLValues();
                 ScoreXML.save();
                 Main.getScene().setRoot(Main.getRoot());
-                Main.getMainMenu().setGame(new Game());
+                Main.getMainMenu().setGame(new Game(true));
             }
         );
     }
@@ -117,7 +117,7 @@ public class GameOverMenu extends GridPane{
     
     public void setTexts(){
         gameOverText.setText(Texts.getGameOverText());
-        playButton.setText(Texts.getPlayButton());
+        playButton.setText(Texts.getArcadeModeButton());
         toMainMenuButton.setText(Texts.getToMainMenuButton());
         scoreText.setText(Texts.getScoreText());
     }
