@@ -42,4 +42,9 @@ class StarAnimTimer extends AnimationTimer{
         Main.getMainMenu().getStarTimeline().play();
     }
     
+    void pause(){
+        pause();
+        Main.getMainMenu().getStarTimeline().stop();
+    }
+    
 }
