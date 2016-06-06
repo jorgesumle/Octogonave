@@ -46,7 +46,7 @@ import javafx.util.Duration;
 public class GameOverMenu extends GridPane{
     
     private Text gameOverText, scoreText;
-    private Button playButton, toMainMenuButton;
+    private Button playAdventureModeButton, playArcadeModeButton, toMainMenuButton;
     private TextFlow scoreTexts;
     TextField playerNameTextField;
 
@@ -54,7 +54,7 @@ public class GameOverMenu extends GridPane{
         applyStyle();
         createTitleText();
         createScoreText();
-        createPlayButton();
+        createPlayButtons();
         createToMainButton();
         setTexts();
         addNodes();
@@ -91,9 +91,18 @@ public class GameOverMenu extends GridPane{
         scoreTexts = new TextFlow(scoreText, new Text(" "), scoreNumber);
     }
     
-    private void createPlayButton(){
-        playButton = new Button();
-        playButton.setOnAction(e ->
+    private void createPlayButtons(){
+        playAdventureModeButton = new Button();
+        playAdventureModeButton.setOnAction(e ->
+            {
+                Main.getMainMenu().getGame().getScore().updateHighestsScoreXMLValues();
+                ScoreXML.save();
+                Main.getScene().setRoot(Main.getRoot());
+                Main.getMainMenu().setGame(new Game(false));
+            }
+        );
+        playArcadeModeButton = new Button();
+        playArcadeModeButton.setOnAction(e ->
             {
                 Main.getMainMenu().getGame().getScore().updateHighestsScoreXMLValues();
                 ScoreXML.save();
@@ -117,7 +126,8 @@ public class GameOverMenu extends GridPane{
     
     public void setTexts(){
         gameOverText.setText(Texts.getGameOverText());
-        playButton.setText(Texts.getArcadeModeButton());
+        playAdventureModeButton.setText(Texts.getAdventureModeButton());
+        playArcadeModeButton.setText(Texts.getArcadeModeButton());
         toMainMenuButton.setText(Texts.getToMainMenuButton());
         scoreText.setText(Texts.getScoreText());
     }
@@ -125,8 +135,9 @@ public class GameOverMenu extends GridPane{
     private void addNodes(){
         add(gameOverText, 0, 0, 2, 1);
         add(scoreTexts, 0, 2);
-        add(playButton, 1, 3);
-        add(toMainMenuButton, 1, 4);
+        add(playAdventureModeButton, 1, 3);
+        add(playArcadeModeButton, 1, 4);
+        add(toMainMenuButton, 1, 5);
     }
 
     public void showHighScoresAnimatedMessage(){

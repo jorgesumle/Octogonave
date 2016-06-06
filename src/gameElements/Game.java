@@ -42,13 +42,14 @@ public class Game {
     private Text pauseText;
     
     public Game(boolean isArcadeMode){
-        this.isArcadeMode = isArcadeMode; 
+        this.isArcadeMode = isArcadeMode;
+        if(isArcadeMode) Levels.arcadeMode();
+        else Levels.level1();
         paused = false;
         createNodes();
         addNodes();
         spriteManager = new SpriteManager();
         startGameLoop();
-        
         pauseText = new Text(Texts.getPausedText());
     }
 
@@ -115,6 +116,8 @@ public class Game {
         gameLoop.stop();
         if(isArcadeMode){
             Levels.getArcadeModeTimeline().stop();
+        } else{
+            Levels.getAnyLevelTimeline().stop();
         }
         if(gameMenus.Config.isMusicOn()){
             stopGameMusic();
@@ -149,7 +152,11 @@ public class Game {
             }
         });
         paused = true;
-        gameLoop.getTimeline().pause();
+        if(isArcadeMode){
+            Levels.getArcadeModeTimeline().pause();
+        } else{
+            Levels.getAnyLevelTimeline().pause();
+        }
         pauseText.setX(14);
         pauseText.setY(45);
         pauseText.setId("pauseText");
@@ -167,7 +174,11 @@ public class Game {
         });
         paused = false;
         Main.getRoot().getChildren().remove(pauseText);
-        gameLoop.getTimeline().play();
+        if(isArcadeMode){
+            Levels.getArcadeModeTimeline().play();
+        } else{
+            Levels.getAnyLevelTimeline().play();
+        }
     }
     
 }

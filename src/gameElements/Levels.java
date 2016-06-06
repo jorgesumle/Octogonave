@@ -36,6 +36,10 @@ public class Levels {
     public static Timeline getArcadeModeTimeline() {
         return arcadeModeTimeline;
     }
+
+    public static Timeline getAnyLevelTimeline() {
+        return anyLevelTimeline;
+    }
     
     /**
      * Empieza el TimeLine, que añade nuevos sprites al juego cada cierto tiempo.

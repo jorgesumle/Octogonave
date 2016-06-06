@@ -41,7 +41,6 @@ class GameLoop extends AnimationTimer{
     private MediaPlayer gameMusicPlayer; //Si no esta declarado aquí el, recolector de basura de Java lo detiene en diez segundos.
     Timeline mediaPlayerTimeline;
     private Random random;
-    private Timeline timeline;
     
     GameLoop(Octogonave octogonave, SpriteManager spriteManager){
         this.octogonave = octogonave;
@@ -58,10 +57,6 @@ class GameLoop extends AnimationTimer{
 
     public Timeline getMediaPlayerTimeline() {
         return mediaPlayerTimeline;
-    }
-
-    public Timeline getTimeline() {
-        return timeline;
     }
     
     /**

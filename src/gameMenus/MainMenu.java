@@ -152,7 +152,6 @@ public class MainMenu extends StackPane{
                 Main.getScene().setRoot(Main.getRoot());
                 starAnimTimer.pause();
                 game = new Game(false);
-                Levels.level1();
             }
         );
         playArcadeModeButton.setOnAction(e -> 
@@ -160,7 +159,6 @@ public class MainMenu extends StackPane{
                 Main.getScene().setRoot(Main.getRoot());
                 starAnimTimer.pause();
                 game = new Game(true);
-                Levels.arcadeMode();
             }
         );
         instructionsButton.setOnAction(e -> 
