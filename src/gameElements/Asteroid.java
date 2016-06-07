@@ -120,8 +120,11 @@ class Asteroid extends Sprite{
                 if(collide(sprite) && this != sprite){
                     destroy = true;
                     if(sprite instanceof Asteroid){
-                        ((Asteroid) sprite).destroy = true;
-                    } else{
+                        ((Asteroid) sprite).setDestroy(true);
+                    } else if(sprite instanceof Gem){
+                        ((Gem) sprite).setDestroy(true);
+                    }
+                    else{
                         Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(sprite);
                         Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
                     }
