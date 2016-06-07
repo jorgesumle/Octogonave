@@ -157,7 +157,10 @@ public class Game {
         } else{
             Levels.getAnyLevelTimeline().pause();
         }
-        octogonave.getReloadBonusTimer().pause();
+        if(octogonave.getReloadBonusTimer() != null){
+            octogonave.getReloadBonusTimer().pause();
+        }
+        
         pauseText.setX(14);
         pauseText.setY(45);
         pauseText.setId("pauseText");
@@ -180,7 +183,9 @@ public class Game {
         } else{
             Levels.getAnyLevelTimeline().play();
         }
-        octogonave.getReloadBonusTimer().play();
+        if(octogonave.getReloadBonusTimer() != null){
+            octogonave.getReloadBonusTimer().play();
+        }
     }
     
 }
