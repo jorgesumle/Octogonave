@@ -79,16 +79,18 @@ public class Score extends Text{
         if(sprite instanceof Asteroid){
             increaseScore(Asteroid.getBONUS());
         } else{
-            if (Config.areSoundsOn()) {
+            if(Config.areSoundsOn()) {
                 Main.getMainMenu().getGame().getOctogonave().getBonusSound().play();
             } 
-            if (sprite instanceof Diamond) {
+            if(sprite instanceof Diamond) {
             increaseScore(Diamond.getBONUS());
-            } else if (sprite instanceof Ruby) {
+            } else if(sprite instanceof Ruby) {
                 increaseScore(Ruby.getBONUS());
-            } else if (sprite instanceof YellowSapphire) {
+            } else if(sprite instanceof YellowSapphire) {
                 increaseScore(YellowSapphire.getBONUS());
-            } 
+            } else if(sprite instanceof ReloadBonus){
+                increaseScore(ReloadBonus.getBONUS());
+            }
         }
         updateScoreText();
     }

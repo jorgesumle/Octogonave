@@ -21,6 +21,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
+import javafx.scene.shape.SVGPath;
+import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 
 /**
@@ -113,7 +115,29 @@ class Asteroid extends Sprite{
         if(boundsOutY() || boundsOutX()){
             Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(this);
             Main.getRoot().getChildren().remove(getSpriteFrame());
+        } else{
+            for(Sprite sprite: Main.getMainMenu().getGame().getSpriteManager().getCurrentNormal()){            
+                if(collide(sprite) && this != sprite){
+                    destroy = true;
+                    if(sprite instanceof Asteroid){
+                        ((Asteroid) sprite).destroy = true;
+                    } else{
+                        Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(sprite);
+                        Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
+                    }
+                }
+            }
         }
+    }
+    
+    private boolean collide(Sprite sprite){
+        if(spriteFrame.getBoundsInParent().intersects(sprite.spriteFrame.getBoundsInParent())){
+            Shape intersection = SVGPath.intersect(spriteBound, sprite.spriteBound);
+            if(!intersection.getBoundsInLocal().isEmpty()){
+                return true;
+            }
+        }
+        return false;
     }
     
     /**

@@ -50,6 +50,7 @@ class Octogonave extends Sprite{
     private double velocity;
     private byte currentFrame, reloadCounter;
     private AudioClip shootSound, bonusSound;
+    private Timeline reloadBonusTimer;
     
     /**
      * Esta constante influye en la velocidad en la que se produce un cambio de fotograma de la nave, se le resta
@@ -79,6 +80,10 @@ class Octogonave extends Sprite{
         lives = 2;
         shootSound = new AudioClip(this.getClass().getResource("/shoot.wav").toExternalForm());
         bonusSound = new AudioClip(this.getClass().getResource("/bonusSound.wav").toExternalForm());
+    }
+
+    Timeline getReloadBonusTimer() {
+        return reloadBonusTimer;
     }
 
     public AudioClip getBonusSound() {
@@ -356,13 +361,17 @@ class Octogonave extends Sprite{
                 } else if(sprite instanceof ReloadBonus){
                     Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(sprite);
                     Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
-                    Timeline bonusTimer = new Timeline();
-                    bonusTimer.getKeyFrames().add(new KeyFrame(Duration.seconds(20), (ActionEvent e) -> {
+                    if(reloadBonusTimer != null){
+                        reloadBonusTimer.stop();
+                    }
+                    reloadBonusTimer = new Timeline();
+                    reloadBonusTimer.getKeyFrames().add(new KeyFrame(Duration.seconds(19), (ActionEvent e) -> {
                         reloadRate = 15;
                     }));
-                    bonusTimer.setCycleCount(1);
-                    bonusTimer.play();
+                    reloadBonusTimer.setCycleCount(1);
+                    reloadBonusTimer.play();
                     reloadRate = 7;
+                    Main.getMainMenu().getGame().getScore().updateScore(sprite);
                 }
             }
         }
