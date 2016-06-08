@@ -51,17 +51,17 @@ class Asteroid extends Sprite{
         this.destroy = destroy;
     }
     
-    public Asteroid(double xLocation, double yLocation, double horizontalVelocity, double verticalVelocity) {
+    public Asteroid(double xLocation, double yLocation, double xVelocity, double yVelocity) {
         super(SVG_PATH, xLocation, yLocation, asteroidImg);
-        this.xVelocity = horizontalVelocity;
-        this.yVelocity = verticalVelocity;
+        this.xVelocity = xVelocity;
+        this.yVelocity = yVelocity;
         xPos = xLocation;
         yPos = yLocation;
         setRandomRotation();
         rotationStage = spriteFrame.getRotate();
         destructionFrame = 0;
         destroy = false;
-        ROTATION_VELOCITY = horizontalVelocity + verticalVelocity;
+        ROTATION_VELOCITY = xVelocity + yVelocity;
         asteroidTimeline = new Timeline();
         asteroidTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(70), (ActionEvent e) -> {
             rotate();
