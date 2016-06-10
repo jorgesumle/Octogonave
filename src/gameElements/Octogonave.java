@@ -49,7 +49,9 @@ class Octogonave extends Sprite{
     private byte reloadRate = 15; //
     private double speed;
     private byte currentFrame, reloadCounter;
-    private AudioClip shootSound, bonusSound;
+    private final AudioClip shootSound = new AudioClip(this.getClass().getResource("/shoot.wav").toExternalForm()), 
+            bonusSound = new AudioClip(this.getClass().getResource("/bonusSound.wav").toExternalForm()),
+            reloadSound = new AudioClip(this.getClass().getResource("/reloadSound.wav").toExternalForm());
     private Timeline reloadBonusTimer;
     
     /**
@@ -78,8 +80,6 @@ class Octogonave extends Sprite{
         xPos = xLocation;
         yPos = yLocation;
         lives = 2;
-        shootSound = new AudioClip(this.getClass().getResource("/shoot.wav").toExternalForm());
-        bonusSound = new AudioClip(this.getClass().getResource("/bonusSound.wav").toExternalForm());
     }
 
     Timeline getReloadBonusTimer() {
@@ -88,6 +88,10 @@ class Octogonave extends Sprite{
 
     public AudioClip getBonusSound() {
         return bonusSound;
+    }
+
+    public AudioClip getReloadSound() {
+        return reloadSound;
     }
 
     @Override

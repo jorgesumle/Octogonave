@@ -80,6 +80,11 @@ public class Score extends Text{
             increaseScore(Asteroid.getBONUS());
         } else if(sprite instanceof UFO){
             increaseScore(UFO.getBONUS());
+        } else if(sprite instanceof ReloadBonus){
+            increaseScore(ReloadBonus.getBONUS());
+            if(Config.areSoundsOn()) {
+                Main.getMainMenu().getGame().getOctogonave().getReloadSound().play();
+            }
         } else{
             if(Config.areSoundsOn()) {
                 Main.getMainMenu().getGame().getOctogonave().getBonusSound().play();
@@ -90,8 +95,6 @@ public class Score extends Text{
                 increaseScore(Ruby.getBONUS());
             } else if(sprite instanceof YellowSapphire) {
                 increaseScore(YellowSapphire.getBONUS());
-            } else if(sprite instanceof ReloadBonus){
-                increaseScore(ReloadBonus.getBONUS());
             }
         }
         updateScoreText();
