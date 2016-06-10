@@ -14,47 +14,31 @@
  * Usted debería haber recibido una copia de la Licencia Pública General GNU
  * junto a este programa.  Si no es así, vea <http://www.gnu.org/licenses/>.
  */
-
 package gameElements;
 
 import javafx.scene.image.Image;
 
 /**
- * OVNI.
+ *
  * @author Jorge Maldonado Ventura
  */
-public class UFO extends Sprite{
+public class MovingEnemy extends Sprite {
+    protected double xPos, yPos, xVelocity, yVelocity;
     
-    private static final String SVG_PATH = "M 32,0 L 32,0 21,8 2,19 31,33 64,20 Z";
-    private static final byte BONUS = 7;
-    private static Image UFOImage = new Image("/UFO.png", 65, 34, true, false, true);
-    private double xSpeed, ySpeed, xPos, yPos;
-    
-    public UFO(double xLocation, double yLocation, double xSpeed, double ySpeed) {
-        super(SVG_PATH, xLocation, yLocation, UFOImage);
-        xPos = xLocation;
-        yPos = yLocation;
-        this.xSpeed = xSpeed;
-        this.ySpeed = ySpeed;
-        
+    public MovingEnemy(String SVGData, double xLocation, double yLocation, Image... spriteImages) {
+        super(SVGData, xLocation, yLocation, spriteImages);
     }
 
     @Override
     void update() {
-        setXAndYPosition();
-        move();
+        
     }
     
-    private void setXAndYPosition(){
-        xPos += xSpeed;
-        yPos += ySpeed;
-    }
-    
-    private void move(){
-        spriteFrame.setTranslateX(xPos);
-        spriteFrame.setTranslateY(yPos);
-        spriteBound.setTranslateX(xPos);
-        spriteBound.setTranslateY(yPos);
+    private boolean isOutOfScreen(){
+        return xPos <= 0 - spriteFrame.getFitWidth() || 
+                xPos >= Main.getScene().getWidth() ||
+                yPos <= 0 - spriteFrame.getFitHeight() ||
+                yPos >= Main.getScene().getHeight();
     }
     
 }

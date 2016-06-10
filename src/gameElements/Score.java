@@ -83,11 +83,11 @@ public class Score extends Text{
                 Main.getMainMenu().getGame().getOctogonave().getBonusSound().play();
             } 
             if(sprite instanceof Diamond) {
-            increaseScore(Diamond.getBonus());
+            increaseScore(Diamond.getBONUS());
             } else if(sprite instanceof Ruby) {
-                increaseScore(Ruby.getBonus());
+                increaseScore(Ruby.getBONUS());
             } else if(sprite instanceof YellowSapphire) {
-                increaseScore(YellowSapphire.getBonus());
+                increaseScore(YellowSapphire.getBONUS());
             } else if(sprite instanceof ReloadBonus){
                 increaseScore(ReloadBonus.getBONUS());
             }

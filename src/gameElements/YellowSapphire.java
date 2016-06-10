@@ -28,10 +28,13 @@ class YellowSapphire extends Gem{
             yellowSapphireDestroyedImg1 = new Image("/yellowSapphireDestroyed1.png", 26, 35, true, false, true),
             yellowSapphireDestroyedImg2 = new Image("/yellowSapphireDestroyed2.png", 30, 29, true, false, true);
     private static final String SVG_PATH = "M 0,4 L 0,4 4,0 18,0 22,4 22,17 18,21 4,21 0,17 Z";
-    
+    private static final byte BONUS = 40;
     YellowSapphire(double xLocation, double yLocation){
         super(SVG_PATH, xLocation, yLocation, yellowSapphireImg, yellowSapphireDestroyedImg1, yellowSapphireDestroyedImg2);
-        bonus = 40;
+    }
+
+    public static byte getBONUS() {
+        return BONUS;
     }
 
     @Override

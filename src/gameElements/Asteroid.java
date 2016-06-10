@@ -29,7 +29,7 @@ import javafx.util.Duration;
  *
  * @author Jorge Maldonado Ventura
  */
-class Asteroid extends Sprite{
+class Asteroid extends MovingEnemy{
     
     private static final String SVG_PATH = "M 18,1 L 18,1 29,0 51,7 54,19 56,23 54,28 55,37 47,49 47,52 39,58 36,55 21,55 20,54 11,47 8,47 6,45 6,41 3,32 0,28 10,6 16,4 Z";
     private static final byte BONUS = 5;
@@ -38,7 +38,7 @@ class Asteroid extends Sprite{
             asteroidDestroyedImg2 = new Image("/asteroidDestroyed2.png", 70, 72, true, false, true),
             asteroidDestroyedImg3 = new Image("/asteroidDestroyed3.png", 70, 72, true, false, true);
     private final double ROTATION_VELOCITY;
-    private double xVelocity, yVelocity, xPos, yPos, rotationStage;
+    private double rotationStage;
     private byte destructionFrame;
     private boolean destroy;
     private Timeline asteroidTimeline;
@@ -63,8 +63,10 @@ class Asteroid extends Sprite{
         destroy = false;
         ROTATION_VELOCITY = xVelocity + yVelocity;
         asteroidTimeline = new Timeline();
+        boolean randomDirection = Math.random() < 0.5;
         asteroidTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(70), (ActionEvent e) -> {
-            rotate();
+            if(randomDirection) rotateRight();
+            else rotateLeft();
             checkCollision();  
         }));
         asteroidTimeline.setCycleCount(Animation.INDEFINITE);
@@ -102,9 +104,18 @@ class Asteroid extends Sprite{
         spriteBound.setTranslateY(yPos);
     }
     
-    private void rotate(){
+    private void rotateRight(){
         rotationStage += ROTATION_VELOCITY;
         if(rotationStage == 360){
+            rotationStage = 0;
+        }
+        spriteFrame.setRotate(rotationStage);
+        spriteBound.setRotate(rotationStage);
+    }
+    
+    private void rotateLeft(){
+        rotationStage -= ROTATION_VELOCITY;
+        if(rotationStage == -360){
             rotationStage = 0;
         }
         spriteFrame.setRotate(rotationStage);

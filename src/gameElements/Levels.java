@@ -52,7 +52,7 @@ public class Levels {
                     createGem();
                     createBonus();
                 }
-                createAsteroid((byte)4);
+                createUfo((byte)4);
             } else if(Main.getMainMenu().getGame().getScore().getScore() < 800){
                 createAsteroid((byte)4);
                 createAsteroid((byte)3);
@@ -166,7 +166,7 @@ public class Levels {
      */
     private static void createAsteroid(byte maxSpeed){
         Asteroid asteroid = null;
-        switch(random.nextInt(maxSpeed)){
+        switch(random.nextInt(4)){
             case 0: //arriba-abajo
                 asteroid = new Asteroid(random.nextDouble() * (56 + Main.getWINDOW_WIDTH()) - 56, 0 - 58, 
                         (random.nextDouble() * maxSpeed + 1) * randomDir(), random.nextDouble() * maxSpeed + 1);
@@ -189,6 +189,30 @@ public class Levels {
         Main.getMainMenu().getGame().getSpriteManager().addToNormalToAdd(asteroid);
     }
     
+    private static void createUfo(byte maxSpeed){
+        UFO ufo = null;
+        switch(random.nextInt(4)){
+            case 0: //arriba-abajo
+                ufo = new UFO(random.nextDouble() * (65 + Main.getWINDOW_WIDTH()) - 65, 0 - 33, 
+                        (random.nextDouble() * maxSpeed + 1) * randomDir(), random.nextDouble() * maxSpeed + 1);
+                break;
+            case 1: //derecha-izquierda
+                ufo = new UFO(Main.getWINDOW_WIDTH() - 1, random.nextDouble() * (33 + Main.getWINDOW_HEIGHT()) - 33, 
+                        (random.nextDouble() * maxSpeed + 1) * -1, (random.nextDouble() * maxSpeed + 1) * randomDir());
+                break;
+            case 2: //abajo-arriba
+                ufo = new UFO(random.nextDouble() * (65 + Main.getWINDOW_WIDTH()) - 65, Main.getWINDOW_HEIGHT() - 1, 
+                        (random.nextDouble() * maxSpeed + 1) * randomDir(), (random.nextDouble() * maxSpeed + 1) * -1);
+                break;
+            case 3: //izquierda-derecha
+                ufo = new UFO(0 - 65, random.nextDouble() * (33 + Main.getWINDOW_HEIGHT()) - 33, 
+                        random.nextDouble() * maxSpeed + 1, (random.nextDouble() * maxSpeed + 1) * randomDir());
+                break;
+        }
+		
+        Main.getRoot().getChildren().add(ufo.getSpriteFrame());
+        Main.getMainMenu().getGame().getSpriteManager().addToNormalToAdd(ufo);
+    }
     /**
      * 
      * @return 1 o -1.
