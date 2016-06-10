@@ -37,7 +37,6 @@ class Asteroid extends MovingEnemy{
             asteroidDestroyedImg3 = new Image("/asteroidDestroyed3.png", 70, 72, true, false, true);
     private final double ROTATION_VELOCITY;
     private double rotationStage;
-    private byte destructionFrame;
     
     public Asteroid(double xLocation, double yLocation, double xVelocity, double yVelocity) {
         super(SVG_PATH, xLocation, yLocation, asteroidImg);

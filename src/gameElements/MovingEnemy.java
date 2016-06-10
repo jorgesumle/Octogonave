@@ -29,6 +29,7 @@ public abstract class MovingEnemy extends Sprite {
     protected double xPos, yPos, xSpeed, ySpeed;
     protected boolean destroy;
     protected Timeline timeline;
+    protected byte destructionFrame;
     
     public MovingEnemy(String SVGData, double xLocation, double yLocation, Image... spriteImages) {
         super(SVGData, xLocation, yLocation, spriteImages);
