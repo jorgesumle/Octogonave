@@ -62,7 +62,7 @@ public class Levels {
                 }
             } else if(Main.getMainMenu().getGame().getScore().getScore() < 1_200){
                 createAsteroid((byte)4);
-                createAsteroid((byte)4);
+                createUfo((byte)4);
                 if(random.nextInt(60) == 0){
                     createGem();
                     createBonus();

@@ -36,7 +36,6 @@ class Asteroid extends MovingEnemy{
             asteroidDestroyedImg2 = new Image("/asteroidDestroyed2.png", 70, 72, true, false, true),
             asteroidDestroyedImg3 = new Image("/asteroidDestroyed3.png", 70, 72, true, false, true);
     private final double ROTATION_VELOCITY;
-    private double rotationStage;
     
     public Asteroid(double xLocation, double yLocation, double xVelocity, double yVelocity) {
         super(SVG_PATH, xLocation, yLocation, asteroidImg);
@@ -45,10 +44,17 @@ class Asteroid extends MovingEnemy{
         xPos = xLocation;
         yPos = yLocation;
         setRandomRotation();
-        rotationStage = spriteFrame.getRotate();
         destructionFrame = 0;
         destroy = false;
         ROTATION_VELOCITY = xVelocity + yVelocity;
+        createAsteroidTimeline();
+    }
+
+    public static byte getBONUS() {
+        return BONUS;
+    }
+    
+    private void createAsteroidTimeline(){
         timeline = new Timeline();
         boolean randomDirection = Math.random() < 0.5;
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(70), (ActionEvent e) -> {
@@ -58,16 +64,6 @@ class Asteroid extends MovingEnemy{
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
-    }
-
-    public static byte getBONUS() {
-        return BONUS;
-    }
-    
-    private void setRandomRotation(){
-        double randomRotation = (Math.random() * 360 + 1);
-        spriteFrame.setRotate(randomRotation);
-        spriteBound.setRotate(randomRotation);
     }
     
     private void rotateRight(){

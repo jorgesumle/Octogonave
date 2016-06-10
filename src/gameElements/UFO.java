@@ -17,6 +17,7 @@
 
 package gameElements;
 
+import java.util.Random;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -42,14 +43,10 @@ public class UFO extends MovingEnemy{
         yPos = yLocation;
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
+        setRandomRotation();
         destroy = false;
         destructionFrame = 0;
-        timeline = new Timeline();
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(70), (ActionEvent e) -> {
-            checkCollision();  
-        }));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
+        createUFOTimeline();
     }
 
     public static byte getBONUS() {
@@ -82,6 +79,27 @@ public class UFO extends MovingEnemy{
                 destructionFrame++;
                 break;
         }
+    }
+    
+    private void createUFOTimeline(){
+        timeline = new Timeline();
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(70), (ActionEvent e) -> {
+            rotateRandomly();
+            checkCollision();  
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+    }
+    
+    private void rotateRandomly(){
+        Random random = new Random();
+        if(Math.random() > 5){
+            rotationStage += random.nextDouble() * xSpeed * 2;
+        } else{
+            rotationStage -= random.nextDouble() * xSpeed * 2;
+        }
+        spriteFrame.setRotate(rotationStage);
+        spriteBound.setRotate(rotationStage);
     }
     
 }

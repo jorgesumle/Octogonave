@@ -26,7 +26,7 @@ import javafx.scene.shape.Shape;
  * @author Jorge Maldonado Ventura
  */
 public abstract class MovingEnemy extends Sprite {
-    protected double xPos, yPos, xSpeed, ySpeed;
+    protected double xPos, yPos, xSpeed, ySpeed, rotationStage;
     protected boolean destroy;
     protected Timeline timeline;
     protected byte destructionFrame;
@@ -110,4 +110,9 @@ public abstract class MovingEnemy extends Sprite {
         spriteBound.setTranslateY(yPos);
     }
     
+    protected void setRandomRotation(){
+        rotationStage = (Math.random() * 360 + 1);
+        spriteFrame.setRotate(rotationStage);
+        spriteBound.setRotate(rotationStage);
+    }
 }
