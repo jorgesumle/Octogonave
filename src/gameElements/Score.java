@@ -78,6 +78,8 @@ public class Score extends Text{
     protected void updateScore(Sprite sprite) {
         if(sprite instanceof Asteroid){
             increaseScore(Asteroid.getBONUS());
+        } else if(sprite instanceof UFO){
+            increaseScore(UFO.getBONUS());
         } else{
             if(Config.areSoundsOn()) {
                 Main.getMainMenu().getGame().getOctogonave().getBonusSound().play();

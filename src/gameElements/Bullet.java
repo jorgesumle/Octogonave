@@ -28,8 +28,7 @@ class Bullet extends Sprite{
     
     private static final Image BULLET_IMG = new Image("/bullet.png", 10, 13, true, false, true);
     private static final String SVG_PATH = "M 4,0 L 4,0 5,0 6,1 6,8 9,11 9,12 0,12 0,11 3,8 3,1 Z";
-    private double verticalVelocity;
-    private double horizontalVelocity;
+    private double xSpeed, ySpeed;
     /**
      * Posición del <i>sprite</i> en el eje X. 
      */
@@ -45,12 +44,12 @@ class Bullet extends Sprite{
         yPos = yLocation;
     }
 
-    void setVerticalVelocity(double verticalVelocity) {
-        this.verticalVelocity = verticalVelocity;
+    void setYSpeed(double verticalVelocity) {
+        this.ySpeed = verticalVelocity;
     }
 
-    void setHorizontalVelocity(double horizontalVelocity) {
-        this.horizontalVelocity = horizontalVelocity;
+    void setXSpeed(double horizontalVelocity) {
+        this.xSpeed = horizontalVelocity;
     }
 
     @Override
@@ -77,8 +76,8 @@ class Bullet extends Sprite{
     }
     
     private void setXAndYPosition(){
-        xPos += horizontalVelocity;
-        yPos += verticalVelocity;
+        xPos += xSpeed;
+        yPos += ySpeed;
     }
     
     /**
@@ -102,8 +101,8 @@ class Bullet extends Sprite{
         }
         for(Sprite sprite: Main.getMainMenu().getGame().getSpriteManager().getCurrentNormal()){
             if(collide(sprite)){
-                if(sprite instanceof Asteroid){
-                    ((Asteroid)sprite).setDestroy(true);
+                if(sprite instanceof MovingEnemy){
+                    ((MovingEnemy)sprite).setDestroy(true);
                     Main.getMainMenu().getGame().getScore().updateScore(sprite);
                 } else if(sprite instanceof Gem){
                     ((Gem)sprite).setDestroy(true);

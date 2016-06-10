@@ -16,29 +16,97 @@
  */
 package gameElements;
 
+import javafx.animation.Timeline;
 import javafx.scene.image.Image;
+import javafx.scene.shape.SVGPath;
+import javafx.scene.shape.Shape;
 
 /**
  *
  * @author Jorge Maldonado Ventura
  */
-public class MovingEnemy extends Sprite {
-    protected double xPos, yPos, xVelocity, yVelocity;
+public abstract class MovingEnemy extends Sprite {
+    protected double xPos, yPos, xSpeed, ySpeed;
+    protected boolean destroy;
+    protected Timeline timeline;
     
     public MovingEnemy(String SVGData, double xLocation, double yLocation, Image... spriteImages) {
         super(SVGData, xLocation, yLocation, spriteImages);
     }
 
-    @Override
-    void update() {
-        
+    public Timeline getTimeline() {
+        return timeline;
     }
     
-    private boolean isOutOfScreen(){
-        return xPos <= 0 - spriteFrame.getFitWidth() || 
+    public void setDestroy(boolean destroy) {
+        this.destroy = destroy;
+    }
+
+    @Override
+    void update() {
+        if(destroy){
+            destroy();
+        }
+        setXAndYPosition();
+        move();
+    }
+    
+    /**
+     * Destruye el enemigo. La destrucción consiste en la eliminación del detector
+     * de colisiones, una animación y la eliminación del objeto del bucle del juego y 
+     * de la pantalla.
+     */
+    protected abstract void destroy();
+    
+    protected void checkCollision(){
+        if(isOutOfScreen()){
+            Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(this);
+            Main.getRoot().getChildren().remove(getSpriteFrame());
+        } else{
+            for(Sprite sprite: Main.getMainMenu().getGame().getSpriteManager().getCurrentNormal()){            
+                if(collide(sprite) && this != sprite){
+                    destroy = true;
+                    if(sprite instanceof MovingEnemy){
+                        ((MovingEnemy) sprite).setDestroy(true);
+                    } else if(sprite instanceof Gem){
+                        ((Gem) sprite).setDestroy(true);
+                    }
+                    else{
+                        Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(sprite);
+                        Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
+                    }
+                }
+            }
+        }
+    }
+    
+    protected boolean isOutOfScreen(){
+        return xPos <= 0 - spriteFrame.getImage().getWidth() || 
                 xPos >= Main.getScene().getWidth() ||
-                yPos <= 0 - spriteFrame.getFitHeight() ||
+                yPos <= 0 - spriteFrame.getImage().getHeight() ||
                 yPos >= Main.getScene().getHeight();
+    }
+    
+    protected boolean collide(Sprite sprite){
+        if(spriteFrame.getBoundsInParent().intersects(sprite.spriteFrame.getBoundsInParent())){
+            Shape intersection = SVGPath.intersect(spriteBound, sprite.spriteBound);
+            if(!intersection.getBoundsInLocal().isEmpty()){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    protected void setXAndYPosition(){
+        xPos += xSpeed;
+        yPos += ySpeed;
+    }
+    
+    protected void move(){
+        spriteFrame.setTranslateX(xPos);
+        spriteFrame.setTranslateY(yPos);
+        spriteBound.setTranslateX(xPos);
+        spriteBound.setTranslateY(yPos);
     }
     
 }

@@ -147,8 +147,8 @@ public class Game {
      */
     void pause(){
         spriteManager.getCurrentNormal().stream().forEach((sprite) -> {
-            if(sprite instanceof Asteroid){
-                ((Asteroid)sprite).getAsteroidTimeline().pause();
+            if(sprite instanceof MovingEnemy){
+                ((MovingEnemy)sprite).getTimeline().pause();
             }
         });
         paused = true;
@@ -172,8 +172,8 @@ public class Game {
      */
     void resume(){
         spriteManager.getCurrentNormal().stream().forEach((sprite) -> {
-            if(sprite instanceof Asteroid){
-                ((Asteroid)sprite).getAsteroidTimeline().play();
+            if(sprite instanceof MovingEnemy){
+                ((MovingEnemy)sprite).getTimeline().play();
             }
         });
         paused = false;
