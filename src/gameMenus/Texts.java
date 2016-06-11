@@ -124,6 +124,10 @@ public class Texts{
         return texts.get(23);
     }
     
+    public static String getLevel1Text(){
+        return texts.get(24);
+    }
+    
     public ArrayList<String> getTexts() {
         return texts;
     }

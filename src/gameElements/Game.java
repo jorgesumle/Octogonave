@@ -44,7 +44,10 @@ public class Game {
     public Game(boolean isArcadeMode){
         this.isArcadeMode = isArcadeMode;
         if(isArcadeMode) Levels.arcadeMode();
-        else Levels.level1();
+        else{
+            Levels.initAnyLevelTimeline();
+            Levels.newLevelTransition(Texts.getLevel1Text(), 1);
+        }
         paused = false;
         createNodes();
         addNodes();

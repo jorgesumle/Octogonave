@@ -18,9 +18,13 @@ package gameElements;
 
 import java.util.Random;
 import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 /**
@@ -93,8 +97,11 @@ public class Levels {
         arcadeModeTimeline.play();
     }
     
-    public static void level1(){
+    public static void initAnyLevelTimeline(){
         anyLevelTimeline = new Timeline();
+    }
+    
+    private static void level1(){
         anyLevelTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(444), (ActionEvent e) -> {
             createAsteroid((byte)3);
             if(random.nextInt(20) == 0){
@@ -106,13 +113,27 @@ public class Levels {
         anyLevelTimeline.setCycleCount(65);
         anyLevelTimeline.setOnFinished(e -> 
             {
-                System.out.println("Nivel 1 completado.");
-                level2();
+                endOfLevelPause();
             });
         anyLevelTimeline.play();
     }
     
-    public static void level2(){
+    private static void endOfLevelPause(){
+        Timeline endOfLevelTimeline = new Timeline();
+        endOfLevelTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(5000), (ActionEvent e) -> {}));
+        endOfLevelTimeline.setCycleCount(1);
+        endOfLevelTimeline.setOnFinished(e -> 
+            {
+                Levels.getAnyLevelTimeline().pause();
+                Main.getMainMenu().getGame().getSpriteManager().getCurrentNormal().clear();
+                Main.getMainMenu().getGame().getSpriteManager().getNormalToAdd().clear();
+                newLevelTransition("Nivel 1 completado.", 2);
+                
+            });
+        endOfLevelTimeline.play();
+    }
+    
+    private static void level2(){
         anyLevelTimeline = new Timeline();
         anyLevelTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(400), (ActionEvent e) -> {
             createAsteroid((byte)4);
@@ -124,11 +145,11 @@ public class Levels {
             }
         }));
         anyLevelTimeline.setCycleCount(100);
+        anyLevelTimeline.play();
         anyLevelTimeline.setOnFinished(e -> 
             {
                 System.out.println("Nivel 2 completado.");
             });
-        anyLevelTimeline.play();
     }
     
     /**
@@ -224,4 +245,41 @@ public class Levels {
                 return -1;
         }
     }
+    
+    public static void newLevelTransition(String text, int nextLevel){
+        Rectangle rect = new Rectangle (0, 0, Main.getWINDOW_WIDTH(), Main.getWINDOW_HEIGHT());
+        rect.setArcHeight(50);
+        rect.setArcWidth(50);
+        rect.setFill(Color.BLACK);
+        
+        Text textNode = new Text(text);
+        textNode.getStyleClass().add("smallTextOnlyWhiteStrong");
+        textNode.setTranslateX(20);
+        textNode.setTranslateY(20);
+        Main.getRoot().getChildren().addAll(rect, textNode);
+        
+        
+        FadeTransition ft = new FadeTransition(Duration.millis(5000), rect);
+        ft.setFromValue(0);
+        ft.setToValue(1.0);
+        ft.setCycleCount(2);
+        ft.setAutoReverse(true);
+        ft.play();
+        ft.setOnFinished(e ->
+            {   
+                Main.getRoot().getChildren().remove(textNode);
+                Levels.getAnyLevelTimeline().play();
+                switch(nextLevel){
+                    case 1:
+                        level1();
+                        break;
+                    case 2:
+                        level2();
+                        break;
+                }
+            }
+        );
+        
+    }
+    
 }
