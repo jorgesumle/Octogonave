@@ -394,9 +394,22 @@ class Octogonave extends Sprite{
                 add(octoNaveMovHurt2);
                 add(octoNaveMovHurt3);
             }};
-            this.setSpriteImages(hurtImages);
+            setSpriteImages(hurtImages);
         } else if(lives == 0){
             Main.getMainMenu().getGame().endGame();
+        }
+    }
+    
+    void heal(){
+        if(lives == 1){
+            lives++;
+            List<Image> normalImages = new ArrayList<Image>(){{
+                add(octoNaveStill);
+                add(octoNaveMov1);
+                add(octoNaveMov2);
+                add(octoNaveMov3);
+            }};
+            setSpriteImages(normalImages);
         }
     }
     
