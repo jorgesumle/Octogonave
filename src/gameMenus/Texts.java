@@ -128,6 +128,18 @@ public class Texts{
         return texts.get(24);
     }
     
+    public static String getLevel2Text(){
+        return texts.get(25);
+    }
+    
+    public static String getLevel3Text(){
+        return texts.get(26);
+    }
+    
+    public static String getGameCompletedText(){
+        return texts.get(27);
+    }
+    
     public ArrayList<String> getTexts() {
         return texts;
     }

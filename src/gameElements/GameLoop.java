@@ -37,7 +37,8 @@ class GameLoop extends AnimationTimer{
     
     private final Octogonave octogonave;
     private final SpriteManager spriteManager;
-    private final String GAME_MUSIC_PATH = "/Stealth Groover.aiff";
+    private final String ADVENTURE_MODE_MUSIC_PATH = "/Stealth Groover.aiff",
+            ARCADE_MODE_MUSIC_PATH = "/V3S - DarkNess.m4a";
     private MediaPlayer gameMusicPlayer; //Si no esta declarado aquí el, recolector de basura de Java lo detiene en diez segundos.
     Timeline mediaPlayerTimeline;
     private Random random;
@@ -109,11 +110,11 @@ class GameLoop extends AnimationTimer{
      * Reproduce la música del juego una y otra vez.
      */
     private void playMusic(){
-        gameMusicPlayer = new MediaPlayer(new Media(this.getClass().getResource(GAME_MUSIC_PATH).toExternalForm()));
+        gameMusicPlayer = new MediaPlayer(new Media(this.getClass().getResource(ARCADE_MODE_MUSIC_PATH).toExternalForm()));
         gameMusicPlayer.play();
         mediaPlayerTimeline = new Timeline();
-        mediaPlayerTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(217_731), (ActionEvent e) -> {
-            gameMusicPlayer = new MediaPlayer(new Media(this.getClass().getResource(GAME_MUSIC_PATH).toExternalForm()));
+        mediaPlayerTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(309_267), (ActionEvent e) -> {
+            gameMusicPlayer = new MediaPlayer(new Media(this.getClass().getResource(ARCADE_MODE_MUSIC_PATH).toExternalForm()));
             gameMusicPlayer.play();
         }));
         mediaPlayerTimeline.setCycleCount(Animation.INDEFINITE);

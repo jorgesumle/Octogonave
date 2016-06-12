@@ -63,21 +63,6 @@ public abstract class MovingEnemy extends Sprite {
         if(isOutOfScreen()){
             Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(this);
             Main.getRoot().getChildren().remove(getSpriteFrame());
-        } else{
-            for(Sprite sprite: Main.getMainMenu().getGame().getSpriteManager().getCurrentNormal()){            
-                if(collide(sprite) && this != sprite){
-                    destroy = true;
-                    if(sprite instanceof MovingEnemy){
-                        ((MovingEnemy) sprite).setDestroy(true);
-                    } else if(sprite instanceof Gem){
-                        ((Gem) sprite).setDestroy(true);
-                    }
-                    else{
-                        Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(sprite);
-                        Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
-                    }
-                }
-            }
         }
     }
     
@@ -98,10 +83,7 @@ public abstract class MovingEnemy extends Sprite {
         return false;
     }
     
-    protected void setXAndYPosition(){
-        xPos += xSpeed;
-        yPos += ySpeed;
-    }
+    protected abstract void setXAndYPosition();
     
     protected void move(){
         spriteFrame.setTranslateX(xPos);

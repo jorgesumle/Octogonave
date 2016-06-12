@@ -94,6 +94,14 @@ class Octogonave extends Sprite{
         return reloadSound;
     }
 
+    double getxCenter() {
+        return xPos + spriteFrame.getImage().getWidth() / 2;
+    }
+
+    double getyCenter() {
+        return yPos + spriteFrame.getImage().getHeight() / 2;
+    }
+
     @Override
     void update() {
         determineKeyPressed();
@@ -142,10 +150,12 @@ class Octogonave extends Sprite{
                         increaseSpeed(1);
                         break;
                     case P:
-                        if(Main.getMainMenu().getGame().isPaused()){
-                            Main.getMainMenu().getGame().resume();
-                        } else{
-                            Main.getMainMenu().getGame().pause();
+                        if(!Main.getMainMenu().getGame().isGameOver()){
+                            if(Main.getMainMenu().getGame().isPaused()){
+                                Main.getMainMenu().getGame().resume();
+                            } else{
+                                Main.getMainMenu().getGame().pause();
+                            }
                         }
                         break;
                 }

@@ -16,6 +16,8 @@
  */
 package gameElements;
 
+import gameMenus.Texts;
+import java.util.ArrayList;
 import java.util.Random;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
@@ -42,6 +44,7 @@ public class Levels {
     private static Random random = new Random();
     private static Timeline arcadeModeTimeline;
     private static Timeline anyLevelTimeline;
+    private static final int TRANSITION_DURATION_IN_MILLIS = 10_000;
 
     public static Timeline getArcadeModeTimeline() {
         return arcadeModeTimeline;
@@ -64,7 +67,7 @@ public class Levels {
                         createGem();
                         createBonus();
                     }
-                    createUfo((byte) 4);
+                    createAsteroid((byte) 4);
                 } else if (Main.getMainMenu().getGame().getScore().getScore() < 800) {
                     createAsteroid((byte) 4);
                     createAsteroid((byte) 3);
@@ -73,7 +76,6 @@ public class Levels {
                         createBonus();
                     }
                 } else if (Main.getMainMenu().getGame().getScore().getScore() < 1_200) {
-                    createAsteroid((byte) 4);
                     createUfo((byte) 4);
                     if (random.nextInt(60) == 0) {
                         createGem();
@@ -99,7 +101,8 @@ public class Levels {
                         createBonus();
                     }
                 }
-            }));
+            })
+        );
         arcadeModeTimeline.setCycleCount(Animation.INDEFINITE);
         arcadeModeTimeline.play();
     }
@@ -112,39 +115,66 @@ public class Levels {
         anyLevelTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(444), (ActionEvent e) -> 
             {
                 createAsteroid((byte) 3);
-                if (random.nextInt(20) == 0) {
+                if (random.nextInt(21) == 0) {
                     createGem();
-                } else if (random.nextInt(15) == 0) {
+                } else if (random.nextInt(16) == 0) {
                     createBonus();
                 }
-            }));
+            })
+        );
         anyLevelTimeline.setCycleCount(65);
+        anyLevelTimeline.play();
         anyLevelTimeline.setOnFinished(e -> 
             {
-                newLevelTransition("Nivel 2. Nebulosa desconocida", 2);
-            });
-        anyLevelTimeline.play();
+                newLevelTransition(Texts.getLevel2Text(), 2);
+            }
+        );
     }
 
     private static void level2() {
-        anyLevelTimeline = new Timeline();
         anyLevelTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(400), (ActionEvent e) -> 
             {
                 createAsteroid((byte) 4);
-                createAsteroid((byte) 2);
                 if (random.nextInt(40) == 0) {
-                createGem();
-                } else if (random.nextInt(30) == 0) {
+                    createGem();
+                }
+                if (random.nextInt(30) == 0) {
                     createBonus();
                 }
-            }));
+            })
+        );
         anyLevelTimeline.setCycleCount(100);
         anyLevelTimeline.play();
-        anyLevelTimeline.setOnFinished(e -> {
-            newLevelTransition("Has completado el juego", 3);
-        });
+        anyLevelTimeline.setOnFinished(e -> 
+            {
+                newLevelTransition(Texts.getLevel3Text(), 3);
+            }
+        );
     }
-
+    
+    private static void level3(){
+        ArrayList<Sprite> bonusSprites = new ArrayList<>();
+        bonusSprites.add(new Diamond(0, 0));
+        bonusSprites.add(new Diamond(Main.getWINDOW_WIDTH() - 32, 0));
+        bonusSprites.add(new Diamond(0, Main.getWINDOW_HEIGHT() - 24));
+        bonusSprites.add(new Diamond(Main.getWINDOW_WIDTH() - 32, Main.getWINDOW_HEIGHT() - 32));
+        for(byte i = 0;  i < 20; i++){
+            createGem();
+        }
+        bonusSprites.stream().forEach((sprite) -> {
+            Main.getRoot().getChildren().add(sprite.getSpriteFrame());
+        });
+        Main.getMainMenu().getGame().getSpriteManager().addToNormalToAdd(bonusSprites.toArray(new Sprite[bonusSprites.size()]));
+        anyLevelTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(5000), (ActionEvent e) -> {System.gc();}));
+        anyLevelTimeline.setCycleCount(1);
+        anyLevelTimeline.play();
+        anyLevelTimeline.setOnFinished(e -> 
+            {
+                newLevelTransition(Texts.getGameCompletedText(), 4);
+            }
+        );
+    }
+    
     /**
      * Crea una gema en una posición aleatoria.
      */
@@ -209,19 +239,19 @@ public class Levels {
         switch (random.nextInt(4)) {
             case 0: //arriba-abajo
                 ufo = new UFO(random.nextDouble() * (65 + Main.getWINDOW_WIDTH()) - 65, 0 - 33,
-                        (random.nextDouble() * maxSpeed + 1) * randomDir(), random.nextDouble() * maxSpeed + 1);
+                        (random.nextDouble() * maxSpeed + 1));
                 break;
             case 1: //derecha-izquierda
                 ufo = new UFO(Main.getWINDOW_WIDTH() - 1, random.nextDouble() * (33 + Main.getWINDOW_HEIGHT()) - 33,
-                        (random.nextDouble() * maxSpeed + 1) * -1, (random.nextDouble() * maxSpeed + 1) * randomDir());
+                        (random.nextDouble() * maxSpeed + 1));
                 break;
             case 2: //abajo-arriba
                 ufo = new UFO(random.nextDouble() * (65 + Main.getWINDOW_WIDTH()) - 65, Main.getWINDOW_HEIGHT() - 1,
-                        (random.nextDouble() * maxSpeed + 1) * randomDir(), (random.nextDouble() * maxSpeed + 1) * -1);
+                        (random.nextDouble() * maxSpeed + 1));
                 break;
             case 3: //izquierda-derecha
                 ufo = new UFO(0 - 65, random.nextDouble() * (33 + Main.getWINDOW_HEIGHT()) - 33,
-                        random.nextDouble() * maxSpeed + 1, (random.nextDouble() * maxSpeed + 1) * randomDir());
+                        random.nextDouble() * maxSpeed + 1);
                 break;
         }
 
@@ -243,44 +273,24 @@ public class Levels {
 
     public static void newLevelTransition(String text, int nextLevel) {
         Rectangle rect = new Rectangle(0, 0, Main.getWINDOW_WIDTH(), Main.getWINDOW_HEIGHT());
-        rect.setArcHeight(50);
-        rect.setArcWidth(50);
         rect.setFill(Color.BLACK);
-
         Text textNode = new Text(text);
         textNode.getStyleClass().add("smallTextOnlyWhiteStrong");
         textNode.setTranslateX(20);
         textNode.setTranslateY(20);
         Main.getRoot().getChildren().addAll(rect, textNode);
-        final int TRANSITION_DURATION_IN_MILLIS = 10_000;
-
         FadeTransition ft = new FadeTransition(Duration.millis(TRANSITION_DURATION_IN_MILLIS / 2), rect);
         ft.setFromValue(0);
         ft.setToValue(1.0);
         ft.setCycleCount(2);
         ft.setAutoReverse(true);
         ft.play();
-        switch (nextLevel) {
-            case 2:
-                changeBackground("/nebula.jpg", TRANSITION_DURATION_IN_MILLIS / 2);
-                break;
-        }
+        chooseBackground(nextLevel);
         ft.setOnFinished(e -> 
             {
                 Main.getRoot().getChildren().remove(textNode);
-                Levels.getAnyLevelTimeline().play();
-                switch (nextLevel) {
-                    case 1:
-                        level1();
-                        break;
-                    case 2:
-                        level2();
-                        break;
-                    default:
-                        Main.getMainMenu().getGame().endGame();
-                        break;
+                startLevel(nextLevel);
             }
-        }
         );
     }
 
@@ -289,9 +299,9 @@ public class Levels {
      * parámetro.
      * @param backgroundURL la URL del fondo de pantalla.
      */
-    private static void changeBackground(String backgroundURL, int timeBeforeChange) {
+    private static void changeBackground(String backgroundURL) {
         Timeline backgroundChange = new Timeline();
-        backgroundChange.getKeyFrames().add(new KeyFrame(Duration.millis(timeBeforeChange), (ActionEvent e) -> 
+        backgroundChange.getKeyFrames().add(new KeyFrame(Duration.millis(TRANSITION_DURATION_IN_MILLIS / 2), (ActionEvent e) -> 
             {
                 resetSprites();
                 Main.getRoot().setBackground(
@@ -312,8 +322,42 @@ public class Levels {
      * preparación para el próximo nivel.
      */
     private static void resetSprites() {
+        for(Sprite sprite: Main.getMainMenu().getGame().getSpriteManager().getCurrentNormal()){
+            Main.getRoot().getChildren().remove(sprite.spriteFrame);
+        }
         Main.getMainMenu().getGame().getSpriteManager().getCurrentNormal().clear();
         Main.getMainMenu().getGame().getSpriteManager().getNormalToAdd().clear();
         Main.getMainMenu().getGame().getOctogonave().heal();
+    }
+    
+    private static void startLevel(int level){
+        switch (level) {
+            case 1:
+                level1();
+                break;
+            case 2:
+                level2();
+                break;
+            case 3:
+                level3();
+                break;
+            case 4:
+                Main.getMainMenu().getGame().endGame();
+                break;
+        }
+    }
+    
+    private static void chooseBackground(int level){
+        switch (level) {
+            case 2:
+                changeBackground("/nebula.jpg");
+                break;
+            case 3:
+                changeBackground("/Neptune.jpg");
+                break;
+            case 4:
+                changeBackground("/alignedPlanets.jpg");
+                break;
+        }
     }
 }

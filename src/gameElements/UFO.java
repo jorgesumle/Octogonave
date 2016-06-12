@@ -37,12 +37,12 @@ public class UFO extends MovingEnemy{
             UFODestroyedImg1 = new Image("/UFODestroyed1.png", 69, 36, true, false, true),
             UFODestroyedImg2 = new Image("/UFODestroyed2.png", 73, 38, true, false, true);
     
-    public UFO(double xLocation, double yLocation, double xSpeed, double ySpeed) {
+    public UFO(double xLocation, double yLocation, double speed) {
         super(SVG_PATH, xLocation, yLocation, UFOImg);
         xPos = xLocation;
         yPos = yLocation;
-        this.xSpeed = xSpeed;
-        this.ySpeed = ySpeed;
+        this.xSpeed = speed;
+        this.ySpeed = speed;
         setRandomRotation();
         destroy = false;
         destructionFrame = 0;
@@ -56,7 +56,15 @@ public class UFO extends MovingEnemy{
     public Timeline getUFOTimeline() {
         return timeline;
     }
-
+    
+    private double getxCenter(){
+        return xPos + spriteFrame.getImage().getWidth() / 2;
+    }
+    
+    private double getyCenter(){
+        return yPos + spriteFrame.getImage().getHeight() / 2;
+    }
+            
     @Override
     protected void destroy() {
         spriteBound.setContent("");
@@ -100,6 +108,46 @@ public class UFO extends MovingEnemy{
         }
         spriteFrame.setRotate(rotationStage);
         spriteBound.setRotate(rotationStage);
+    }
+    
+    @Override
+    protected void setXAndYPosition(){
+        Octogonave octogonave = Main.getMainMenu().getGame().getOctogonave();
+        if(!(octogonave.getxCenter() == getxCenter())){
+            if(octogonave.getxCenter() > getxCenter()){
+                if(getxCenter() + xSpeed > octogonave.getxCenter()){
+                    xPos = octogonave.getxCenter() - spriteFrame.getImage().getWidth() / 2;
+                }
+                else{
+                    xPos += xSpeed;
+                }
+            } else{
+                if(getxCenter() - xSpeed < octogonave.getxCenter()){
+                    xPos = octogonave.getxCenter() - spriteFrame.getImage().getWidth() / 2;
+                } else{
+                    xPos -= xSpeed;
+                }
+            }
+        } 
+        if(!(octogonave.getyCenter() == getyCenter())){
+            if(octogonave.getyCenter() > getyCenter()){
+                if(getyCenter() + ySpeed > octogonave.getyCenter()){
+                    yPos = octogonave.getyCenter() - spriteFrame.getImage().getHeight() / 2;
+                }
+                else{
+                    yPos += ySpeed;
+                }
+            } else{
+                if(getyCenter() - ySpeed < octogonave.getyCenter()){
+                    yPos = octogonave.getyCenter() - spriteFrame.getImage().getHeight() / 2;
+                } else{
+                    yPos -= ySpeed;
+                }
+            }
+        }
+        
+    
+
     }
     
 }

@@ -32,8 +32,7 @@ import javafx.scene.text.Text;
  * @author Jorge Maldonado Ventura
  */
 public class Game {
-    private boolean isArcadeMode;
-    private boolean paused;
+    private boolean isArcadeMode, paused, gameOver;
     private Octogonave octogonave;
     private SpriteManager spriteManager;
     private Score score;
@@ -54,10 +53,19 @@ public class Game {
         spriteManager = new SpriteManager();
         startGameLoop();
         pauseText = new Text(Texts.getPausedText());
+        gameOver = false;
+    }
+
+    boolean isIsArcadeMode() {
+        return isArcadeMode;
     }
 
     boolean isPaused() {
         return paused;
+    }
+
+    boolean isGameOver() {
+        return gameOver;
     }
 
     public GameOverMenu getGameOverMenu() {
@@ -116,6 +124,7 @@ public class Game {
      * Finaliza la partida llevando al menú de fin de la partida.
      */
     void endGame(){
+        gameOver = true;
         gameLoop.stop();
         if(isArcadeMode){
             Levels.getArcadeModeTimeline().stop();

@@ -111,5 +111,11 @@ class Asteroid extends MovingEnemy{
                 break;
         }
     }
+    
+    @Override
+    protected void setXAndYPosition(){
+        xPos += xSpeed;
+        yPos += ySpeed;
+    }
 
 }
