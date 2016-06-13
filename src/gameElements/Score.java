@@ -120,14 +120,18 @@ public class Score extends Text{
     public boolean checkRecord(){
         ScoreXML.load();
         if(Main.getMainMenu().getGame().isArcadeMode()){
-            adventureModeHighestsScores = ScoreXML.getArcadeModeScores();
+            arcadeModeHighestsScores = ScoreXML.getArcadeModeScores();
+            for(int i = 0; i < arcadeModeHighestsScores.size(); i++){
+                if(score > Long.parseLong(arcadeModeHighestsScores.get(i))){
+                    return true;
+                }
+            }
         } else{
             adventureModeHighestsScores = ScoreXML.getAdventureModeScores();
-        }
-        
-        for(int i = 0; i < adventureModeHighestsScores.size(); i++){
-            if(score > Long.parseLong(adventureModeHighestsScores.get(i))){
-                return true;
+            for(int i = 0; i < adventureModeHighestsScores.size(); i++){
+                if(score > Long.parseLong(adventureModeHighestsScores.get(i))){
+                    return true;
+                }
             }
         }
         return false;
@@ -139,9 +143,17 @@ public class Score extends Text{
      * @return 
      */
     private byte playerPosition(){
-        for(byte i = 0; i < adventureModeHighestsScores.size(); i++){
-            if(score > Long.parseLong(adventureModeHighestsScores.get(i))){
-                return (byte)(i + 1);
+        if(Main.getMainMenu().getGame().isArcadeMode()){
+            for(byte i = 0; i < arcadeModeHighestsScores.size(); i++){
+                if(score > Long.parseLong(arcadeModeHighestsScores.get(i))){
+                    return (byte)(i + 1);
+                }
+            }
+        } else{
+            for(byte i = 0; i < adventureModeHighestsScores.size(); i++){
+                if(score > Long.parseLong(adventureModeHighestsScores.get(i))){
+                    return (byte)(i + 1);
+                }
             }
         }
         return 0;
