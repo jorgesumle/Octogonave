@@ -33,6 +33,10 @@
     -fx-background-color: #33e130;
 }
 
+.buttonSelected{
+    -fx-background-color: #33e130;
+}
+
 .smallTitle{
    -fx-font-size: 30px;
    -fx-font-family: "Verdana";

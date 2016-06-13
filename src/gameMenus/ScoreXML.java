@@ -32,6 +32,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -44,60 +46,164 @@ import org.xml.sax.SAXException;
 public class ScoreXML {
     
     private static final String HIGHESTS_SCORES_FILE = "highestsScores.xml";
-    public static ArrayList<String> scores;
-    public static ArrayList<String> recordHolders;
-
-    public static ArrayList<String> getScores() {
-        return scores;
+    private static ArrayList<String> adventureModeScores, 
+            adventureModeRecordHolders, 
+            arcadeModeScores,
+            arcadeModeRecordHolders;
+    
+    
+    public static ArrayList<String> getAdventureModeScores() {
+        return adventureModeScores;
     }
 
-    public static ArrayList<String> getRecordHolders() {
-        return recordHolders;
+    public static ArrayList<String> getAdventureModeRecordHolders() {
+        return adventureModeRecordHolders;
     }
 
-    public static void setRecordHolders(ArrayList<String> recordHolders) {
-        ScoreXML.recordHolders = recordHolders;
+    public static ArrayList<String> getArcadeModeScores() {
+        return arcadeModeScores;
+    }
+    
+    public static ArrayList<String> getArcadeModeRecordHolders() {
+        return arcadeModeRecordHolders;
+    }
+    
+    public static void setArcadeModeScores(ArrayList<String> arcadeModeScores) {
+        ScoreXML.arcadeModeScores = arcadeModeScores;
     }
 
-    public static void setScores(ArrayList<String> scores) {
-        ScoreXML.scores = scores;
+    public static void setArcadeModeRecordHolders(ArrayList<String> arcadeModeRecordHolders) {
+        ScoreXML.arcadeModeRecordHolders = arcadeModeRecordHolders;
+    }
+
+    public static void setAdventureModeRecordHolders(ArrayList<String> recordHolders) {
+        ScoreXML.adventureModeRecordHolders = recordHolders;
+    }
+
+    public static void setAdventureModeScores(ArrayList<String> scores) {
+        ScoreXML.adventureModeScores = scores;
     }
     
     /**
-     * Carga las mejores puntuaciones del archivo XML de mejores puntuaciones.
+     * Carga las puntuaciones...
      */
-    public static void load() {
+    public static void load(){
+        if(Main.getMainMenu().getGame().isArcadeMode()){
+            ScoreXML.loadArcadeModeScores();
+        } else{
+            ScoreXML.loadAdventureModeScores();
+        }
+    }
+    
+    /**
+     * Actualiza las puntuaciones y ejecuta un método de guardado acorde al modo
+     * de juego: ejecuta {@link #saveAdventureModeScores()} si la partida es del
+     * modo aventura y {@link #saveArcadeModeScores()} si es del modo recreátiva.
+     */
+    public static void save(){
+        Main.getMainMenu().getGame().getScore().updateHighestsScoreXMLValues();
+        if(Main.getMainMenu().getGame().isArcadeMode()){
+            ScoreXML.saveArcadeModeScores();
+        } else{
+            ScoreXML.saveAdventureModeScores();
+        }
+    }
+    
+    /**
+     * Carga las mejores puntuaciones del modo aventura del archivo XML de mejores puntuaciones.
+     */
+    public static void loadAdventureModeScores() {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = null;
-        Document configXML = null;
+        Document document = null;
         try {
             documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            configXML = documentBuilder.parse(HIGHESTS_SCORES_FILE);
+            document = documentBuilder.parse(HIGHESTS_SCORES_FILE);
         } catch (ParserConfigurationException | SAXException | IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        NodeList highestsScores = configXML.getElementsByTagName("points");
-        NodeList recordHoldersNodeList = configXML.getElementsByTagName("player");
+        NodeList adventureModeNodeList = document.getElementsByTagName("adventureMode");
+        Node adventureModeNode = adventureModeNodeList.item(0);
+        NodeList recordHoldersNodeList = ((Element)adventureModeNode).getElementsByTagName("player");
+        NodeList scoresNodeList = ((Element)adventureModeNode).getElementsByTagName("points");
         
-        scores = new ArrayList<>();
-        recordHolders = new ArrayList<>();
-        for(byte i = 0; i < highestsScores.getLength(); i++){
-            scores.add(i, highestsScores.item(i).getTextContent());
-            recordHolders.add(i, recordHoldersNodeList.item(i).getTextContent());
+        adventureModeScores = new ArrayList<>();
+        adventureModeRecordHolders = new ArrayList<>();
+        for(byte i = 0; i < scoresNodeList.getLength(); i++){
+            adventureModeScores.add(i, scoresNodeList.item(i).getTextContent());
+            adventureModeRecordHolders.add(i, recordHoldersNodeList.item(i).getTextContent());
         }
     }
     
     /**
-     * Guarda las mejores puntuaciones en el archivo XML de mejores puntuaciones.
+     * Carga las mejores puntuaciones del modo recreativa del archivo XML de mejores puntuaciones.
      */
-    public static void save() {
+    public static void loadArcadeModeScores() {
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder = null;
+        Document document = null;
+        try {
+            documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            document = documentBuilder.parse(HIGHESTS_SCORES_FILE);
+        } catch (ParserConfigurationException | SAXException | IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        NodeList arcadeModeNodeList = document.getElementsByTagName("arcadeMode");
+        Node arcadeModeNode = arcadeModeNodeList.item(0);
+        NodeList recordHoldersNodeList = ((Element)arcadeModeNode).getElementsByTagName("player");
+        NodeList scoresNodeList = ((Element)arcadeModeNode).getElementsByTagName("points");
+        
+        arcadeModeScores = new ArrayList<>();
+        arcadeModeRecordHolders = new ArrayList<>();
+        for(byte i = 0; i < scoresNodeList.getLength(); i++){
+            arcadeModeScores.add(i, scoresNodeList.item(i).getTextContent());
+            arcadeModeRecordHolders.add(i, recordHoldersNodeList.item(i).getTextContent());
+        }
+    }
+    
+    /**
+     * Guarda las mejores puntuaciones del modo aventura en el archivo XML de mejores puntuaciones.
+     */
+    public static void saveAdventureModeScores() {
         try {
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
             Document document = documentBuilder.parse(HIGHESTS_SCORES_FILE);
-            for(byte i = 0; i < scores.size(); i++){
-                document.getElementsByTagName("points").item(i).setTextContent(scores.get(i));
-                document.getElementsByTagName("player").item(i).setTextContent(recordHolders.get(i));
+            NodeList adventureModeNodeList = document.getElementsByTagName("adventureMode");
+            Node adventureModeNode = adventureModeNodeList.item(0);
+            NodeList recordHoldersNodeList = ((Element)adventureModeNode).getElementsByTagName("player");
+            NodeList scoresNodeList = ((Element)adventureModeNode).getElementsByTagName("points");
+            for(byte i = 0; i < recordHoldersNodeList.getLength(); i++){
+                recordHoldersNodeList.item(i).setTextContent(adventureModeRecordHolders.get(i));
+                scoresNodeList.item(i).setTextContent(adventureModeScores.get(i));
+            }
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(document);
+            StreamResult result = new StreamResult(new File(HIGHESTS_SCORES_FILE));
+            transformer.transform(source, result);
+        } catch (SAXException | ParserConfigurationException | IOException | TransformerConfigurationException ex) {
+            Logger.getLogger(ScoreXML.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TransformerException ex) {
+            Logger.getLogger(ScoreXML.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    /**
+     * Guarda las mejores puntuaciones del modo recreátiva en el archivo XML de mejores puntuaciones.
+     */
+    public static void saveArcadeModeScores() {
+        try {
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document document = documentBuilder.parse(HIGHESTS_SCORES_FILE);
+            NodeList arcadeModeNodeList = document.getElementsByTagName("arcadeMode");
+            Node arcadeModeNode = arcadeModeNodeList.item(0);
+            NodeList recordHoldersNodeList = ((Element)arcadeModeNode).getElementsByTagName("player");
+            NodeList scoresNodeList = ((Element)arcadeModeNode).getElementsByTagName("points");
+            for(byte i = 0; i < recordHoldersNodeList.getLength(); i++){
+                recordHoldersNodeList.item(i).setTextContent(arcadeModeRecordHolders.get(i));
+                scoresNodeList.item(i).setTextContent(arcadeModeScores.get(i));
             }
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();

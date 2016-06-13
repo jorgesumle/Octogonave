@@ -98,8 +98,9 @@ public class GameOverMenu extends GridPane{
         playAdventureModeButton = new Button();
         playAdventureModeButton.setOnAction(e ->
             {
-                Main.getMainMenu().getGame().getScore().updateHighestsScoreXMLValues();
-                ScoreXML.save();
+                if(Main.getMainMenu().getGame().getScore().checkRecord()){
+                    ScoreXML.save();
+                }
                 Main.getScene().setRoot(Main.getRoot());
                 Main.getMainMenu().setGame(new Game(false));
             }
@@ -110,8 +111,9 @@ public class GameOverMenu extends GridPane{
         playArcadeModeButton = new Button();
         playArcadeModeButton.setOnAction(e ->
             {
-                Main.getMainMenu().getGame().getScore().updateHighestsScoreXMLValues();
-                ScoreXML.save();
+                if(Main.getMainMenu().getGame().getScore().checkRecord()){
+                    ScoreXML.save();
+                }
                 Main.getScene().setRoot(Main.getRoot());
                 Main.getMainMenu().setGame(new Game(true));
             }
@@ -124,8 +126,9 @@ public class GameOverMenu extends GridPane{
             {
                 Main.getMainMenu().getStarAnimTimer().resume();
                 Main.getScene().setRoot(Main.getMainMenu());
-                Main.getMainMenu().getGame().getScore().updateHighestsScoreXMLValues();
-                ScoreXML.save();
+                if(Main.getMainMenu().getGame().getScore().checkRecord()){
+                    ScoreXML.save();
+                }
             }
         );
     }
@@ -134,6 +137,9 @@ public class GameOverMenu extends GridPane{
         exitButton = new Button();
         exitButton.setOnAction(e ->
             {
+                if(Main.getMainMenu().getGame().getScore().checkRecord()){
+                    ScoreXML.save();
+                }
                 System.exit(0);
             }
         );

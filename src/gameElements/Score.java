@@ -31,23 +31,35 @@ import javafx.scene.text.Text;
 public class Score extends Text{
     
     private long score;
-    private static ArrayList<String> highestsScores;
-    private static ArrayList<String> recordHolders;
+    private static ArrayList<String> adventureModeRecordHolders,
+            adventureModeHighestsScores,
+            arcadeModeRecordHolders,
+            arcadeModeHighestsScores;
+    private boolean record;
     
     Score(double xLocation, double yLocation){
         score = 0;
+        record = false;
         setTranslateX(xLocation);
         setTranslateY(yLocation);
         getStyleClass().add("text");
         setFill(Color.WHITE);
     }
-
-    public ArrayList<String> getHighestsScores() {
-        return highestsScores;
+    
+    public boolean isRecord(){
+        return record;
+    }
+    
+    public void setRecord(boolean record){
+        this.record = record;
+    }
+    
+    public ArrayList<String> getAdventureModeHighestsScores() {
+        return adventureModeHighestsScores;
     }
 
-    public static ArrayList<String> getRecordHolders() {
-        return recordHolders;
+    public static ArrayList<String> getAdventureModeRecordHolders() {
+        return adventureModeRecordHolders;
     }
 
     public long getScore() {
@@ -90,7 +102,7 @@ public class Score extends Text{
                 Main.getMainMenu().getGame().getOctogonave().getBonusSound().play();
             } 
             if(sprite instanceof Diamond) {
-            increaseScore(Diamond.getBONUS());
+                increaseScore(Diamond.getBONUS());
             } else if(sprite instanceof Ruby) {
                 increaseScore(Ruby.getBONUS());
             } else if(sprite instanceof YellowSapphire) {
@@ -102,12 +114,19 @@ public class Score extends Text{
     
     /**
      * Comprueba si la puntuación obtenida es una de las cinco mejores.
+     * @return <tt>true</tt> si la puntuación obtenida es una de las cinco mejores
+     * ; <tt>false</tt> en caso contrario.
      */
-    boolean isRecord(){
+    public boolean checkRecord(){
         ScoreXML.load();
-        highestsScores = ScoreXML.getScores();
-        for(int i = 0; i < highestsScores.size(); i++){
-            if(score > Long.parseLong(highestsScores.get(i))){
+        if(Main.getMainMenu().getGame().isArcadeMode()){
+            adventureModeHighestsScores = ScoreXML.getArcadeModeScores();
+        } else{
+            adventureModeHighestsScores = ScoreXML.getAdventureModeScores();
+        }
+        
+        for(int i = 0; i < adventureModeHighestsScores.size(); i++){
+            if(score > Long.parseLong(adventureModeHighestsScores.get(i))){
                 return true;
             }
         }
@@ -120,8 +139,8 @@ public class Score extends Text{
      * @return 
      */
     private byte playerPosition(){
-        for(byte i = 0; i < highestsScores.size(); i++){
-            if(score > Long.parseLong(highestsScores.get(i))){
+        for(byte i = 0; i < adventureModeHighestsScores.size(); i++){
+            if(score > Long.parseLong(adventureModeHighestsScores.get(i))){
                 return (byte)(i + 1);
             }
         }
@@ -144,10 +163,17 @@ public class Score extends Text{
      * @param scorePos el número de puntuaciones de la lista de récords que se han superado.
      */
     private void addHighestsScore(int scorePos){
-        for(int j = highestsScores.size() - 1; j > scorePos - 1; j--){
-            highestsScores.set(j, highestsScores.get(j - 1));                        
+        if(Main.getMainMenu().getGame().isArcadeMode()){
+            for(int j = arcadeModeHighestsScores.size() - 1; j > scorePos - 1; j--){
+                arcadeModeHighestsScores.set(j, arcadeModeHighestsScores.get(j - 1));                        
+            }
+            arcadeModeHighestsScores.set(scorePos - 1, Long.toString(score));
+        } else{
+            for(int j = adventureModeHighestsScores.size() - 1; j > scorePos - 1; j--){
+                adventureModeHighestsScores.set(j, adventureModeHighestsScores.get(j - 1));                        
+            }
+            adventureModeHighestsScores.set(scorePos - 1, Long.toString(score));
         }
-        highestsScores.set(scorePos - 1, Long.toString(score));
     }
     
     /**
@@ -155,10 +181,19 @@ public class Score extends Text{
      * @param playerPos el número de jugadores de la lista de récords que se han superado.
      */
     private void addRecordHolder(int playerPos){
-        recordHolders = ScoreXML.getRecordHolders();
-        for(int j = recordHolders.size() - 1; j > playerPos - 1; j--){
-            recordHolders.set(j, recordHolders.get(j - 1));                        
+        if(Main.getMainMenu().getGame().isArcadeMode()){
+            adventureModeRecordHolders = ScoreXML.getArcadeModeRecordHolders();
+            for(int j = adventureModeRecordHolders.size() - 1; j > playerPos - 1; j--){
+                adventureModeRecordHolders.set(j, adventureModeRecordHolders.get(j - 1));                        
+            }
+            adventureModeRecordHolders.set(playerPos - 1, Main.getMainMenu().getGame().getGameOverMenu().getPlayerNameTextField().getText());
+        } else{
+            arcadeModeRecordHolders = ScoreXML.getAdventureModeRecordHolders();
+            for(int j = arcadeModeRecordHolders.size() - 1; j > playerPos - 1; j--){
+                arcadeModeRecordHolders.set(j, arcadeModeRecordHolders.get(j - 1));                        
+            }
+            arcadeModeRecordHolders.set(playerPos - 1, Main.getMainMenu().getGame().getGameOverMenu().getPlayerNameTextField().getText());
         }
-        recordHolders.set(playerPos - 1, Main.getMainMenu().getGame().getGameOverMenu().getPlayerNameTextField().getText());
+        
     }
 }

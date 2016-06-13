@@ -35,37 +35,47 @@ import javafx.scene.text.Text;
  * @author Jorge Maldonado Ventura
  */
 class HighestScoresScreen extends GridPane{
+    ArrayList<Text> adventureModeRecordHoldersTexts,
+            adventureModeScoresTexts,
+            arcadeModeRecordHoldersTexts,
+            arcadeModeScoresTexts;
+    ArrayList<String> adventureModeRecordHolders,
+            adventureModeScores,
+            arcadeModeRecordHolders,
+            arcadeModeScores; 
+    Text title;
+    Button adventureMode, arcadeMode, backButton;
+    boolean showingAdventureModeData;
     
-    Text title, score1, score2, score3, score4, score5, player1, player2, player3,
-            player4, player5;
-    Button backButton;
-    ArrayList<String> bestPlayers, scores; 
     
     HighestScoresScreen(){
+        showingAdventureModeData = false;
         applyStyle();
         createTitleText();
-        ScoreXML.load();
+        ScoreXML.loadAdventureModeScores();
+        ScoreXML.loadArcadeModeScores();
         createPlayerNamesTexts();
         createPlayerScoresTexts();
+        createModesButtons();
         createBackButton();
         addNodes();
     }
     
     void setTexts(){
         title.setText(Texts.getHighestScoresButton());
+        adventureMode.setText(Texts.getAdventureModeButton());
+        arcadeMode.setText(Texts.getArcadeModeButton());
         backButton.setText(Texts.getBackButton());
-        bestPlayers = ScoreXML.getRecordHolders();
-        player1.setText(bestPlayers.get(0));
-        player2.setText(bestPlayers.get(1));
-        player3.setText(bestPlayers.get(2));
-        player4.setText(bestPlayers.get(3));
-        player5.setText(bestPlayers.get(4));
-        scores = ScoreXML.getScores();
-        score1.setText(scores.get(0));
-        score2.setText(scores.get(1));
-        score3.setText(scores.get(2));
-        score4.setText(scores.get(3));
-        score5.setText(scores.get(4));
+        adventureModeRecordHolders = ScoreXML.getAdventureModeRecordHolders();
+        adventureModeScores = ScoreXML.getAdventureModeScores();
+        arcadeModeRecordHolders = ScoreXML.getArcadeModeRecordHolders();
+        arcadeModeScores = ScoreXML.getArcadeModeScores();
+        for(int i = 0; i < adventureModeRecordHolders.size(); i++){
+            adventureModeRecordHoldersTexts.get(i).setText(adventureModeRecordHolders.get(i));
+            adventureModeScoresTexts.get(i).setText(adventureModeScores.get(i));
+            arcadeModeRecordHoldersTexts.get(i).setText(arcadeModeRecordHolders.get(i));
+            arcadeModeScoresTexts.get(i).setText(arcadeModeScores.get(i));
+        }
     }
     
     private void applyStyle(){
@@ -87,39 +97,57 @@ class HighestScoresScreen extends GridPane{
     }
     
     private void createPlayerNamesTexts(){
-        player1 = new Text();
-        player1.getStyleClass().add("smallTextOnlyWhiteStrong");
-        setHalignment(player1, HPos.CENTER);
-        player2 = new Text();
-        player2.getStyleClass().add("smallTextOnlyWhiteStrong");
-        setHalignment(player2, HPos.CENTER);
-        player3 = new Text();
-        player3.getStyleClass().add("smallTextOnlyWhiteStrong");
-        setHalignment(player3, HPos.CENTER);
-        player4 = new Text();
-        player4.getStyleClass().add("smallTextOnlyWhiteStrong");
-        setHalignment(player4, HPos.CENTER);
-        player5 = new Text();
-        player5.getStyleClass().add("smallTextOnlyWhiteStrong");
-        setHalignment(player5, HPos.CENTER);
+        adventureModeRecordHoldersTexts = new ArrayList<>();
+        arcadeModeRecordHoldersTexts = new ArrayList<>();
+        for(int i = 0; i < 5; i++){    
+            adventureModeRecordHoldersTexts.add(new Text());
+            adventureModeRecordHoldersTexts.get(i).getStyleClass().add("smallTextOnlyWhiteStrong");
+            setHalignment(adventureModeRecordHoldersTexts.get(i), HPos.CENTER);
+            arcadeModeRecordHoldersTexts.add(new Text());
+            arcadeModeRecordHoldersTexts.get(i).getStyleClass().add("smallTextOnlyWhiteStrong");
+            setHalignment(arcadeModeRecordHoldersTexts.get(i), HPos.CENTER);
+        }
     }
     
     private void createPlayerScoresTexts(){
-        score1 = new Text();
-        score1.getStyleClass().add("smallTextOnlyWhiteStrong");
-        setHalignment(score1, HPos.CENTER);
-        score2 = new Text();
-        score2.getStyleClass().add("smallTextOnlyWhiteStrong");
-        setHalignment(score2, HPos.CENTER);
-        score3 = new Text();
-        score3.getStyleClass().add("smallTextOnlyWhiteStrong");
-        setHalignment(score3, HPos.CENTER);
-        score4 = new Text();
-        score4.getStyleClass().add("smallTextOnlyWhiteStrong");
-        setHalignment(score4, HPos.CENTER);
-        score5 = new Text();
-        score5.getStyleClass().add("smallTextOnlyWhiteStrong");
-        setHalignment(score5, HPos.CENTER);
+        adventureModeScoresTexts = new ArrayList<>();
+        arcadeModeScoresTexts = new ArrayList<>();
+        for(int i = 0; i < 5; i++){
+            adventureModeScoresTexts.add(new Text());
+            adventureModeScoresTexts.get(i).getStyleClass().add("smallTextOnlyWhiteStrong");
+            setHalignment(adventureModeScoresTexts.get(i), HPos.CENTER);
+            arcadeModeScoresTexts.add(new Text());
+            arcadeModeScoresTexts.get(i).getStyleClass().add("smallTextOnlyWhiteStrong");
+            setHalignment(arcadeModeScoresTexts.get(i), HPos.CENTER);
+        }
+    }
+    
+    private void createModesButtons(){
+        adventureMode = new Button();
+        adventureMode.setOnAction(e -> 
+            {
+                if(!showingAdventureModeData){
+                    showDataOfOtherMode();
+                    arcadeMode.getStyleClass().remove("buttonSelected");
+                    adventureMode.getStyleClass().add("buttonSelected");
+                }
+            }
+        );
+        arcadeMode = new Button();
+        arcadeMode.setOnAction(e -> 
+            {
+                if(showingAdventureModeData){
+                    showDataOfOtherMode();
+                    adventureMode.getStyleClass().remove("buttonSelected");
+                    arcadeMode.getStyleClass().add("buttonSelected");
+                }
+            }
+        );
+        if(showingAdventureModeData){
+            adventureMode.getStyleClass().add("buttonSelected");
+        } else{
+            arcadeMode.getStyleClass().add("buttonSelected");
+        }
     }
     
     private void createBackButton(){
@@ -134,16 +162,39 @@ class HighestScoresScreen extends GridPane{
     
     private void addNodes(){
         add(title, 0, 0, 2, 1);
-        add(player1, 0, 1);
-        add(score1, 1, 1);
-        add(player2, 0, 2);
-        add(score2, 1, 2);
-        add(player3, 0, 3);
-        add(score3, 1, 3);
-        add(player4, 0, 4);
-        add(score4, 1, 4);
-        add(player5, 0, 5);
-        add(score5, 1, 5);
-        add(backButton, 0, 6, 2, 1);
+        add(adventureMode, 0, 7);
+        add(arcadeMode, 1, 7);
+        if(showingAdventureModeData){
+            for(int i = 0; i < adventureModeRecordHoldersTexts.size(); i++){
+                add(adventureModeRecordHoldersTexts.get(i), 0, i + 1);
+                add(adventureModeScoresTexts.get(i), 1, i + 1);
+            }
+        } else{
+            for(int i = 0; i < arcadeModeRecordHoldersTexts.size(); i++){
+                add(arcadeModeRecordHoldersTexts.get(i), 0, i + 1);
+                add(arcadeModeScoresTexts.get(i), 1, i + 1);
+            }
+        }
+        add(backButton, 0, 8, 2, 1);
+    }
+    
+    private void showDataOfOtherMode(){
+        if(showingAdventureModeData){
+            showingAdventureModeData = false;
+            for(int i = 0; i < adventureModeRecordHoldersTexts.size(); i++){
+                add(arcadeModeRecordHoldersTexts.get(i), 0, i + 1);
+                add(arcadeModeScoresTexts.get(i), 1, i + 1);
+                getChildren().remove(adventureModeRecordHoldersTexts.get(i));
+                getChildren().remove(adventureModeScoresTexts.get(i));
+            }
+        } else{
+            showingAdventureModeData = true;
+            for(int i = 0; i < adventureModeRecordHoldersTexts.size(); i++){
+                add(adventureModeRecordHoldersTexts.get(i), 0, i + 1);
+                add(adventureModeScoresTexts.get(i), 1, i + 1);
+                getChildren().remove(arcadeModeRecordHoldersTexts.get(i));
+                getChildren().remove(arcadeModeScoresTexts.get(i));
+            }
+        }
     }
 }

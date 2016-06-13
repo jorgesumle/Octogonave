@@ -32,7 +32,7 @@ import javafx.scene.text.Text;
  * @author Jorge Maldonado Ventura
  */
 public class Game {
-    private boolean isArcadeMode, paused, gameOver;
+    private boolean arcadeMode, paused, gameOver;
     private Octogonave octogonave;
     private SpriteManager spriteManager;
     private Score score;
@@ -41,7 +41,7 @@ public class Game {
     private Text pauseText;
     
     public Game(boolean isArcadeMode){
-        this.isArcadeMode = isArcadeMode;
+        this.arcadeMode = isArcadeMode;
         if(isArcadeMode) Levels.arcadeMode();
         else{
             Levels.initAnyLevelTimeline();
@@ -56,8 +56,8 @@ public class Game {
         gameOver = false;
     }
 
-    boolean isIsArcadeMode() {
-        return isArcadeMode;
+    public boolean isArcadeMode() {
+        return arcadeMode;
     }
 
     boolean isPaused() {
@@ -126,7 +126,7 @@ public class Game {
     void endGame(){
         gameOver = true;
         gameLoop.stop();
-        if(isArcadeMode){
+        if(arcadeMode){
             Levels.getArcadeModeTimeline().stop();
         } else{
             Levels.getAnyLevelTimeline().stop();
@@ -137,7 +137,8 @@ public class Game {
         Main.getRoot().getChildren().clear();
         gameOverMenu = new GameOverMenu();
         Main.getScene().setRoot(gameOverMenu);
-        if(score.isRecord()){
+        if(score.checkRecord()){
+            score.setRecord(true);
             gameOverMenu.showHighScoresAnimatedMessage();
             gameOverMenu.createSavingArea();
         }
@@ -164,7 +165,7 @@ public class Game {
             }
         });
         paused = true;
-        if(isArcadeMode){
+        if(arcadeMode){
             Levels.getArcadeModeTimeline().pause();
         } else{
             Levels.getAnyLevelTimeline().pause();
@@ -190,7 +191,7 @@ public class Game {
         });
         paused = false;
         Main.getRoot().getChildren().remove(pauseText);
-        if(isArcadeMode){
+        if(arcadeMode){
             Levels.getArcadeModeTimeline().play();
         } else{
             Levels.getAnyLevelTimeline().play();
