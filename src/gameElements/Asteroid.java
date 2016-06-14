@@ -31,10 +31,10 @@ class Asteroid extends MovingEnemy{
     
     private static final String SVG_PATH = "M 18,1 L 18,1 29,0 51,7 54,19 56,23 54,28 55,37 47,49 47,52 39,58 36,55 21,55 20,54 11,47 8,47 6,45 6,41 3,32 0,28 10,6 16,4 Z";
     private static final byte BONUS = 5;
-    private static Image asteroidImg = new Image("/asteroid.png", 57, 59, true, false, true),
-            asteroidDestroyedImg1 = new Image("/asteroidDestroyed1.png", 70, 72, true, false, true),
-            asteroidDestroyedImg2 = new Image("/asteroidDestroyed2.png", 70, 72, true, false, true),
-            asteroidDestroyedImg3 = new Image("/asteroidDestroyed3.png", 70, 72, true, false, true);
+    private static Image asteroidImg = new Image("/images/sprites/asteroid/asteroid.png", 57, 59, true, false, true),
+            asteroidDestroyedImg1 = new Image("/images/sprites/asteroid/asteroidDestroyed1.png", 70, 72, true, false, true),
+            asteroidDestroyedImg2 = new Image("/images/sprites/asteroid/asteroidDestroyed2.png", 70, 72, true, false, true),
+            asteroidDestroyedImg3 = new Image("/images/sprites/asteroid/asteroidDestroyed3.png", 70, 72, true, false, true);
     private final double ROTATION_VELOCITY;
     
     public Asteroid(double xLocation, double yLocation, double xVelocity, double yVelocity) {

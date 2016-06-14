@@ -16,6 +16,8 @@
             <name>Octogonave</name>
             <source-roots>
                 <root id="src.dir"/>
+                <root id="src.assets.dir" name="Assets"/>
+                <root id="src.lang.dir" name="Language Files"/>
             </source-roots>
             <test-roots>
                 <root id="test.src.dir"/>

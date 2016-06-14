@@ -434,19 +434,19 @@ public class Levels {
     private static void chooseBackground(int level){
         switch (level) {
             case 2:
-                changeBackground("/Saturn.jpg");
+                changeBackground("/images/backgrounds/Saturn.jpg");
                 break;
             case 3:
-                changeBackground("/Neptune.jpg");
+                changeBackground("/images/backgrounds/Neptune.jpg");
                 break;
             case 4:
-                changeBackground("KuiperBelt.jpg");
+                changeBackground("/images/backgrounds/KuiperBelt.jpg");
                 break;
             case 5:
-                changeBackground("nebula.jpg");
+                changeBackground("/images/backgrounds/nebula.jpg");
                 break;
             case 6:
-                changeBackground("/alignedPlanets.jpg");
+                changeBackground("/images/backgrounds/alignedPlanets.jpg");
                 break;
         }
     }

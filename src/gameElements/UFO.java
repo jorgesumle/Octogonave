@@ -33,9 +33,9 @@ public class UFO extends MovingEnemy{
     
     private static final String SVG_PATH = "M 32,0 L 32,0 21,8 2,19 31,33 64,20 Z";
     private static final byte BONUS = 7;
-    private static Image UFOImg = new Image("/UFO.png", 65, 34, true, false, true),
-            UFODestroyedImg1 = new Image("/UFODestroyed1.png", 69, 36, true, false, true),
-            UFODestroyedImg2 = new Image("/UFODestroyed2.png", 73, 38, true, false, true);
+    private static Image UFOImg = new Image("/images/sprites/UFO/UFO.png", 65, 34, true, false, true),
+            UFODestroyedImg1 = new Image("/images/sprites/UFO/UFODestroyed1.png", 69, 36, true, false, true),
+            UFODestroyedImg2 = new Image("/images/sprites/UFO/UFODestroyed2.png", 73, 38, true, false, true);
     
     public UFO(double xLocation, double yLocation, double speed) {
         super(SVG_PATH, xLocation, yLocation, UFOImg);

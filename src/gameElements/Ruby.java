@@ -25,9 +25,9 @@ import javafx.scene.image.Image;
  */
 class Ruby extends Gem{
     
-    private static final Image rubyImg = new Image("/ruby.png", 32, 32, true, false, true),
-            rubyDestroyedImg1 = new Image("/rubyDestroyed1.png", 36, 36, true, false, true),
-            rubyDestroyedImg2 = new Image("/rubyDestroyed2.png", 40, 40, true, false, true);
+    private static final Image rubyImg = new Image("/images/sprites/ruby/ruby.png", 32, 32, true, false, true),
+            rubyDestroyedImg1 = new Image("/images/sprites/ruby/rubyDestroyed1.png", 36, 36, true, false, true),
+            rubyDestroyedImg2 = new Image("/images/sprites/ruby/rubyDestroyed2.png", 40, 40, true, false, true);
     private static final String SVG_PATH = "M 14,0 L 14,0 17,0 31,14 31,16 16,31 15,31 0,16 0,14 Z";
     private static final byte BONUS = 45;
     

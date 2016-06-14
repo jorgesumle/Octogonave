@@ -62,7 +62,7 @@ class ConfigMenu extends GridPane{
         setAlignment(Pos.CENTER);
         setBackground(new Background(
                         new BackgroundImage(
-                                new Image("configMenuBackground.jpg", 640, 480, true, false, true),
+                                new Image("/images/backgrounds/configMenu.jpg", 640, 480, true, false, true),
                                 BackgroundRepeat.NO_REPEAT,
                                 BackgroundRepeat.NO_REPEAT,
                                 BackgroundPosition.CENTER,
@@ -93,13 +93,13 @@ class ConfigMenu extends GridPane{
             String selectedlanguage = languageChoiceBox.getItems().get((Integer) selectedOption).toString();
             if(selectedlanguage.equals("castellano")){
                 Config.setSelectedLanguage("castellano");
-                Texts.setTexts(LanguageFileReader.readLanguageFile("lang/castellano.lang"));
+                Texts.setTexts(LanguageFileReader.readLanguageFile("/lang/castellano.lang"));
             } else if(selectedlanguage.equals("deutsch")){
                 Config.setSelectedLanguage("deutsch");
-                Texts.setTexts(LanguageFileReader.readLanguageFile("lang/deutsch.lang"));
+                Texts.setTexts(LanguageFileReader.readLanguageFile("/lang/deutsch.lang"));
             } else if(selectedlanguage.equals("english")){
                 Config.setSelectedLanguage("english");
-                Texts.setTexts(LanguageFileReader.readLanguageFile("lang/english.lang"));
+                Texts.setTexts(LanguageFileReader.readLanguageFile("/lang/english.lang"));
             }
             Config.saveConfig();
             setTexts();

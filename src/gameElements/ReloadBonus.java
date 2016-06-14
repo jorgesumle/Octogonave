@@ -24,7 +24,7 @@ import javafx.scene.image.Image;
  */
 public class ReloadBonus extends Sprite{
     
-    private static final Image reloadBonusImg = new Image("/reloadBonus.png", 32, 24, true, false, true);
+    private static final Image reloadBonusImg = new Image("/images/sprites/reloadBonus/reloadBonus.png", 32, 24, true, false, true);
     private static final String SVG_PATH = "M 11,0 L 11,0 26,0 37,11 37,26 27,36 11,36 0,26 0,11 Z";
     private static final byte BONUS = 1;
     

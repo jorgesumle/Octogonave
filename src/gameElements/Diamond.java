@@ -25,12 +25,12 @@ import javafx.scene.image.Image;
  */
 class Diamond extends Gem{
     
-    private static final Image diamondImg1 = new Image("/diamond1.png", 32, 24, true, false, true),
-            diamondImg2 = new Image("/diamond2.png", 32, 24, true, false, true),
-            diamond1DestroyedImg1 = new Image("/diamond1Destroyed1.png", 36, 27, true, false, true),
-            diamond1DestroyedImg2 = new Image("/diamond1Destroyed2.png", 40, 30, true, false, true),
-            diamond2DestroyedImg1 = new Image("/diamond2Destroyed1.png", 36, 27, true, false, true),
-            diamond2DestroyedImg2 = new Image("/diamond2Destroyed2.png", 40, 30, true, false, true);
+    private static final Image diamondImg1 = new Image("/images/sprites/diamond/diamond1.png", 32, 24, true, false, true),
+            diamondImg2 = new Image("/images/sprites/diamond/diamond2.png", 32, 24, true, false, true),
+            diamond1DestroyedImg1 = new Image("/images/sprites/diamond/diamond1Destroyed1.png", 36, 27, true, false, true),
+            diamond1DestroyedImg2 = new Image("/images/sprites/diamond/diamond1Destroyed2.png", 40, 30, true, false, true),
+            diamond2DestroyedImg1 = new Image("/images/sprites/diamond/diamond2Destroyed1.png", 36, 27, true, false, true),
+            diamond2DestroyedImg2 = new Image("/images/sprites/diamond/diamond2Destroyed2.png", 40, 30, true, false, true);
     private static final String SVG_PATH = "M 0,6 L 0,6 6,0 25,0 31,6 31,8 16,23 15,23 0,8 Z";
     private static final byte BONUS = 50,
             FRAME_CHANGE_TIME = 20;

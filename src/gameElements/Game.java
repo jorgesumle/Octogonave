@@ -44,7 +44,7 @@ public class Game {
     private GameOverMenu gameOverMenu;
     private Text pauseText;
     MediaPlayer musicPlayer;
-    private final String ARCADE_MODE_MUSIC_PATH = "V3S - DarkNess.wav";
+    private final String ARCADE_MODE_MUSIC_PATH = "assets/songs/V3S - DarkNess.wav";
     
     public Game(){
         if(gameMenus.Config.isMusicOn()){
@@ -104,7 +104,7 @@ public class Game {
         Main.getRoot().setBackground(
                 new Background(
                         new BackgroundImage(
-                                new Image("/Jupiter.jpg", 640, 480, true, false, true), 
+                                new Image("/images/backgrounds/Jupiter.jpg", 640, 480, true, false, true), 
                                 BackgroundRepeat.NO_REPEAT, 
                                 BackgroundRepeat.NO_REPEAT, 
                                 BackgroundPosition.CENTER, 

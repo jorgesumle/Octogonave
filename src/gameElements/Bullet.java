@@ -26,7 +26,7 @@ import javafx.scene.shape.Shape;
  */
 class Bullet extends MovingSprite{
     
-    private static final Image BULLET_IMG = new Image("/bullet.png", 10, 13, true, false, true);
+    private static final Image BULLET_IMG = new Image("/images/sprites/bullet/bullet.png", 10, 13, true, false, true);
     private static final String SVG_PATH = "M 4,0 L 4,0 5,0 6,1 6,8 9,11 9,12 0,12 0,11 3,8 3,1 Z";
     private double xSpeed, ySpeed;
     
