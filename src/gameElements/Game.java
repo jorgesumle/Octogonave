@@ -52,7 +52,8 @@ public class Game {
         addNodes();
         spriteManager = new SpriteManager();
         startGameLoop();
-        pauseText = new Text(Texts.getPausedText());
+        pauseText = new Text(14, 45, Texts.getPausedText());
+        pauseText.setId("pauseText");
         gameOver = false;
     }
 
@@ -126,15 +127,19 @@ public class Game {
     void endGame(){
         gameOver = true;
         gameLoop.stop();
-        if(arcadeMode){
-            Levels.getArcadeModeTimeline().stop();
-        } else{
-            Levels.getAnyLevelTimeline().stop();
-        }
+        Levels.removeTimers();
         if(gameMenus.Config.isMusicOn()){
             stopGameMusic();
         }
         Main.getRoot().getChildren().clear();
+        displayGameOverMenu();
+    }
+    
+    /**
+     * Muestra el menú de fin de juego. Si se ha conseguido un récord, 
+     * crea una zona para escribir el nombre del jugador y guardar la puntuación.
+     */
+    private void displayGameOverMenu(){
         gameOverMenu = new GameOverMenu();
         Main.getScene().setRoot(gameOverMenu);
         if(score.checkRecord()){
@@ -159,24 +164,16 @@ public class Game {
      * pausa para reanudar el juego.
      */
     void pause(){
-        spriteManager.getCurrentNormal().stream().forEach((sprite) -> {
-            if(sprite instanceof MovingEnemy){
-                ((MovingEnemy)sprite).getTimeline().pause();
-            }
-        });
+        spriteManager.pauseCurrentSpritesTimeline();
         paused = true;
         if(arcadeMode){
             Levels.getArcadeModeTimeline().pause();
         } else{
-            Levels.getAnyLevelTimeline().pause();
+            Levels.pauseAdventureModeTimers();
         }
         if(octogonave.getReloadBonusTimer() != null){
             octogonave.getReloadBonusTimer().pause();
         }
-        
-        pauseText.setX(14);
-        pauseText.setY(45);
-        pauseText.setId("pauseText");
         Main.getRoot().getChildren().add(pauseText);
     }
     
@@ -184,17 +181,13 @@ public class Game {
      * Reanuda el juego si está pausado.
      */
     void resume(){
-        spriteManager.getCurrentNormal().stream().forEach((sprite) -> {
-            if(sprite instanceof MovingEnemy){
-                ((MovingEnemy)sprite).getTimeline().play();
-            }
-        });
+        spriteManager.resumeCurrentSpritesTimeline();
         paused = false;
         Main.getRoot().getChildren().remove(pauseText);
         if(arcadeMode){
             Levels.getArcadeModeTimeline().play();
         } else{
-            Levels.getAnyLevelTimeline().play();
+            Levels.resumeAdventureModeTimers();
         }
         if(octogonave.getReloadBonusTimer() != null){
             octogonave.getReloadBonusTimer().play();

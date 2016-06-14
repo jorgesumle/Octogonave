@@ -42,18 +42,46 @@ import javafx.util.Duration;
 public class Levels {
 
     private static Random random = new Random();
-    private static Timeline arcadeModeTimeline;
-    private static Timeline anyLevelTimeline;
+    private static Timeline arcadeModeTimeline, 
+            anyLevelTimeline, 
+            backgroundChange;
+    private static FadeTransition ft;
     private static final int TRANSITION_DURATION_IN_MILLIS = 10_000;
+    private static boolean changingLevel;
 
-    public static Timeline getArcadeModeTimeline() {
+    static Timeline getArcadeModeTimeline() {
         return arcadeModeTimeline;
     }
-
-    public static Timeline getAnyLevelTimeline() {
-        return anyLevelTimeline;
+    
+    static void removeTimers(){
+        arcadeModeTimeline = null;
+        anyLevelTimeline = null;
+        backgroundChange = null;
+        ft = null;
     }
-
+    
+    static void pauseAdventureModeTimers(){
+        if(changingLevel){
+            ft.pause();
+            if(backgroundChange != null){
+                backgroundChange.pause();
+            }
+        } else{
+            anyLevelTimeline.pause();
+        }
+    }
+    
+    static void resumeAdventureModeTimers(){
+        if(changingLevel){
+            ft.play();
+            if(backgroundChange != null){
+                backgroundChange.play();
+            }
+        } else{
+            anyLevelTimeline.play();
+        }
+    }
+    
     /**
      * Empieza el TimeLine, que añade nuevos sprites al juego cada cierto
      * tiempo.
@@ -120,8 +148,8 @@ public class Levels {
                 } else if (random.nextInt(16) == 0) {
                     createBonus();
                 }
-            })
-        );
+            }
+        ));
         anyLevelTimeline.setCycleCount(65);
         anyLevelTimeline.play();
         anyLevelTimeline.setOnFinished(e -> 
@@ -272,6 +300,7 @@ public class Levels {
     }
 
     public static void newLevelTransition(String text, int nextLevel) {
+        changingLevel = true;
         Rectangle rect = new Rectangle(0, 0, Main.getWINDOW_WIDTH(), Main.getWINDOW_HEIGHT());
         rect.setFill(Color.BLACK);
         Text textNode = new Text(text);
@@ -279,7 +308,7 @@ public class Levels {
         textNode.setTranslateX(20);
         textNode.setTranslateY(20);
         Main.getRoot().getChildren().addAll(rect, textNode);
-        FadeTransition ft = new FadeTransition(Duration.millis(TRANSITION_DURATION_IN_MILLIS / 2), rect);
+        ft = new FadeTransition(Duration.millis(TRANSITION_DURATION_IN_MILLIS / 2), rect);
         ft.setFromValue(0);
         ft.setToValue(1.0);
         ft.setCycleCount(2);
@@ -288,6 +317,7 @@ public class Levels {
         chooseBackground(nextLevel);
         ft.setOnFinished(e -> 
             {
+                changingLevel = false;
                 Main.getRoot().getChildren().remove(textNode);
                 startLevel(nextLevel);
             }
@@ -300,7 +330,7 @@ public class Levels {
      * @param backgroundURL la URL del fondo de pantalla.
      */
     private static void changeBackground(String backgroundURL) {
-        Timeline backgroundChange = new Timeline();
+        backgroundChange = new Timeline();
         backgroundChange.getKeyFrames().add(new KeyFrame(Duration.millis(TRANSITION_DURATION_IN_MILLIS / 2), (ActionEvent e) -> 
             {
                 resetSprites();

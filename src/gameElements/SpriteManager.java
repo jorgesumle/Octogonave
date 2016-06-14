@@ -206,6 +206,22 @@ class SpriteManager {
     void removeFromCurrentNormal(Sprite... sprites){
         currentNormal.removeAll(Arrays.asList(sprites));
         removedNormal.addAll(Arrays.asList(sprites));
-    }    
+    }
+    
+    void pauseCurrentSpritesTimeline(){
+        getCurrentNormal().stream().forEach((sprite) -> {
+            if(sprite instanceof MovingEnemy){
+                ((MovingEnemy)sprite).getTimeline().pause();
+            }
+        });
+    }
+    
+    void resumeCurrentSpritesTimeline(){
+        getCurrentNormal().stream().forEach((sprite) -> {
+            if(sprite instanceof MovingEnemy){
+                ((MovingEnemy)sprite).getTimeline().play();
+            }
+        });
+    }
     
 }
