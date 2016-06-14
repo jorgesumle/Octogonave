@@ -136,8 +136,16 @@ public class Texts{
         return texts.get(26);
     }
     
-    public static String getGameCompletedText(){
+    public static String getLevel4Text(){
         return texts.get(27);
+    }
+    
+    public static String getLevel5Text(){
+        return texts.get(28);
+    }
+    
+    public static String getGameCompletedText(){
+        return texts.get(29);
     }
     
     public ArrayList<String> getTexts() {

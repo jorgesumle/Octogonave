@@ -18,14 +18,7 @@
 package gameElements;
 
 import java.util.Random;
-import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.util.Duration;
 
 /**
  * El bucle del juego. Hereda de la clase AnimationTimer, lo cual
@@ -37,27 +30,12 @@ class GameLoop extends AnimationTimer{
     
     private final Octogonave octogonave;
     private final SpriteManager spriteManager;
-    private final String ADVENTURE_MODE_MUSIC_PATH = "/Stealth Groover.aiff",
-            ARCADE_MODE_MUSIC_PATH = "/V3S - DarkNess.m4a";
-    private MediaPlayer gameMusicPlayer; //Si no esta declarado aquí el, recolector de basura de Java lo detiene en diez segundos.
-    Timeline mediaPlayerTimeline;
     private Random random;
     
     GameLoop(Octogonave octogonave, SpriteManager spriteManager){
         this.octogonave = octogonave;
         this.spriteManager = spriteManager;
         random = new Random();
-        if(gameMenus.Config.isMusicOn()){
-            playMusic();
-        }
-    }
-    
-    public MediaPlayer getGameMusicPlayer() {
-        return gameMusicPlayer;
-    }
-
-    public Timeline getMediaPlayerTimeline() {
-        return mediaPlayerTimeline;
     }
     
     /**
@@ -104,21 +82,6 @@ class GameLoop extends AnimationTimer{
     @Override
     public void stop(){
         super.stop();
-    }
-           
-    /**
-     * Reproduce la música del juego una y otra vez.
-     */
-    private void playMusic(){
-        gameMusicPlayer = new MediaPlayer(new Media(this.getClass().getResource(ARCADE_MODE_MUSIC_PATH).toExternalForm()));
-        gameMusicPlayer.play();
-        mediaPlayerTimeline = new Timeline();
-        mediaPlayerTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(309_267), (ActionEvent e) -> {
-            gameMusicPlayer = new MediaPlayer(new Media(this.getClass().getResource(ARCADE_MODE_MUSIC_PATH).toExternalForm()));
-            gameMusicPlayer.play();
-        }));
-        mediaPlayerTimeline.setCycleCount(Animation.INDEFINITE);
-        mediaPlayerTimeline.play();
     }
     
 }

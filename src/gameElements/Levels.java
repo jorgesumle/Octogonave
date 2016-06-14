@@ -54,6 +54,11 @@ public class Levels {
     }
     
     static void removeTimers(){
+        if(Main.getMainMenu().getGame() instanceof ArcadeModeGame){
+            arcadeModeTimeline.stop();
+        } else{
+            anyLevelTimeline.stop();
+        }
         arcadeModeTimeline = null;
         anyLevelTimeline = null;
         backgroundChange = null;
@@ -166,7 +171,7 @@ public class Levels {
                 if (random.nextInt(40) == 0) {
                     createGem();
                 }
-                if (random.nextInt(30) == 0) {
+                if (random.nextInt(31) == 0) {
                     createBonus();
                 }
             })
@@ -198,7 +203,50 @@ public class Levels {
         anyLevelTimeline.play();
         anyLevelTimeline.setOnFinished(e -> 
             {
-                newLevelTransition(Texts.getGameCompletedText(), 4);
+                newLevelTransition(Texts.getLevel4Text(), 4);
+            }
+        );
+    }
+    
+    private static void level4(){
+        anyLevelTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(430), (ActionEvent e) -> 
+            {
+                createUfo((byte) 3);
+                if (random.nextInt(60) == 0) {
+                    createGem();
+                }
+                if (random.nextInt(50) == 0) {
+                    createBonus();
+                }
+            })
+        );
+        anyLevelTimeline.setCycleCount(50);
+        anyLevelTimeline.play();
+        anyLevelTimeline.setOnFinished(e -> 
+            {
+                newLevelTransition(Texts.getLevel5Text(), 5);
+            }
+        );
+    }
+    
+    private static void level5(){
+        anyLevelTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(400), (ActionEvent e) -> 
+            {
+                createUfo((byte) 4);
+                createAsteroid((byte)2);
+                if (random.nextInt(60) == 0) {
+                    createGem();
+                }
+                if (random.nextInt(50) == 0) {
+                    createBonus();
+                }
+            })
+        );
+        anyLevelTimeline.setCycleCount(65);
+        anyLevelTimeline.play();
+        anyLevelTimeline.setOnFinished(e -> 
+            {
+                newLevelTransition(Texts.getGameCompletedText(), 6);
             }
         );
     }
@@ -372,6 +420,12 @@ public class Levels {
                 level3();
                 break;
             case 4:
+                level4();
+                break;
+            case 5:
+                level5();
+                break;
+            case 6:
                 Main.getMainMenu().getGame().endGame();
                 break;
         }
@@ -380,12 +434,18 @@ public class Levels {
     private static void chooseBackground(int level){
         switch (level) {
             case 2:
-                changeBackground("/nebula.jpg");
+                changeBackground("/Saturn.jpg");
                 break;
             case 3:
                 changeBackground("/Neptune.jpg");
                 break;
             case 4:
+                changeBackground("KuiperBelt.jpg");
+                break;
+            case 5:
+                changeBackground("nebula.jpg");
+                break;
+            case 6:
                 changeBackground("/alignedPlanets.jpg");
                 break;
         }

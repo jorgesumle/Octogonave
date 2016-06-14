@@ -25,8 +25,8 @@ import javafx.scene.shape.Shape;
  *
  * @author Jorge Maldonado Ventura
  */
-public abstract class MovingEnemy extends Sprite {
-    protected double xPos, yPos, xSpeed, ySpeed, rotationStage;
+public abstract class MovingEnemy extends MovingSprite {
+    protected double xSpeed, ySpeed, rotationStage;
     protected boolean destroy;
     protected Timeline timeline;
     protected byte destructionFrame;
@@ -64,13 +64,6 @@ public abstract class MovingEnemy extends Sprite {
             Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(this);
             Main.getRoot().getChildren().remove(getSpriteFrame());
         }
-    }
-    
-    protected boolean isOutOfScreen(){
-        return xPos <= 0 - spriteFrame.getImage().getWidth() || 
-                xPos >= Main.getScene().getWidth() ||
-                yPos <= 0 - spriteFrame.getImage().getHeight() ||
-                yPos >= Main.getScene().getHeight();
     }
     
     protected boolean collide(Sprite sprite){

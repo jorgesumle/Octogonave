@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><highestsScores>
 	<arcadeMode>
 		<score>
+			<player/>
+			<points>862</points>
+		</score>
+		<score>
 			<player>usuario</player>
 			<points>841</points>
 		</score>
@@ -10,37 +14,33 @@
 		</score>
 		<score>
 			<player>usuario</player>
-			<points>694</points>
+			<points>742</points>
 		</score>
 		<score>
 			<player>usuario</player>
-			<points>572</points>
-		</score>
-		<score>
-			<player>arcade1</player>
-			<points>543</points>
+			<points>694</points>
 		</score>
 	</arcadeMode>
 	<adventureMode>
+		<score>
+			<player>usuario</player>
+			<points>2511</points>
+		</score>
+		<score>
+			<player>usuario</player>
+			<points>2059</points>
+		</score>
 		<score>
 			<player>usuario</player>
 			<points>2057</points>
 		</score>
 		<score>
 			<player>usuario</player>
-			<points>1115</points>
+			<points>1692</points>
 		</score>
 		<score>
 			<player>usuario</player>
-			<points>952</points>
-		</score>
-		<score>
-			<player>usuario</player>
-			<points>862</points>
-		</score>
-		<score>
-			<player>usuario</player>
-			<points>811</points>
+			<points>1352</points>
 		</score>
 	</adventureMode>
 </highestsScores>

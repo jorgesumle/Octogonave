@@ -34,7 +34,7 @@ import javafx.util.Duration;
  * El héroe del juego.
  * @author Jorge Maldonado Ventura 
  */
-class Octogonave extends Sprite{
+class Octogonave extends MovingSprite{
     
     private static final String SVG_PATH = "M 53,30 L 53,30 64,30 65,31 65,38 67,39 72,34 74,34 81,42 81,44 76,49 78,51 85,51 86,52 86,63 85,64 78,64 77,65 77,66 76,67 81,72 81,74 74,81 72,81 65,76 66,77 64,77 64,85 63,86 52,86 51,85 51,78 49,76 44,81 42,81 35,74 35,72 40,67 39,66 39,64 31,64 30,63 30,52 31,51 38,51 40,49 35,44 35,42 42,34 44,34 49,40 50,39 52,39 52,31 Z";
     private static final Image octoNaveStill = new Image("/octogonaveStill.png", 117, 117, true, false, true),
@@ -45,34 +45,24 @@ class Octogonave extends Sprite{
             octoNaveMovHurt1 = new Image("/octogonaveMovingFireHurt1.png", 117, 117, true, false, true),
             octoNaveMovHurt2 = new Image("octogonaveMovingFireHurt2.png", 117, 117, true, false, true),
             octoNaveMovHurt3 = new Image("octogonaveMovingFireHurt3.png", 117, 117, true, false, true);
-    private boolean up, right, down, left, fireUp, fireRight, fireLeft, fireDown, moving;
-    private byte reloadRate = 15; //
-    private double speed;
-    private byte currentFrame, reloadCounter;
     private final AudioClip shootSound = new AudioClip(this.getClass().getResource("/shoot.wav").toExternalForm()), 
             bonusSound = new AudioClip(this.getClass().getResource("/bonusSound.wav").toExternalForm()),
             reloadSound = new AudioClip(this.getClass().getResource("/reloadSound.wav").toExternalForm());
+    private final byte NORMAL_RELOAD_RATE = 15,
+            BONUS_RELOAD_RATE = 7;
+    private boolean up, right, down, left, fireUp, fireRight, fireLeft, fireDown, moving;
+    private byte reloadRate;
+    private double speed;
+    private byte currentFrame, reloadCounter;
     private Timeline reloadBonusTimer;
-    
-    /**
-     * Esta constante influye en la velocidad en la que se produce un cambio de fotograma de la nave, se le resta
-     * posteriormente la velocidad para que a más velocidad mayor sea el cambio.
-     */
     private final short frameChangeRate;
     private int frameCounter;
-    /**
-     * Posición del <i>sprite</i> en el eje X. 
-     */
-    private double xPos;
-    /**
-     * Posición del <i>sprite</i> en el eje Y.
-     */
-    private double yPos;
     private byte lives;
     
     Octogonave(double xLocation, double yLocation) {
         super(SVG_PATH, xLocation, yLocation, octoNaveStill, octoNaveMov1, octoNaveMov2, octoNaveMov3);
         currentFrame = 1;
+        reloadRate = NORMAL_RELOAD_RATE;
         reloadCounter = 6;
         speed = 5;
         moving = false;
@@ -217,45 +207,33 @@ class Octogonave extends Sprite{
                 reloadCounter = 0;
                 Bullet bullet = null;
                 if(fireUp && fireRight){
-                    bullet = new Bullet(xPos + 78, yPos + 28);
-                    bullet.setXSpeed(7);
-                    bullet.setYSpeed(-7);
+                    bullet = new Bullet(xPos + 78, yPos + 28, 7, -7);
                     bullet.getSpriteFrame().setRotate(45);
                     bullet.getSpriteBound().setRotate(45);
                 } else if(fireDown && fireRight){
-                    bullet = new Bullet(xPos + 78, yPos + 76);
-                    bullet.setXSpeed(7);
-                    bullet.setYSpeed(7);
+                    bullet = new Bullet(xPos + 78, yPos + 76, 7, 7);
                     bullet.getSpriteFrame().setRotate(135);
                     bullet.getSpriteBound().setRotate(135);
                 } else if(fireDown && fireLeft){
-                    bullet = new Bullet(xPos + 30, yPos + 76);
-                    bullet.setXSpeed(-7);
-                    bullet.setYSpeed(7);
+                    bullet = new Bullet(xPos + 30, yPos + 76, -7, 7);
                     bullet.getSpriteFrame().setRotate(225);
                     bullet.getSpriteBound().setRotate(225);
                 } else if(fireLeft && fireUp){
-                    bullet = new Bullet(xPos + 30, yPos + 27);
-                    bullet.setXSpeed(-7);
-                    bullet.setYSpeed(-7);
+                    bullet = new Bullet(xPos + 30, yPos + 27, -7, -7);
                     bullet.getSpriteFrame().setRotate(315);
                     bullet.getSpriteBound().setRotate(315);
                 } else if(fireUp){
-                    bullet = new Bullet(xPos + 54, yPos + 17); //(xPos + la mitad de la anchura de octogonave - la mitad de la anchura de la bala, yPos + la transparencia de la imagen de octogonave - la altura de la bala.
-                    bullet.setYSpeed(-7);
+                    bullet = new Bullet(xPos + 54, yPos + 17, 0, -7);
                 } else if(fireLeft){
-                    bullet = new Bullet(xPos + 19, yPos + 52); //(xPos + la transparencia de la imagen de octogonave - la anchura de la bala, yPos + la mitad de la anchura de octogonave - la mitad de la altura de la bala).
-                    bullet.setXSpeed(-7);
+                    bullet = new Bullet(xPos + 19, yPos + 52, -7, 0);
                     bullet.getSpriteFrame().setRotate(-90);
                     bullet.getSpriteBound().setRotate(-90);
                 } else if(fireDown){
-                    bullet = new Bullet(xPos + 54, yPos + 87); //(xPos + la mitad de la anchura de la nave - la mitad de la anchura de la bala, yPos + la anchura de Octogonave - la transparencia de la imagen de octogonave)
-                    bullet.setYSpeed(7);
+                    bullet = new Bullet(xPos + 54, yPos + 87, 0, 7);
                     bullet.getSpriteFrame().setRotate(180);
                     bullet.getSpriteBound().setRotate(180);
                 } else if(fireRight){
-                    bullet = new Bullet(xPos + 89, yPos + 52); //(xPos + la anchura de Octogonave - la transparencia de la imagen de octogonave, yPos)
-                    bullet.setXSpeed(7);
+                    bullet = new Bullet(xPos + 89, yPos + 52, 7, 0);
                     bullet.getSpriteFrame().setRotate(90);
                     bullet.getSpriteBound().setRotate(90);
                 } 
@@ -375,20 +353,24 @@ class Octogonave extends Sprite{
                 } else if(sprite instanceof ReloadBonus){
                     Main.getMainMenu().getGame().getSpriteManager().addToNormalToRemove(sprite);
                     Main.getRoot().getChildren().remove(sprite.getSpriteFrame());
-                    if(reloadBonusTimer != null){
-                        reloadBonusTimer.stop();
-                    }
-                    reloadBonusTimer = new Timeline();
-                    reloadBonusTimer.getKeyFrames().add(new KeyFrame(Duration.seconds(19), (ActionEvent e) -> {
-                        reloadRate = 15;
-                    }));
-                    reloadBonusTimer.setCycleCount(1);
-                    reloadBonusTimer.play();
-                    reloadRate = 7;
+                    reloadBonus();
                     Main.getMainMenu().getGame().getScore().updateScore(sprite);
                 }
             }
         }
+    }
+    
+    private void reloadBonus(){
+        if(reloadBonusTimer != null){
+            reloadBonusTimer.stop();
+        }
+        reloadBonusTimer = new Timeline();
+        reloadBonusTimer.getKeyFrames().add(new KeyFrame(Duration.seconds(19), (ActionEvent e) -> {
+            reloadRate = NORMAL_RELOAD_RATE;
+        }));
+        reloadBonusTimer.setCycleCount(1);
+        reloadBonusTimer.play();
+        reloadRate = BONUS_RELOAD_RATE;
     }
     
     /**

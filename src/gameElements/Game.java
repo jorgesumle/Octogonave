@@ -18,13 +18,17 @@ package gameElements;
 
 import gameMenus.GameOverMenu;
 import gameMenus.Texts;
+import java.io.File;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 /**
  * Representa una partida, lleva asociado el controlador de los <i>sprites</i>, la Octogonave y la
@@ -39,8 +43,13 @@ public class Game {
     private GameLoop gameLoop;
     private GameOverMenu gameOverMenu;
     private Text pauseText;
+    MediaPlayer musicPlayer;
+    private final String ARCADE_MODE_MUSIC_PATH = "V3S - DarkNess.wav";
     
     public Game(){
+        if(gameMenus.Config.isMusicOn()){
+            playMusic();
+        }
         paused = false;
         createNodes();
         addNodes();
@@ -119,7 +128,7 @@ public class Game {
         gameLoop.stop();
         Levels.removeTimers();
         if(gameMenus.Config.isMusicOn()){
-            stopGameMusic();
+            musicPlayer.stop();
         }
         Main.getRoot().getChildren().clear();
         displayGameOverMenu();
@@ -140,14 +149,6 @@ public class Game {
     }
     
     /**
-     * Detiene la música del juego.
-     */
-    private void stopGameMusic(){
-        gameLoop.getGameMusicPlayer().stop();
-        gameLoop.getMediaPlayerTimeline().stop();
-    }
-    
-    /**
      * Pausa el juego. Cuando el juego está pausado todos los <i>sprites</i> se detienen.
      * Solo permanece activo el método de <i>Octogonave</i> que comprueba las teclas 
      * pulsadas para ejecutar el método {@link #resume()} cuando se pulse la tecla de
@@ -158,6 +159,9 @@ public class Game {
         paused = true;
         if(octogonave.getReloadBonusTimer() != null){
             octogonave.getReloadBonusTimer().pause();
+        }
+        if(gameMenus.Config.isMusicOn()){
+            musicPlayer.pause();
         }
         Main.getRoot().getChildren().add(pauseText);
     }
@@ -172,6 +176,23 @@ public class Game {
         if(octogonave.getReloadBonusTimer() != null){
             octogonave.getReloadBonusTimer().play();
         }
+        if(gameMenus.Config.isMusicOn()){
+            musicPlayer.play();
+        }
+    }
+
+    /**
+     * Reproduce la música del juego una y otra vez.
+     */
+    void playMusic() {
+        musicPlayer = new MediaPlayer(new Media(new File(ARCADE_MODE_MUSIC_PATH).toURI().toString()));
+        musicPlayer.setOnReady(() -> {
+            musicPlayer.play();
+            musicPlayer.setOnEndOfMedia(() -> {
+                musicPlayer.seek(Duration.ZERO);
+                musicPlayer.play();
+            });
+        });
     }
     
 }
