@@ -75,9 +75,19 @@ public class Main extends Application {
         if(args.length > 0){
             String parameter = args[0].toLowerCase();
             if(parameter.contains("version") || parameter.equals("-v")){
-                System.out.println("1.0.1.1");
+                System.out.println("2.0.0.0");
             } else if(parameter.contains("license") || parameter.equals("-l")){
                 System.out.println("GNU General Public License (http://www.gnu.org/licenses/)");
+            } else if(parameter.contains("help") || parameter.equals("-h")){
+                System.out.print("-h, help\n"
+                        + "    Muestra este mensaje de ayuda.\n"
+                        + "-l, license\n"
+                        + "    Muestra la licencia del programa.\n"
+                        + "-v, version\n"
+                        + "    Muestra la versión del programa.\n");
+            } else{
+                System.out.println("Parámetro desconocido. Para ver los parámetros"
+                        + "admitidos utilice el parámetro -h.");
             }
             System.exit(0);
         } else{
