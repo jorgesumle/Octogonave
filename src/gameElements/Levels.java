@@ -165,6 +165,7 @@ public class Levels {
     }
 
     private static void level2() {
+        anyLevelTimeline = new Timeline();
         anyLevelTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(400), (ActionEvent e) -> 
             {
                 createAsteroid((byte) 4);
@@ -186,6 +187,7 @@ public class Levels {
     }
     
     private static void level3(){
+        anyLevelTimeline = new Timeline();
         ArrayList<Sprite> bonusSprites = new ArrayList<>();
         bonusSprites.add(new Diamond(0, 0));
         bonusSprites.add(new Diamond(Main.getWINDOW_WIDTH() - 32, 0));
@@ -198,17 +200,15 @@ public class Levels {
             Main.getRoot().getChildren().add(sprite.getSpriteFrame());
         });
         Main.getMainMenu().getGame().getSpriteManager().addToNormalToAdd(bonusSprites.toArray(new Sprite[bonusSprites.size()]));
-        anyLevelTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(5000), (ActionEvent e) -> {}));
+        anyLevelTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(5000), (ActionEvent e) -> {
+            newLevelTransition(Texts.getLevel4Text(), 4);
+        }));
         anyLevelTimeline.setCycleCount(1);
         anyLevelTimeline.play();
-        anyLevelTimeline.setOnFinished(e -> 
-            {
-                newLevelTransition(Texts.getLevel4Text(), 4);
-            }
-        );
     }
     
     private static void level4(){
+        anyLevelTimeline = new Timeline();
         anyLevelTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(430), (ActionEvent e) -> 
             {
                 createUfo((byte) 3);
@@ -230,6 +230,7 @@ public class Levels {
     }
     
     private static void level5(){
+        anyLevelTimeline = new Timeline();
         anyLevelTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(400), (ActionEvent e) -> 
             {
                 createUfo((byte) 4);

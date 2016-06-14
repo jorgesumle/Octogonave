@@ -239,6 +239,8 @@ class Octogonave extends MovingSprite{
                 } 
                 Main.getMainMenu().getGame().getSpriteManager().addToBulletsToAdd(bullet);
                 Main.getRoot().getChildren().add(bullet.getSpriteFrame());
+            } else{
+                reloadCounter--;
             }
         }
     }

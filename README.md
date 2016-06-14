@@ -11,25 +11,26 @@ para que funcione JavaFX correctamente.
 
 ## Instrucciones
 
-Tu personaje es una nave espacial un poco extraña: se trata de una nave en
+Tu personaje es una nave espacial un poco extraña: se trata de una nave con
 forma de octógono llamada Octogonave. Tu objetivo es conseguir el mayor número de
 puntos que puedas; para ello debes sobrevivir esquivando y destruyendo asteroides y OVNIs.
 Si chocas con los bordes de la ventana (la del sistema operativo) o con algún asteroide u OVNI,
-la nave sufre daños. Si la nave ya está dañada y vuelve a chocar
-se destruye y acaba la partida.
+el escudo deflector de la nave se destruye. Si la nave no tiene escudos y vuelve a chocar,
+se destruye y acaba la partida. Puedes recoger gemas espaciales y una bonificación para reducir el
+tiempo de recarga de la nave momentaneamente. 
 
 ## Controles durante la partida
 
 Teclas | Acción
 ------ | ------
 FLECHA ARRIBA | Mueve la nave arriba
-FLECA ARRIBA + FLECHA DERECHA | Mueve la nave arriba y a la derecha
+FLECHA ARRIBA + FLECHA DERECHA | Mueve la nave arriba y a la derecha
 FLECHA DERECHA | Mueve la nave a la derecha
 FLECHA DERECHA + FLECHA ABAJO | Mueve la nave abajo y a la derecha
 FLECHA ABAJO | Mueve la nave abajo
 FLECHA ABAJO + FLECHA IZQUIERDA | Mueve la nave abajo y a la izquierda
-FLECA IZQUIERDA | Mueve la nave a la izquierda
-FLECA IZQUIERDA + FLECHA ARRIBA | Mueve la nave arriba y a la izquierda
+FLECHA IZQUIERDA | Mueve la nave a la izquierda
+FLECHA IZQUIERDA + FLECHA ARRIBA | Mueve la nave arriba y a la izquierda
 Z | Disminuye la velocidad
 X | Aumenta la velocidad
 W | Dispara arriba
