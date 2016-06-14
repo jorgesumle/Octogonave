@@ -18,7 +18,8 @@
 package gameMenus;
 
 import gameElements.Game;
-import gameElements.Levels;
+import gameElements.ArcadeModeGame;
+import gameElements.AdventureModeGame;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
@@ -151,14 +152,14 @@ public class MainMenu extends StackPane{
             {
                 Main.getScene().setRoot(Main.getRoot());
                 starAnimTimer.pause();
-                game = new Game(false);
+                game = new AdventureModeGame();
             }
         );
         playArcadeModeButton.setOnAction(e -> 
             {
                 Main.getScene().setRoot(Main.getRoot());
                 starAnimTimer.pause();
-                game = new Game(true);
+                game = new ArcadeModeGame();
             }
         );
         instructionsButton.setOnAction(e -> 

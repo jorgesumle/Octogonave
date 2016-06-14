@@ -32,7 +32,7 @@ import javafx.scene.text.Text;
  * @author Jorge Maldonado Ventura
  */
 public class Game {
-    private boolean arcadeMode, paused, gameOver;
+    private boolean paused, gameOver;
     private Octogonave octogonave;
     private SpriteManager spriteManager;
     private Score score;
@@ -40,13 +40,7 @@ public class Game {
     private GameOverMenu gameOverMenu;
     private Text pauseText;
     
-    public Game(boolean isArcadeMode){
-        this.arcadeMode = isArcadeMode;
-        if(isArcadeMode) Levels.arcadeMode();
-        else{
-            Levels.initAnyLevelTimeline();
-            Levels.newLevelTransition(Texts.getLevel1Text(), 1);
-        }
+    public Game(){
         paused = false;
         createNodes();
         addNodes();
@@ -57,15 +51,11 @@ public class Game {
         gameOver = false;
     }
 
-    public boolean isArcadeMode() {
-        return arcadeMode;
-    }
-
-    boolean isPaused() {
+    protected boolean isPaused() {
         return paused;
     }
 
-    boolean isGameOver() {
+    protected boolean isGameOver() {
         return gameOver;
     }
 
@@ -73,11 +63,11 @@ public class Game {
         return gameOverMenu;
     }
 
-    GameLoop getGameLoop() {
+    protected GameLoop getGameLoop() {
         return gameLoop;
     }
     
-    Octogonave getOctogonave() {
+    protected Octogonave getOctogonave() {
         return octogonave;
     }
     
@@ -85,7 +75,7 @@ public class Game {
         return score;
     }
     
-    SpriteManager getSpriteManager() {
+    protected SpriteManager getSpriteManager() {
         return spriteManager;
     }
     
@@ -163,14 +153,9 @@ public class Game {
      * pulsadas para ejecutar el método {@link #resume()} cuando se pulse la tecla de
      * pausa para reanudar el juego.
      */
-    void pause(){
+    protected void pause(){
         spriteManager.pauseCurrentSpritesTimeline();
         paused = true;
-        if(arcadeMode){
-            Levels.getArcadeModeTimeline().pause();
-        } else{
-            Levels.pauseAdventureModeTimers();
-        }
         if(octogonave.getReloadBonusTimer() != null){
             octogonave.getReloadBonusTimer().pause();
         }
@@ -180,15 +165,10 @@ public class Game {
     /**
      * Reanuda el juego si está pausado.
      */
-    void resume(){
+    protected void resume(){
         spriteManager.resumeCurrentSpritesTimeline();
         paused = false;
         Main.getRoot().getChildren().remove(pauseText);
-        if(arcadeMode){
-            Levels.getArcadeModeTimeline().play();
-        } else{
-            Levels.resumeAdventureModeTimers();
-        }
         if(octogonave.getReloadBonusTimer() != null){
             octogonave.getReloadBonusTimer().play();
         }

@@ -16,6 +16,7 @@
  */
 package gameMenus;
 
+import gameElements.ArcadeModeGame;
 import gameElements.Main;
 import java.io.File;
 import java.io.IOException;
@@ -88,7 +89,7 @@ public class ScoreXML {
      * Carga las puntuaciones...
      */
     public static void load(){
-        if(Main.getMainMenu().getGame().isArcadeMode()){
+        if(Main.getMainMenu().getGame() instanceof ArcadeModeGame){
             ScoreXML.loadArcadeModeScores();
         } else{
             ScoreXML.loadAdventureModeScores();
@@ -102,7 +103,7 @@ public class ScoreXML {
      */
     public static void save(){
         Main.getMainMenu().getGame().getScore().updateHighestsScoreXMLValues();
-        if(Main.getMainMenu().getGame().isArcadeMode()){
+        if(Main.getMainMenu().getGame() instanceof ArcadeModeGame){
             ScoreXML.saveArcadeModeScores();
         } else{
             ScoreXML.saveAdventureModeScores();

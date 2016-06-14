@@ -16,7 +16,8 @@
  */
 package gameMenus;
 
-import gameElements.Game;
+import gameElements.AdventureModeGame;
+import gameElements.ArcadeModeGame;
 import gameElements.Main;
 import javafx.animation.FadeTransition;
 import javafx.geometry.HPos;
@@ -102,7 +103,7 @@ public class GameOverMenu extends GridPane{
                     ScoreXML.save();
                 }
                 Main.getScene().setRoot(Main.getRoot());
-                Main.getMainMenu().setGame(new Game(false));
+                Main.getMainMenu().setGame(new AdventureModeGame());
             }
         );
     }
@@ -115,7 +116,7 @@ public class GameOverMenu extends GridPane{
                     ScoreXML.save();
                 }
                 Main.getScene().setRoot(Main.getRoot());
-                Main.getMainMenu().setGame(new Game(true));
+                Main.getMainMenu().setGame(new ArcadeModeGame());
             }
         );
     }

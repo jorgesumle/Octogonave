@@ -193,7 +193,7 @@ public class Levels {
             Main.getRoot().getChildren().add(sprite.getSpriteFrame());
         });
         Main.getMainMenu().getGame().getSpriteManager().addToNormalToAdd(bonusSprites.toArray(new Sprite[bonusSprites.size()]));
-        anyLevelTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(5000), (ActionEvent e) -> {System.gc();}));
+        anyLevelTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(5000), (ActionEvent e) -> {}));
         anyLevelTimeline.setCycleCount(1);
         anyLevelTimeline.play();
         anyLevelTimeline.setOnFinished(e -> 

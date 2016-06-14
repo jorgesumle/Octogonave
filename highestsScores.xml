@@ -6,6 +6,10 @@
 		</score>
 		<score>
 			<player>usuario</player>
+			<points>775</points>
+		</score>
+		<score>
+			<player>usuario</player>
 			<points>694</points>
 		</score>
 		<score>
@@ -16,15 +20,15 @@
 			<player>arcade1</player>
 			<points>543</points>
 		</score>
-		<score>
-			<player>ahra</player>
-			<points>176</points>
-		</score>
 	</arcadeMode>
 	<adventureMode>
 		<score>
 			<player>usuario</player>
 			<points>2057</points>
+		</score>
+		<score>
+			<player>usuario</player>
+			<points>1115</points>
 		</score>
 		<score>
 			<player>usuario</player>
@@ -37,10 +41,6 @@
 		<score>
 			<player>usuario</player>
 			<points>811</points>
-		</score>
-		<score>
-			<player>usuario</player>
-			<points>772</points>
 		</score>
 	</adventureMode>
 </highestsScores>

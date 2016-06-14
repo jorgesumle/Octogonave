@@ -119,7 +119,7 @@ public class Score extends Text{
      */
     public boolean checkRecord(){
         ScoreXML.load();
-        if(Main.getMainMenu().getGame().isArcadeMode()){
+        if(Main.getMainMenu().getGame() instanceof ArcadeModeGame){
             arcadeModeHighestsScores = ScoreXML.getArcadeModeScores();
             for(int i = 0; i < arcadeModeHighestsScores.size(); i++){
                 if(score > Long.parseLong(arcadeModeHighestsScores.get(i))){
@@ -143,7 +143,7 @@ public class Score extends Text{
      * @return 
      */
     private byte playerPosition(){
-        if(Main.getMainMenu().getGame().isArcadeMode()){
+        if(Main.getMainMenu().getGame() instanceof ArcadeModeGame){
             for(byte i = 0; i < arcadeModeHighestsScores.size(); i++){
                 if(score > Long.parseLong(arcadeModeHighestsScores.get(i))){
                     return (byte)(i + 1);
@@ -175,7 +175,7 @@ public class Score extends Text{
      * @param scorePos el número de puntuaciones de la lista de récords que se han superado.
      */
     private void addHighestsScore(int scorePos){
-        if(Main.getMainMenu().getGame().isArcadeMode()){
+        if(Main.getMainMenu().getGame() instanceof ArcadeModeGame){
             for(int j = arcadeModeHighestsScores.size() - 1; j > scorePos - 1; j--){
                 arcadeModeHighestsScores.set(j, arcadeModeHighestsScores.get(j - 1));                        
             }
@@ -193,7 +193,7 @@ public class Score extends Text{
      * @param playerPos el número de jugadores de la lista de récords que se han superado.
      */
     private void addRecordHolder(int playerPos){
-        if(Main.getMainMenu().getGame().isArcadeMode()){
+        if(Main.getMainMenu().getGame() instanceof ArcadeModeGame){
             adventureModeRecordHolders = ScoreXML.getArcadeModeRecordHolders();
             for(int j = adventureModeRecordHolders.size() - 1; j > playerPos - 1; j--){
                 adventureModeRecordHolders.set(j, adventureModeRecordHolders.get(j - 1));                        
@@ -205,7 +205,7 @@ public class Score extends Text{
                 arcadeModeRecordHolders.set(j, arcadeModeRecordHolders.get(j - 1));                        
             }
             arcadeModeRecordHolders.set(playerPos - 1, Main.getMainMenu().getGame().getGameOverMenu().getPlayerNameTextField().getText());
-        }
-        
+        }    
     }
+    
 }
