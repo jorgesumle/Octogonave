@@ -20,6 +20,7 @@ package gameMenus;
 import gameElements.Game;
 import gameElements.ArcadeModeGame;
 import gameElements.AdventureModeGame;
+import gameElements.Levels;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
@@ -120,8 +121,8 @@ public class MainMenu extends StackPane{
         starAnimTimer = new StarAnimTimer(stars);
         Random random = new Random();
         starTimeline = new Timeline();
-        starTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(9), (ActionEvent e) -> {
-            Star star = new Star(0, 0, random.nextDouble() * 9 - 5, random.nextDouble() * 9 - 5);
+        starTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(19), (ActionEvent e) -> {
+            Star star = new Star(0, 0, random.nextDouble() * 4 * Levels.randomDir() + 4 * Levels.randomDir(), random.nextDouble() * 4 * Levels.randomDir() + 4 * Levels.randomDir());
             getChildren().add(star);
             stars.add(star);
         }));

@@ -17,19 +17,12 @@
 package gameMenus;
 
 import gameElements.Main;
-import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -42,7 +35,7 @@ import org.xml.sax.SAXException;
  */
 public class Config {
 
-    private static File settingsFile = new File("settings.xml");
+    private final static String SETTINGS_FILE_URL = "settings.xml";
     private static boolean soundsOn;
     private static String selectedLanguage;
     private static boolean musicOn;
@@ -78,32 +71,38 @@ public class Config {
     public static void loadConfig() {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = null;
-        Document configXML = null;
+        Document document = null;
         try {
             documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            configXML = documentBuilder.parse(settingsFile);
+            document = documentBuilder.parse(SETTINGS_FILE_URL);
         } catch (ParserConfigurationException | SAXException | IOException ex) {
             saveDefaultConfig();
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("El archivo XML de configuración se ha dañado por causas desconocidas."
                     + "Se ha creado un nuevo archivo de configuración.");
         }
-        NodeList languageTag = configXML.getElementsByTagName("language");
+        NodeList languageTag = document.getElementsByTagName("language");
         Node languageValue = languageTag.item(0);
-        if (languageValue.getTextContent().equals("castellano")) {
-            selectedLanguage = "castellano";
-            Texts.setTexts(LanguageFileReader.readLanguageFile("lang/castellano.lang"));
-        } else if (languageValue.getTextContent().equals("english")) {
-            selectedLanguage = "english";
-            Texts.setTexts(LanguageFileReader.readLanguageFile("lang/english.lang"));
-        } else if (languageValue.getTextContent().equals("deutsch")) {
-            selectedLanguage = "deutsch";
-            Texts.setTexts(LanguageFileReader.readLanguageFile("lang/deutsch.lang"));
+        switch (languageValue.getTextContent()) {
+            case "castellano":
+                selectedLanguage = "castellano";
+                Texts.setTexts(LanguageFileReader.readLanguageFile("lang/castellano.lang"));
+                break;
+            case "english":
+                selectedLanguage = "english";
+                Texts.setTexts(LanguageFileReader.readLanguageFile("lang/english.lang"));
+                break;
+            case "deutsch":
+                selectedLanguage = "deutsch";
+                Texts.setTexts(LanguageFileReader.readLanguageFile("lang/deutsch.lang"));
+                break;
+            default:
+                break;
         }
-        NodeList musicTag = configXML.getElementsByTagName("music");
+        NodeList musicTag = document.getElementsByTagName("music");
         Node musicValue = musicTag.item(0);
         musicOn = musicValue.getTextContent().equals("on");
-        NodeList soundsTag = configXML.getElementsByTagName("sounds");
+        NodeList soundsTag = document.getElementsByTagName("sounds");
         Node soundsValue = soundsTag.item(0);
         soundsOn = soundsValue.getTextContent().equals("on");
     }
@@ -112,7 +111,7 @@ public class Config {
      * Guarda las opciones de configuración en el XML de configuración.
      */
     static void saveConfig() {
-        Document document = XMLUtils.createDocument(settingsFile.toString());
+        Document document = XMLUtils.createDocument(SETTINGS_FILE_URL);
         document.getElementsByTagName("language").item(0).setTextContent(Texts.getLanguage());
         if(musicOn){
             document.getElementsByTagName("music").item(0).setTextContent("on");
@@ -124,7 +123,7 @@ public class Config {
         } else{
             document.getElementsByTagName("sounds").item(0).setTextContent("off");
         }
-        XMLUtils.transform(document, settingsFile.toString());
+        XMLUtils.transform(document, SETTINGS_FILE_URL);
     }
     
      /**
@@ -151,20 +150,7 @@ public class Config {
         root.appendChild(music);
         root.appendChild(sounds);
         configXML.appendChild(root);
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = null;
-        try {
-            transformer = transformerFactory.newTransformer();
-        } catch (TransformerConfigurationException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        DOMSource source = new DOMSource(configXML);
-        StreamResult streamResult = new StreamResult(settingsFile);
-        try {
-            transformer.transform(source, streamResult);
-        } catch (TransformerException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        XMLUtils.transform(configXML, SETTINGS_FILE_URL);
         loadConfig();
     }
 

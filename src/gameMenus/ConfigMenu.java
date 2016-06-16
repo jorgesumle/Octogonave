@@ -91,15 +91,21 @@ class ConfigMenu extends GridPane{
         setLanguageChoiceBoxText();
         languageChoiceBox.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> observableValue, Number previousOption, Number selectedOption) -> {
             String selectedlanguage = languageChoiceBox.getItems().get((Integer) selectedOption).toString();
-            if(selectedlanguage.equals("castellano")){
-                Config.setSelectedLanguage("castellano");
-                Texts.setTexts(LanguageFileReader.readLanguageFile("lang/castellano.lang"));
-            } else if(selectedlanguage.equals("deutsch")){
-                Config.setSelectedLanguage("deutsch");
-                Texts.setTexts(LanguageFileReader.readLanguageFile("lang/deutsch.lang"));
-            } else if(selectedlanguage.equals("english")){
-                Config.setSelectedLanguage("english");
-                Texts.setTexts(LanguageFileReader.readLanguageFile("lang/english.lang"));
+            switch (selectedlanguage) {
+                case "castellano":
+                    Config.setSelectedLanguage("castellano");
+                    Texts.setTexts(LanguageFileReader.readLanguageFile("lang/castellano.lang"));
+                    break;
+                case "deutsch":
+                    Config.setSelectedLanguage("deutsch");
+                    Texts.setTexts(LanguageFileReader.readLanguageFile("lang/deutsch.lang"));
+                    break;
+                case "english":
+                    Config.setSelectedLanguage("english");
+                    Texts.setTexts(LanguageFileReader.readLanguageFile("lang/english.lang"));
+                    break;
+                default:
+                    break;
             }
             Config.saveConfig();
             setTexts();

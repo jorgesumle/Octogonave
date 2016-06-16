@@ -344,7 +344,7 @@ public class Levels {
      *
      * @return 1 o -1.
      */
-    private static byte randomDir() {
+    public static byte randomDir() {
         if (random.nextBoolean()) {
             return 1;
         } else {

@@ -69,7 +69,7 @@ class XMLUtils {
         try {
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(document);
-            StreamResult result = new StreamResult(new File(outputXml));
+            StreamResult result = new StreamResult(outputXml);
             transformer.transform(source, result);
         } catch (TransformerException ex) {
             Logger.getLogger(ScoreXML.class.getName()).log(Level.SEVERE, null, ex);
