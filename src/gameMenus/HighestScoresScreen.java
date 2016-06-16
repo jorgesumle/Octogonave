@@ -79,8 +79,8 @@ class HighestScoresScreen extends GridPane{
     }
     
     private void applyStyle(){
-        setVgap(Main.getMainMenu().getPADDING());
         setHgap(Main.getMainMenu().getPADDING());
+        setVgap(Main.getMainMenu().getPADDING());
         setAlignment(Pos.CENTER);
         setBackground(new Background(
                         new BackgroundImage(

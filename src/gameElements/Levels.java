@@ -53,6 +53,10 @@ public class Levels {
         return arcadeModeTimeline;
     }
     
+    static boolean isChangingLevel(){
+        return changingLevel;
+    }
+    
     static void removeTimers(){
         if(Main.getMainMenu().getGame() instanceof ArcadeModeGame){
             arcadeModeTimeline.stop();

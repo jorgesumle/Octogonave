@@ -148,6 +148,11 @@ class Octogonave extends MovingSprite{
                             }
                         }
                         break;
+                    case G:
+                        if(Main.getMainMenu().getGame().isPaused() && Levels.isChangingLevel()){
+                            System.out.println("Acabo de guardar la partida.");
+                        }
+                        break;
                 }
             }
         );

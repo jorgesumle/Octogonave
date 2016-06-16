@@ -112,29 +112,19 @@ public class Config {
      * Guarda las opciones de configuración en el XML de configuración.
      */
     static void saveConfig() {
-        try {
-            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            Document document = documentBuilder.parse(settingsFile.toString());
-            document.getElementsByTagName("language").item(0).setTextContent(Texts.getLanguage());
-            if(musicOn){
-                document.getElementsByTagName("music").item(0).setTextContent("on");
-            } else{
-                document.getElementsByTagName("music").item(0).setTextContent("off");
-            }
-            if(soundsOn){
-                document.getElementsByTagName("sounds").item(0).setTextContent("on");
-            } else{
-                document.getElementsByTagName("sounds").item(0).setTextContent("off");
-            }
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(document);
-            StreamResult result = new StreamResult(settingsFile);
-            transformer.transform(source, result);
-        } catch (TransformerException | SAXException | ParserConfigurationException | IOException ex) {
-            Logger.getLogger(ScoreXML.class.getName()).log(Level.SEVERE, null, ex);
+        Document document = XMLUtils.createDocument(settingsFile.toString());
+        document.getElementsByTagName("language").item(0).setTextContent(Texts.getLanguage());
+        if(musicOn){
+            document.getElementsByTagName("music").item(0).setTextContent("on");
+        } else{
+            document.getElementsByTagName("music").item(0).setTextContent("off");
         }
+        if(soundsOn){
+            document.getElementsByTagName("sounds").item(0).setTextContent("on");
+        } else{
+            document.getElementsByTagName("sounds").item(0).setTextContent("off");
+        }
+        XMLUtils.transform(document, settingsFile.toString());
     }
     
      /**
