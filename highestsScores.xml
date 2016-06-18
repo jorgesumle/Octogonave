@@ -5,6 +5,10 @@
 			<points>937</points>
 		</score>
 		<score>
+			<player>jorge</player>
+			<points>903</points>
+		</score>
+		<score>
 			<player/>
 			<points>862</points>
 		</score>
@@ -13,12 +17,8 @@
 			<points>841</points>
 		</score>
 		<score>
-			<player>usuario</player>
-			<points>775</points>
-		</score>
-		<score>
-			<player>usuario</player>
-			<points>742</points>
+			<player>blb</player>
+			<points>835</points>
 		</score>
 	</arcadeMode>
 	<adventureMode>
@@ -36,11 +36,11 @@
 		</score>
 		<score>
 			<player>jorge</player>
-			<points>1845</points>
+			<points>1940</points>
 		</score>
 		<score>
-			<player>usuario</player>
-			<points>1692</points>
+			<player>jorge</player>
+			<points>1885</points>
 		</score>
 	</adventureMode>
 </highestsScores>

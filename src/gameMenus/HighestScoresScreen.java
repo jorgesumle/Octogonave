@@ -34,7 +34,7 @@ import javafx.scene.text.Text;
  * 
  * @author Jorge Maldonado Ventura
  */
-class HighestScoresScreen extends GridPane{
+class HighestScoresScreen extends GridPane implements Window{
     ArrayList<Text> adventureModeRecordHoldersTexts,
             adventureModeScoresTexts,
             arcadeModeRecordHoldersTexts,
@@ -61,7 +61,8 @@ class HighestScoresScreen extends GridPane{
         addNodes();
     }
     
-    void setTexts(){
+    @Override
+    public void setTexts(){
         title.setText(Texts.getHighestScoresButton());
         adventureMode.setText(Texts.getAdventureModeButton());
         arcadeMode.setText(Texts.getArcadeModeButton());
@@ -78,7 +79,8 @@ class HighestScoresScreen extends GridPane{
         }
     }
     
-    private void applyStyle(){
+    @Override
+    public void applyStyle(){
         setHgap(Main.getMainMenu().getPADDING());
         setVgap(Main.getMainMenu().getPADDING());
         setAlignment(Pos.CENTER);
@@ -160,7 +162,8 @@ class HighestScoresScreen extends GridPane{
         );
     }
     
-    private void addNodes(){
+    @Override
+    public void addNodes(){
         add(title, 0, 0, 2, 1);
         add(adventureMode, 0, 7);
         add(arcadeMode, 1, 7);

@@ -42,6 +42,7 @@ public class Score extends Text{
         record = false;
         setTranslateX(xLocation);
         setTranslateY(yLocation);
+        setText(String.valueOf(score));
         getStyleClass().add("text");
         setFill(Color.WHITE);
     }
@@ -66,6 +67,10 @@ public class Score extends Text{
         return score;
     }
     
+    public void setScore(long score){
+        this.score = score;
+    }
+    
     /**
      * Aumenta la puntuación de la partida.
      * @param addedScore la cantidad en que se quiere aumentar la puntuación.
@@ -78,7 +83,7 @@ public class Score extends Text{
      * Actualiza el texto que aparece en pantalla con la puntuación actual,
      * obtenida de la variable {@link #score}.
      */
-    void updateScoreText() {
+    public void updateScoreText() {
         setText(Long.toString(score));
     }
 

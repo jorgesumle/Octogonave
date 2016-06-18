@@ -25,6 +25,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.GridPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
@@ -36,7 +37,7 @@ import javafx.util.Duration;
  * @author Jorge Maldonado Ventura
  */
 public class Game {
-    private boolean paused, gameOver;
+    private boolean paused, gameOver, saving;
     private Octogonave octogonave;
     private SpriteManager spriteManager;
     private Score score;
@@ -45,6 +46,23 @@ public class Game {
     private Text pauseText;
     MediaPlayer musicPlayer;
     private final String ARCADE_MODE_MUSIC_PATH = "assets/songs/V3S - DarkNess.wav";
+    private GridPane saveMenu;
+    
+    boolean isSaving(){
+        return saving;
+    }
+    
+    public void setSaving(boolean saving){
+        this.saving = saving;
+    }
+    
+    public GridPane getSaveMenu() {
+        return saveMenu;
+    }
+    
+    public void setSaveMenu(GridPane saveMenu) {
+        this.saveMenu = saveMenu;
+    }
     
     public Game(){
         if(gameMenus.Config.isMusicOn()){

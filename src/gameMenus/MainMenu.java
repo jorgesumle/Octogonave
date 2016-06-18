@@ -34,6 +34,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -44,7 +46,7 @@ import javafx.util.Duration;
  * El menú que aparece al arrancar el programa.
  * @author Jorge Maldonado Ventura
  */
-public class MainMenu extends StackPane{
+public class MainMenu extends StackPane implements Window{
     private Timeline starTimeline;
     private byte PADDING;
     private Button playAdventureModeButton, playArcadeModeButton, instructionsButton, scoreButton, configButton, exitButton;
@@ -57,14 +59,13 @@ public class MainMenu extends StackPane{
     private StarAnimTimer starAnimTimer;
     
     public MainMenu(){
-        applyLayoutStyle();
+        applyStyle();
         animateBackground();
         createTitleText();
         createButtons();
         makeButtonsInteract();
         setTexts();
-        menuVBox.getChildren().addAll(title, playAdventureModeButton, playArcadeModeButton, instructionsButton, scoreButton, configButton, exitButton);
-        getChildren().add(menuVBox);
+        addNodes();
     }
 
     public Game getGame() {
@@ -107,7 +108,8 @@ public class MainMenu extends StackPane{
         this.game = game;
     }
     
-    private void applyLayoutStyle(){
+    @Override
+    public void applyStyle(){
         setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         menuVBox = new VBox();
         menuVBox.getStyleClass().add("transparent");
@@ -151,9 +153,17 @@ public class MainMenu extends StackPane{
     public void makeButtonsInteract(){
         playAdventureModeButton.setOnAction(e ->
             {
-                Main.getScene().setRoot(Main.getRoot());
-                starAnimTimer.pause();
-                game = new AdventureModeGame();
+                if(!(SavedGamesXML.isEmpty(0) && SavedGamesXML.isEmpty(1) && SavedGamesXML.isEmpty(2))){
+                    new Alert(Alert.AlertType.CONFIRMATION, Texts.getWantToLoadSavedGame()).showAndWait().ifPresent(response -> {
+                         if (response == ButtonType.OK) {
+                            Main.getScene().setRoot(new LoadGameMenu());
+                         } else{
+                            startNewAdventure();
+                         }
+                     });
+                } else{
+                    startNewAdventure();
+                }
             }
         );
         playArcadeModeButton.setOnAction(e -> 
@@ -203,9 +213,19 @@ public class MainMenu extends StackPane{
     }
     
     /**
+     * Empieza una partida en modo aventura habiendo pausado el <tt>startAnimTimer</tt>.
+     */
+    private void startNewAdventure(){
+        starAnimTimer.pause();
+        Main.getScene().setRoot(Main.getRoot());
+        game = new AdventureModeGame(1);
+    }
+    
+    /**
      * Asigna el texto de las instancias de <tt>Node</tt> que contienen texto.
      */
-    void setTexts(){
+    @Override
+    public void setTexts(){
         title.setText(Texts.getProgramTitle());
         playAdventureModeButton.setText(Texts.getAdventureModeButton());
         playArcadeModeButton.setText(Texts.getArcadeModeButton());
@@ -213,6 +233,12 @@ public class MainMenu extends StackPane{
         scoreButton.setText(Texts.getHighestScoresButton());
         configButton.setText(Texts.getConfigButton());
         exitButton.setText(Texts.getExitButton());
+    }
+    
+    @Override
+    public void addNodes(){
+        menuVBox.getChildren().addAll(title, playAdventureModeButton, playArcadeModeButton, instructionsButton, scoreButton, configButton, exitButton);
+        getChildren().add(menuVBox);
     }
     
 }

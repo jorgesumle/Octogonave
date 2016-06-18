@@ -148,6 +148,46 @@ public class Texts{
         return texts.get(29);
     }
     
+    static String getSavingScreen(){
+        return texts.get(30);
+    }
+    
+    static String getOptionalEnterYourName(){
+        return texts.get(31);
+    }
+    
+    static String getOptionalEnterGameName(){
+        return texts.get(32);
+    }
+    
+    static String getSave(){
+        return texts.get(33);
+    }
+    
+    static String getSavedGames(){
+        return texts.get(34);
+    }
+    
+    static String getFree(){
+        return texts.get(35);
+    }
+    
+    static String getChooseAGame(){
+        return texts.get(36);
+    }
+    
+    static String getLevel(){
+        return texts.get(37);
+    }
+    
+    static String getPoints(){
+        return texts.get(38);
+    }
+    
+    static String getWantToLoadSavedGame(){
+        return texts.get(39);
+    }
+    
     public ArrayList<String> getTexts() {
         return texts;
     }

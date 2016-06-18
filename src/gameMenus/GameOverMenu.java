@@ -25,6 +25,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
@@ -44,7 +45,7 @@ import javafx.util.Duration;
  * La pantalla que aparece cuando finaliza la partida.
  * @author Jorge Maldonado Ventura
  */
-public class GameOverMenu extends GridPane{
+public class GameOverMenu extends GridPane implements Window{
     
     private Text gameOverText, scoreText;
     private Button playAdventureModeButton, playArcadeModeButton,
@@ -68,7 +69,8 @@ public class GameOverMenu extends GridPane{
         return playerNameTextField;
     }
     
-    private void applyStyle(){
+    @Override
+    public void applyStyle(){
         setVgap(Main.getMainMenu().getPADDING());
         setHgap(Main.getMainMenu().getPADDING());
         setAlignment(Pos.CENTER);
@@ -103,7 +105,7 @@ public class GameOverMenu extends GridPane{
                     ScoreXML.save();
                 }
                 Main.getScene().setRoot(Main.getRoot());
-                Main.getMainMenu().setGame(new AdventureModeGame());
+                Main.getMainMenu().setGame(new AdventureModeGame(1));
             }
         );
     }
@@ -115,8 +117,19 @@ public class GameOverMenu extends GridPane{
                 if(Main.getMainMenu().getGame().getScore().checkRecord()){
                     ScoreXML.save();
                 }
-                Main.getScene().setRoot(Main.getRoot());
-                Main.getMainMenu().setGame(new ArcadeModeGame());
+                if(!(SavedGamesXML.isEmpty(0) && SavedGamesXML.isEmpty(1) && SavedGamesXML.isEmpty(2))){
+                    new Alert(Alert.AlertType.CONFIRMATION, Texts.getWantToLoadSavedGame()).showAndWait().ifPresent(response -> {
+                         if (response == ButtonType.OK) {
+                            Main.getScene().setRoot(new LoadGameMenu());
+                         } else{
+                            Main.getScene().setRoot(Main.getRoot());
+                            Main.getMainMenu().setGame(new ArcadeModeGame());
+                         }
+                     });
+                } else{
+                    Main.getScene().setRoot(Main.getRoot());
+                    Main.getMainMenu().setGame(new ArcadeModeGame());
+                }
             }
         );
     }
@@ -146,6 +159,7 @@ public class GameOverMenu extends GridPane{
         );
     }
     
+    @Override
     public void setTexts(){
         gameOverText.setText(Texts.getGameOverText());
         playAdventureModeButton.setText(Texts.getAdventureModeButton());
@@ -155,7 +169,8 @@ public class GameOverMenu extends GridPane{
         exitButton.setText(Texts.getExitButton());
     }
     
-    private void addNodes(){
+    @Override
+    public void addNodes(){
         add(gameOverText, 0, 0, 2, 1);
         add(scoreTexts, 0, 2);
         add(playAdventureModeButton, 1, 3);

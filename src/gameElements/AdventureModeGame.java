@@ -24,10 +24,34 @@ import gameMenus.Texts;
  */
 public class AdventureModeGame extends Game{
     
-    public AdventureModeGame() {
+    public AdventureModeGame(int level) {
         super();
         Levels.initAnyLevelTimeline();
-        Levels.newLevelTransition(Texts.getLevel1Text(), 1);
+        switch(level){
+            case 1:
+                Levels.newLevelTransition(Texts.getLevel1Text(), 1);
+                Levels.setCurrentLevel((byte)1);
+                break;
+            case 2:
+                Levels.newLevelTransition(Texts.getLevel2Text(), 2);
+                Levels.setCurrentLevel((byte)2);
+                break;
+            case 3:
+                Levels.newLevelTransition(Texts.getLevel3Text(), 3);
+                Levels.setCurrentLevel((byte)3);
+                break;
+            case 4:
+                Levels.newLevelTransition(Texts.getLevel4Text(), 4);
+                Levels.setCurrentLevel((byte)4);
+                break;
+            case 5:
+                Levels.newLevelTransition(Texts.getLevel5Text(), 5);
+                Levels.setCurrentLevel((byte)5);
+                break;
+            default:
+                System.out.println("Error, no existe ese nivel.");
+                break;
+        }
     }
     
     @Override

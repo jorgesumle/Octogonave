@@ -25,6 +25,7 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
@@ -141,7 +142,7 @@ class Octogonave extends MovingSprite{
                         break;
                     case P:
                         if(!Main.getMainMenu().getGame().isGameOver()){
-                            if(Main.getMainMenu().getGame().isPaused()){
+                            if(Main.getMainMenu().getGame().isPaused() && !Main.getMainMenu().getGame().isSaving()){
                                 Main.getMainMenu().getGame().resume();
                             } else{
                                 Main.getMainMenu().getGame().pause();
@@ -150,7 +151,16 @@ class Octogonave extends MovingSprite{
                         break;
                     case G:
                         if(Main.getMainMenu().getGame().isPaused() && Levels.isChangingLevel()){
-                            System.out.println("Acabo de guardar la partida.");
+                            Game game = Main.getMainMenu().getGame();
+                            game.setSaving(true);
+                            GridPane saveMenu;
+                            if(game.getSaveMenu() == null){
+                                saveMenu = new gameMenus.SavingScreen();
+                            } else{
+                                saveMenu = game.getSaveMenu();
+                            }
+                            game.setSaveMenu(saveMenu);
+                            Main.getScene().setRoot(saveMenu);
                         }
                         break;
                 }

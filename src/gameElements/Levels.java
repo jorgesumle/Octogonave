@@ -48,6 +48,15 @@ public class Levels {
     private static FadeTransition ft;
     private static final int TRANSITION_DURATION_IN_MILLIS = 10_000;
     private static boolean changingLevel;
+    private static byte currentLevel;
+
+    public static byte getCurrentLevel() {
+        return currentLevel;
+    }
+    
+    static void setCurrentLevel(byte currentLevel){
+        Levels.currentLevel = currentLevel;
+    }
 
     static Timeline getArcadeModeTimeline() {
         return arcadeModeTimeline;
@@ -149,6 +158,7 @@ public class Levels {
     }
 
     private static void level1() {
+        currentLevel = 1;
         anyLevelTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(444), (ActionEvent e) -> 
             {
                 createAsteroid((byte) 3);
@@ -169,6 +179,7 @@ public class Levels {
     }
 
     private static void level2() {
+        currentLevel = 2;
         anyLevelTimeline = new Timeline();
         anyLevelTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(400), (ActionEvent e) -> 
             {
@@ -191,6 +202,7 @@ public class Levels {
     }
     
     private static void level3(){
+        currentLevel = 3;
         anyLevelTimeline = new Timeline();
         ArrayList<Sprite> bonusSprites = new ArrayList<>();
         bonusSprites.add(new Diamond(0, 0));
@@ -212,6 +224,7 @@ public class Levels {
     }
     
     private static void level4(){
+        currentLevel = 4;
         anyLevelTimeline = new Timeline();
         anyLevelTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(430), (ActionEvent e) -> 
             {
@@ -234,6 +247,7 @@ public class Levels {
     }
     
     private static void level5(){
+        currentLevel = 5;
         anyLevelTimeline = new Timeline();
         anyLevelTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(400), (ActionEvent e) -> 
             {
@@ -414,6 +428,9 @@ public class Levels {
     }
     
     private static void startLevel(int level){
+        if(anyLevelTimeline == null){
+            initAnyLevelTimeline();
+        }
         switch (level) {
             case 1:
                 level1();

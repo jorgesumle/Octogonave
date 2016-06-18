@@ -17,7 +17,11 @@
 package gameMenus;
 
 import gameElements.Main;
+import java.util.Calendar;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
@@ -25,22 +29,101 @@ import javafx.scene.text.Text;
  *
  * @author Jorge Maldonado Ventura
  */
-class SavingScreen extends GridPane{
-    private Text title;
+public class SavingScreen extends GridPane implements Window{
+    private Text title, nameText, gameNameText;
+    private TextField nameTextField, gameNameTextField;
+    private Button saveButton, backButton;
     
-    SavingScreen(){
+    public SavingScreen(){
         applyStyle();
         createTitleText();
+        createPlayerNameText();
+        createPlayerNameTextField();
+        createGameNameText();
+        createGameNameTextField();
+        createSaveButton();
+        createBackButton();
+        setTexts();
+        addNodes();
     }
     
-    private void applyStyle(){
+    public void applyStyle(){
         setHgap(Main.getMainMenu().getPADDING());
         setVgap(Main.getMainMenu().getPADDING());
         setAlignment(Pos.CENTER);
     }
     
     private void createTitleText(){
-        title = new Text("Área de guardado");
-        title.getStyleClass().add("smallTitleWhite");
+        title = new Text();
+        title.getStyleClass().add("smallTitle");
     }
+    
+    private void createPlayerNameText(){
+        nameText = new Text();
+        nameText.getStyleClass().add("text");
+    }
+    
+    private void createPlayerNameTextField(){
+        nameTextField = new TextField(System.getProperty("user.name"));
+        nameTextField.textProperty().addListener((observable, oldValue, newValue) -> 
+            {
+                if(newValue.length() > 20){
+                    nameTextField.setText(nameTextField.getText().substring(0, 20));    
+                    new Alert(Alert.AlertType.INFORMATION, "No puedes guardar un nombre con más de 20 letras").showAndWait();  
+                }
+            }
+        );
+    }
+    
+    private void createGameNameText(){
+        gameNameText = new Text();
+        gameNameText.getStyleClass().add("text");
+    }
+    
+    private void createGameNameTextField(){
+        gameNameTextField = new TextField();
+        gameNameTextField.textProperty().addListener((observable, oldValue, newValue) -> 
+            {
+                if(newValue.length() > 20){
+                    gameNameTextField.setText(gameNameTextField.getText().substring(0, 20));    
+                    new Alert(Alert.AlertType.INFORMATION, "No puedes guardar un nombre de partida con más de 20 letras").showAndWait();  
+                }
+            }
+        );
+    }
+    
+    private void createSaveButton(){
+        saveButton = new Button();
+        saveButton.setOnAction(e -> {
+            Main.getScene().setRoot(new SavedGamesScreen(Calendar.getInstance(), nameTextField.getText(), gameNameTextField.getText()));
+        });
+    }
+    
+    private void createBackButton(){
+        backButton = new Button();
+        backButton.setOnAction(e -> {
+            Main.getScene().setRoot(Main.getRoot());
+            Main.getMainMenu().getGame().setSaving(false);
+        });
+    }
+    
+    public void addNodes(){
+        add(title, 0, 0, 2, 1);
+        add(nameText, 0, 1);
+        add(nameTextField, 1, 1);
+        add(gameNameText, 0, 2);
+        add(gameNameTextField, 1, 2);
+        add(saveButton, 0, 3);
+        add(backButton, 1, 3);
+    }
+
+    @Override
+    public void setTexts() {
+        title.setText(Texts.getSavingScreen());
+        nameText.setText(Texts.getOptionalEnterYourName());
+        gameNameText.setText(Texts.getOptionalEnterGameName());
+        saveButton.setText(Texts.getSave());
+        backButton.setText(Texts.getBackButton());
+    }
+    
 }

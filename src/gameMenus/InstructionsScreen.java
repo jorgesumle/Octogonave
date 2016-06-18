@@ -29,7 +29,7 @@ import javafx.scene.text.TextFlow;
  * La pantalla que muestra las instrucciones del juego.
  * @author Jorge Maldonado Ventura
  */
-class InstructionsScreen extends VBox{
+class InstructionsScreen extends VBox implements Window{
     
     private Text titleText, gameTitleText, instructionsText;
     private Button backButton;
@@ -41,10 +41,11 @@ class InstructionsScreen extends VBox{
         createInstructionsTextFlow();
         createBackButton();
         setTexts();
-        getChildren().addAll(titleText, instructions, backButton);
+        addNodes();
     }
     
-    private void applyStyle(){
+    @Override
+    public void applyStyle(){
         setAlignment(Pos.CENTER);
         setSpacing(Main.getMainMenu().getPADDING());
     }
@@ -77,11 +78,17 @@ class InstructionsScreen extends VBox{
     /**
      * Asigna el texto de las instancias de <tt>Node</tt> que contienen texto.
      */
-    void setTexts() {
+    @Override
+    public void setTexts() {
         titleText.setText(Texts.getInstructionsButton());
         gameTitleText.setText(Texts.getProgramTitle());
         instructionsText.setText(Texts.getInstructionsText());
         backButton.setText(Texts.getBackButton());
+    }
+    
+    @Override
+    public void addNodes(){
+        getChildren().addAll(titleText, instructions, backButton);
     }
     
 }

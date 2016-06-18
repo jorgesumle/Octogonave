@@ -1,21 +1,23 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<savedGames>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><savedGames>
 	<savedGame>
-		<date></date>
-		<level></level>
-		<player></player>
-		<gameName></gameName>
+		<date>1466241698055</date>
+		<level>2</level>
+		<player>jorge</player>
+		<gameName/>
+		<score>298</score>	
 	</savedGame>
 	<savedGame>
-		<date></date>
-		<level></level>
-		<player></player>
-		<gameName></gameName>
+		<date>1466241698055</date>
+		<level>2</level>
+		<player>jorge</player>
+		<gameName/>
+		<score>298</score>
 	</savedGame>
 	<savedGame>
-		<date></date>
-		<level></level>
-		<player></player>
-		<gameName></gameName>
+		<date>1466240165285</date>
+		<level>1</level>
+		<player>Alguien</player>
+		<gameName>partida legendario</gameName>
+		<score>0</score>
 	</savedGame>
 </savedGames>

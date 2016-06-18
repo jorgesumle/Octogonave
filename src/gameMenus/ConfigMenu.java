@@ -35,7 +35,7 @@ import javafx.scene.text.Text;
  * El menú que permite modificar las configuración del juego.
  * @author Jorge Maldonado Ventura
  */
-class ConfigMenu extends GridPane{
+class ConfigMenu extends GridPane implements Window{
 
     private Label languageLabel, musicLabel, soundsLabel;
     private Button musicButton, soundsButton, backButton;
@@ -56,7 +56,8 @@ class ConfigMenu extends GridPane{
     /**
      * Aplica estilos al menú de configuración, como el fondo de pantalla, el <i>padding</i>.
      */
-    private void applyStyle(){
+    @Override
+    public void applyStyle(){
         setVgap(Main.getMainMenu().getPADDING());
         setHgap(Main.getMainMenu().getPADDING());
         setAlignment(Pos.CENTER);
@@ -198,7 +199,8 @@ class ConfigMenu extends GridPane{
     /**
      * Asigna el texto de las instancias de <tt>Node</tt> que contienen texto.
      */
-    private void setTexts() {
+    @Override
+    public void setTexts() {
         title.setText(Texts.getConfigButton());
         languageLabel.setText(Texts.getLanguageLabel());
         musicLabel.setText(Texts.getMusicLabel());
@@ -219,7 +221,8 @@ class ConfigMenu extends GridPane{
     /**
      * Añade los nodos creados con {@code: add()} para hacerlos visibles.
      */
-    private void addNodes(){
+    @Override
+    public void addNodes(){
         add(title, 0, 0, 2, 1);
         add(languageLabel, 0, 1);
         add(languageChoiceBox, 1, 1);
