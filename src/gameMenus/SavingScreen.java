@@ -18,11 +18,13 @@ package gameMenus;
 
 import gameElements.Main;
 import java.util.Calendar;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import static javafx.scene.layout.GridPane.setHalignment;
 import javafx.scene.text.Text;
 
 /**
@@ -41,8 +43,8 @@ public class SavingScreen extends GridPane implements Window{
         createPlayerNameTextField();
         createGameNameText();
         createGameNameTextField();
-        createSaveButton();
         createBackButton();
+        createSaveButton();
         setTexts();
         addNodes();
     }
@@ -69,7 +71,7 @@ public class SavingScreen extends GridPane implements Window{
             {
                 if(newValue.length() > 20){
                     nameTextField.setText(nameTextField.getText().substring(0, 20));    
-                    new Alert(Alert.AlertType.INFORMATION, "No puedes guardar un nombre con más de 20 letras").showAndWait();  
+                    new Alert(Alert.AlertType.INFORMATION, Texts.get20CharactersNameLimit()).showAndWait();  
                 }
             }
         );
@@ -86,17 +88,10 @@ public class SavingScreen extends GridPane implements Window{
             {
                 if(newValue.length() > 20){
                     gameNameTextField.setText(gameNameTextField.getText().substring(0, 20));    
-                    new Alert(Alert.AlertType.INFORMATION, "No puedes guardar un nombre de partida con más de 20 letras").showAndWait();  
+                    new Alert(Alert.AlertType.INFORMATION, Texts.get20CharactersNameLimit()).showAndWait();  
                 }
             }
         );
-    }
-    
-    private void createSaveButton(){
-        saveButton = new Button();
-        saveButton.setOnAction(e -> {
-            Main.getScene().setRoot(new SavedGamesScreen(Calendar.getInstance(), nameTextField.getText(), gameNameTextField.getText()));
-        });
     }
     
     private void createBackButton(){
@@ -107,14 +102,25 @@ public class SavingScreen extends GridPane implements Window{
         });
     }
     
+    private void createSaveButton(){
+        saveButton = new Button();
+        saveButton.setOnAction(e -> {
+            Main.getScene().setRoot(new SavedGamesScreen(Calendar.getInstance(), nameTextField.getText(), gameNameTextField.getText()));
+        });
+    }
+    
     public void addNodes(){
         add(title, 0, 0, 2, 1);
+        setHalignment(title, HPos.CENTER);
         add(nameText, 0, 1);
         add(nameTextField, 1, 1);
         add(gameNameText, 0, 2);
         add(gameNameTextField, 1, 2);
-        add(saveButton, 0, 3);
-        add(backButton, 1, 3);
+        add(backButton, 0, 3);
+        setHalignment(backButton, HPos.CENTER);
+        add(saveButton, 1, 3);
+        setHalignment(saveButton, HPos.CENTER);
+        
     }
 
     @Override

@@ -156,6 +156,7 @@ public class MainMenu extends StackPane implements Window{
                 if(!(SavedGamesXML.isEmpty(0) && SavedGamesXML.isEmpty(1) && SavedGamesXML.isEmpty(2))){
                     new Alert(Alert.AlertType.CONFIRMATION, Texts.getWantToLoadSavedGame()).showAndWait().ifPresent(response -> {
                          if (response == ButtonType.OK) {
+                            pauseStarAnimation();
                             Main.getScene().setRoot(new LoadGameMenu());
                          } else{
                             startNewAdventure();
@@ -169,7 +170,7 @@ public class MainMenu extends StackPane implements Window{
         playArcadeModeButton.setOnAction(e -> 
             {
                 Main.getScene().setRoot(Main.getRoot());
-                starAnimTimer.pause();
+                pauseStarAnimation();
                 game = new ArcadeModeGame();
             }
         );
@@ -178,7 +179,7 @@ public class MainMenu extends StackPane implements Window{
                 if(instructionsScreen == null){
                     instructionsScreen = new InstructionsScreen();
                 }
-                starAnimTimer.pause();
+                pauseStarAnimation();
                 Main.getRoot().getChildren().clear();
                 instructionsScreen.setTexts();
                 Main.getScene().setRoot(instructionsScreen);
@@ -189,7 +190,7 @@ public class MainMenu extends StackPane implements Window{
                 if(highestScoresScreen == null){
                     highestScoresScreen = new HighestScoresScreen();
                 }
-                starAnimTimer.pause();
+                pauseStarAnimation();
                 Main.getRoot().getChildren().clear();
                 highestScoresScreen.setTexts();
                 Main.getScene().setRoot(highestScoresScreen);
@@ -200,7 +201,7 @@ public class MainMenu extends StackPane implements Window{
                 if(configMenu == null){
                     configMenu = new ConfigMenu();
                 }
-                starAnimTimer.pause();
+                pauseStarAnimation();
                 Main.getRoot().getChildren().clear();
                 Main.getScene().setRoot(configMenu);
             }
@@ -213,10 +214,28 @@ public class MainMenu extends StackPane implements Window{
     }
     
     /**
+     * Pausa la animación de las estrellas, deteniendo el <tt>AnimationTimer</tt>
+     * y el <tt>Timeline</tt>.
+     */
+    private void pauseStarAnimation(){
+        starAnimTimer.pause();
+        starTimeline.pause();
+    }
+    
+    /**
+     * Reanuda la animación de las estrellas, volviendo a poner en marcha el 
+     * <tt>AnimationTimer</tt> y el <tt>Timeline</tt>.
+     */
+    void resumeStarAnimation(){
+        starAnimTimer.resume();
+        starTimeline.play();
+    }
+    
+    /**
      * Empieza una partida en modo aventura habiendo pausado el <tt>startAnimTimer</tt>.
      */
     private void startNewAdventure(){
-        starAnimTimer.pause();
+        pauseStarAnimation();
         Main.getScene().setRoot(Main.getRoot());
         game = new AdventureModeGame(1);
     }

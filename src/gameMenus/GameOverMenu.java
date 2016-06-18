@@ -104,8 +104,19 @@ public class GameOverMenu extends GridPane implements Window{
                 if(Main.getMainMenu().getGame().getScore().checkRecord()){
                     ScoreXML.save();
                 }
-                Main.getScene().setRoot(Main.getRoot());
-                Main.getMainMenu().setGame(new AdventureModeGame(1));
+                if(!(SavedGamesXML.isEmpty(0) && SavedGamesXML.isEmpty(1) && SavedGamesXML.isEmpty(2))){
+                    new Alert(Alert.AlertType.CONFIRMATION, Texts.getWantToLoadSavedGame()).showAndWait().ifPresent(response -> {
+                         if (response == ButtonType.OK) {
+                            Main.getScene().setRoot(new LoadGameMenu());
+                         } else{
+                            Main.getScene().setRoot(Main.getRoot());
+                            Main.getMainMenu().setGame(new AdventureModeGame(1));
+                         }
+                     });
+                } else{
+                    Main.getScene().setRoot(Main.getRoot());
+                    Main.getMainMenu().setGame(new AdventureModeGame(1));
+                }
             }
         );
     }
@@ -117,19 +128,8 @@ public class GameOverMenu extends GridPane implements Window{
                 if(Main.getMainMenu().getGame().getScore().checkRecord()){
                     ScoreXML.save();
                 }
-                if(!(SavedGamesXML.isEmpty(0) && SavedGamesXML.isEmpty(1) && SavedGamesXML.isEmpty(2))){
-                    new Alert(Alert.AlertType.CONFIRMATION, Texts.getWantToLoadSavedGame()).showAndWait().ifPresent(response -> {
-                         if (response == ButtonType.OK) {
-                            Main.getScene().setRoot(new LoadGameMenu());
-                         } else{
-                            Main.getScene().setRoot(Main.getRoot());
-                            Main.getMainMenu().setGame(new ArcadeModeGame());
-                         }
-                     });
-                } else{
-                    Main.getScene().setRoot(Main.getRoot());
-                    Main.getMainMenu().setGame(new ArcadeModeGame());
-                }
+                Main.getScene().setRoot(Main.getRoot());
+                Main.getMainMenu().setGame(new ArcadeModeGame());
             }
         );
     }
@@ -138,7 +138,7 @@ public class GameOverMenu extends GridPane implements Window{
         toMainMenuButton = new Button();
         toMainMenuButton.setOnAction(e ->
             {
-                Main.getMainMenu().getStarAnimTimer().resume();
+                Main.getMainMenu().resumeStarAnimation();
                 Main.getScene().setRoot(Main.getMainMenu());
                 if(Main.getMainMenu().getGame().getScore().checkRecord()){
                     ScoreXML.save();
@@ -210,9 +210,9 @@ public class GameOverMenu extends GridPane implements Window{
         playerNameTextField = new TextField(System.getProperty("user.name"));
         playerNameTextField.textProperty().addListener((observable, oldValue, newValue) -> 
             {
-                if(newValue.length() > 30){
+                if(newValue.length() > 20){
                     playerNameTextField.setText(playerNameTextField.getText().substring(0, 30));    
-                    new Alert(AlertType.INFORMATION, "No puedes guardar un nombre con más de 30 letras").showAndWait();  
+                    new Alert(AlertType.INFORMATION, Texts.get20CharactersNameLimit()).showAndWait();  
                 }
             }
         );

@@ -21,6 +21,7 @@ import gameElements.Main;
 import gameElements.Score;
 import java.util.ArrayList;
 import java.util.Calendar;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -95,6 +96,7 @@ public class LoadGameMenu extends GridPane implements Window{
     private void createBackButton(){
         backButton = new Button();
         backButton.setOnAction(e -> {
+            Main.getMainMenu().resumeStarAnimation();
             Main.getScene().setRoot(Main.getMainMenu());
         });
     }
@@ -120,7 +122,7 @@ public class LoadGameMenu extends GridPane implements Window{
                             ((Text)savedGames.get(i).getChildren().get(j)).setText(String.format("%d/%d/%d", date.get(Calendar.DAY_OF_MONTH), date.get(Calendar.MONTH) + 1, date.get(Calendar.YEAR)));
                             break;
                         case 1:
-                            ((Text)savedGames.get(i).getChildren().get(j)).setText("Nivel " + savedGameMeta.get(j));
+                            ((Text)savedGames.get(i).getChildren().get(j)).setText(Texts.getLevel() + " " + savedGameMeta.get(j));
                             break;
                         case 4:
                             ((Text)savedGames.get(i).getChildren().get(j)).setText(savedGameMeta.get(j) + " " + Texts.getPoints());
@@ -138,10 +140,12 @@ public class LoadGameMenu extends GridPane implements Window{
     @Override
     public void addNodes() {
         add(title, 0, 0, 3, 1);
+        setHalignment(title, HPos.CENTER);
         for(byte i = 0; i < NUMBER_OF_SAVED_GAMES; i++){
             add(savedGames.get(i), i, 1);
         }
-        add(backButton, 1, 2);
+        add(backButton, 0, 2, 3, 1);
+        setHalignment(backButton, HPos.CENTER);
     }
     
 }

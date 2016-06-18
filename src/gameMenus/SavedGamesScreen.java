@@ -19,12 +19,14 @@ package gameMenus;
 import gameElements.Main;
 import java.util.ArrayList;
 import java.util.Calendar;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.GridPane;
+import static javafx.scene.layout.GridPane.setHalignment;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -80,7 +82,7 @@ class SavedGamesScreen extends GridPane implements Window{
                     SavedGamesXML.save(savedGames.indexOf(savedGame), date, playerName, gameName);
                     setTexts();
                 } else{
-                    new Alert(AlertType.CONFIRMATION, "¿Seguro que quieres sobreescribir esta partida?").showAndWait().ifPresent(response -> {
+                    new Alert(AlertType.CONFIRMATION, Texts.getSureOverrideMessage()).showAndWait().ifPresent(response -> {
                          if (response == ButtonType.OK) {
                             SavedGamesXML.save(savedGames.indexOf(savedGame), date, playerName, gameName);
                             setTexts();
@@ -146,10 +148,12 @@ class SavedGamesScreen extends GridPane implements Window{
     @Override
     public void addNodes(){
         add(title, 0, 0, 3, 1);
+        setHalignment(title, HPos.CENTER);
         for(byte i = 0; i < NUMBER_OF_SAVED_GAMES; i++){
             add(savedGames.get(i), i, 1);
         }
-        add(backButton, 1, 2);
+        add(backButton, 0, 2, 3, 1);
+        setHalignment(backButton, HPos.CENTER);
     }
     
 }

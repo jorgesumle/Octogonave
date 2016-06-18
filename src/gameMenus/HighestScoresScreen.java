@@ -156,7 +156,7 @@ class HighestScoresScreen extends GridPane implements Window{
         backButton = new Button();
         backButton.setOnAction(e ->
             {
-                Main.getMainMenu().getStarAnimTimer().resume();
+                Main.getMainMenu().resumeStarAnimation();
                 Main.getScene().setRoot(Main.getMainMenu());
             }
         );

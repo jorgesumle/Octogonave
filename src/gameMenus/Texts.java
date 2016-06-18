@@ -188,6 +188,14 @@ public class Texts{
         return texts.get(39);
     }
     
+    static String getSureOverrideMessage(){
+        return texts.get(40);
+    }
+    
+    static String get20CharactersNameLimit(){
+        return texts.get(41);
+    }
+    
     public ArrayList<String> getTexts() {
         return texts;
     }

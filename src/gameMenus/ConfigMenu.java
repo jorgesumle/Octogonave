@@ -188,7 +188,7 @@ class ConfigMenu extends GridPane implements Window{
         backButton = new Button();
         backButton.setOnAction(e ->
             {
-                Main.getMainMenu().getStarAnimTimer().resume();
+                Main.getMainMenu().resumeStarAnimation();
                 Main.getScene().setRoot(Main.getMainMenu());
                 Main.getMainMenu().setTexts();
                 Config.saveConfig(); 
