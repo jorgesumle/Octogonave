@@ -6,6 +6,10 @@
 		</score>
 		<score>
 			<player>jorge</player>
+			<points>911</points>
+		</score>
+		<score>
+			<player>jorge</player>
 			<points>903</points>
 		</score>
 		<score>
@@ -15,10 +19,6 @@
 		<score>
 			<player>usuario</player>
 			<points>841</points>
-		</score>
-		<score>
-			<player>blb</player>
-			<points>835</points>
 		</score>
 	</arcadeMode>
 	<adventureMode>

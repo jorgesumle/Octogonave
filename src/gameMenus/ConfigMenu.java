@@ -95,15 +95,15 @@ class ConfigMenu extends GridPane implements Window{
             switch (selectedlanguage) {
                 case "castellano":
                     Config.setSelectedLanguage("castellano");
-                    Texts.setTexts(LanguageFileReader.readLanguageFile("lang/castellano.lang"));
+                    Texts.setTexts(LanguageFileReader.readLanguageFile("/castellano.lang"));
                     break;
                 case "deutsch":
                     Config.setSelectedLanguage("deutsch");
-                    Texts.setTexts(LanguageFileReader.readLanguageFile("lang/deutsch.lang"));
+                    Texts.setTexts(LanguageFileReader.readLanguageFile("/deutsch.lang"));
                     break;
                 case "english":
                     Config.setSelectedLanguage("english");
-                    Texts.setTexts(LanguageFileReader.readLanguageFile("lang/english.lang"));
+                    Texts.setTexts(LanguageFileReader.readLanguageFile("/english.lang"));
                     break;
                 default:
                     break;

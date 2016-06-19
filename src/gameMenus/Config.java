@@ -86,15 +86,15 @@ public class Config {
         switch (languageValue.getTextContent()) {
             case "castellano":
                 selectedLanguage = "castellano";
-                Texts.setTexts(LanguageFileReader.readLanguageFile("lang/castellano.lang"));
+                Texts.setTexts(LanguageFileReader.readLanguageFile("/castellano.lang"));
                 break;
             case "english":
                 selectedLanguage = "english";
-                Texts.setTexts(LanguageFileReader.readLanguageFile("lang/english.lang"));
+                Texts.setTexts(LanguageFileReader.readLanguageFile("/english.lang"));
                 break;
             case "deutsch":
                 selectedLanguage = "deutsch";
-                Texts.setTexts(LanguageFileReader.readLanguageFile("lang/deutsch.lang"));
+                Texts.setTexts(LanguageFileReader.readLanguageFile("/deutsch.lang"));
                 break;
             default:
                 break;
