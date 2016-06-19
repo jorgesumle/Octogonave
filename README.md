@@ -42,3 +42,4 @@ S + A | Dispara abajo a la izquierda
 A | Dispara a la izquierda
 A + W | Dispara arriba a la izquierda
 P | Pausa la partida
+G | Accede al menú para guardar la partida. Solo puede accederse a este menú cuando el juego está en pausa, y si el jugador se encuentra en la transición de nivel.
