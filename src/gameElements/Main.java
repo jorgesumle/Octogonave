@@ -75,7 +75,7 @@ public class Main extends Application {
         if(args.length > 0){
             String parameter = args[0].toLowerCase();
             if(parameter.contains("version") || parameter.equals("-v")){
-                System.out.println("2.3.0.0");
+                System.out.println("2.3.0.1");
             } else if(parameter.contains("license") || parameter.equals("-l")){
                 System.out.println("GNU General Public License (http://www.gnu.org/licenses/)");
             } else if(parameter.contains("help") || parameter.equals("-h")){
